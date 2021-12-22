@@ -1,5 +1,6 @@
 import { Center, Heading } from "@chakra-ui/layout";
 import Head from "next/head";
+import ProfileForm from "../components/ProfileForm";
 import Topbar from "../components/Topbar";
 
 export default function Home() {
@@ -15,6 +16,9 @@ export default function Home() {
         <Heading>
           Welcome to <a href="https://tupu.io">Tupu!</a>
         </Heading>
+      </Center>
+      <Center mt="60px">
+        <ProfileForm />
       </Center>
     </div>
   );
