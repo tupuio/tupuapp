@@ -1,7 +1,7 @@
 import { Button } from "@chakra-ui/button";
 import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { Input } from "@chakra-ui/input";
-import { Grid, GridItem } from "@chakra-ui/layout";
+import { Flex, Grid, GridItem, VStack } from "@chakra-ui/layout";
 import { Textarea } from "@chakra-ui/textarea";
 import { Form, useFormik } from "formik";
 
@@ -18,8 +18,8 @@ const ProfileForm = () => {
 
   return (
     <form onSubmit={formik.handleSubmit}>
-      <Grid templateColumns="repeat(10, 1fr)" gap={4}>
-        <GridItem colSpan={7}>
+      <Flex h="100vh" py={10}>
+        <VStack w="full" h="full" p={10} spacing={10} alignItems="flex-start">
           <FormControl>
             <FormLabel htmlFor="name">Name</FormLabel>
             <Input id="name" width={400} />
@@ -44,12 +44,19 @@ const ProfileForm = () => {
               rows={6}
             />
           </FormControl>
-        </GridItem>
-      </Grid>
-
-      <Button mt={4} type="submit">
-        Submit
-      </Button>
+          <Button mt={4} type="submit">
+            Submit
+          </Button>
+        </VStack>
+        <VStack
+          w="full"
+          h="full"
+          p={10}
+          spacing={10}
+          alignItems="flex-start"
+          bg="gray.50"
+        ></VStack>
+      </Flex>
     </form>
   );
 };
