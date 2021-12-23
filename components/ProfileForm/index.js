@@ -6,6 +6,7 @@ import { Textarea } from "@chakra-ui/textarea";
 import { useForm } from "react-hook-form";
 
 const ProfileForm = ({ profile }) => {
+  console.log(profile);
   const { register, handleSubmit } = useForm({
     defaultValues: profile,
   });
