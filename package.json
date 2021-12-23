@@ -12,11 +12,13 @@
     "@chakra-ui/react": "^1.7.3",
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
-    "formik": "^2.2.9",
+    "client": "file:../../xataio/client",
     "framer-motion": "^4.1.17",
     "next": "12.0.7",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "react-hook-form": "^7.22.4",
+    "swr": "^1.1.1"
   },
   "devDependencies": {
     "eslint": "8.5.0",

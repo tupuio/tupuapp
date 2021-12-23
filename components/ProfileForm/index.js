@@ -3,41 +3,41 @@ import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { Input } from "@chakra-ui/input";
 import { Flex, VStack } from "@chakra-ui/layout";
 import { Textarea } from "@chakra-ui/textarea";
-import { useFormik } from "formik";
+import { useForm } from "react-hook-form";
 
-const ProfileForm = () => {
-  const formik = useFormik({
-    initialValues: {
-      name: "",
-    },
-    onSubmit: (values) => {
-      console.log(values);
-    },
+const ProfileForm = ({ profile }) => {
+  const { register, handleSubmit } = useForm({
+    defaultValues: profile,
   });
 
+  const onSubmit = (data) => {
+    console.log(data);
+  };
+
   return (
-    <form onSubmit={formik.handleSubmit}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <Flex h="100vh" py={10}>
         <VStack w="full" h="full" p={10} spacing={10} alignItems="flex-start">
           <FormControl>
             <FormLabel htmlFor="name">Name</FormLabel>
-            <Input id="name" width={400} />
+            <Input {...register("name")} id="name" width={400} />
           </FormControl>
           <FormControl>
             <FormLabel htmlFor="email">Email</FormLabel>
-            <Input id="email" type="email" />
+            <Input {...register("email")} id="email" type="email" />
           </FormControl>
           <FormControl>
             <FormLabel htmlFor="twitter">Twitter</FormLabel>
-            <Input id="twitter" />
+            <Input {...register("twitter")} id="twitter" />
           </FormControl>
           <FormControl>
             <FormLabel htmlFor="linkedin">Linkedin</FormLabel>
-            <Input id="linkedin" />
+            <Input {...register("linkedin")} id="linkedin" />
           </FormControl>
           <FormControl>
             <FormLabel htmlFor="biography">Biography</FormLabel>
             <Textarea
+              {...register("biography")}
               id="biography"
               placeholder="Write a bit about yourself"
               rows={6}
