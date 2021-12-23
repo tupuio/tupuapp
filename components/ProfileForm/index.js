@@ -1,9 +1,9 @@
 import { Button } from "@chakra-ui/button";
 import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { Input } from "@chakra-ui/input";
-import { Flex, Grid, GridItem, VStack } from "@chakra-ui/layout";
+import { Flex, VStack } from "@chakra-ui/layout";
 import { Textarea } from "@chakra-ui/textarea";
-import { Form, useFormik } from "formik";
+import { useFormik } from "formik";
 
 const ProfileForm = () => {
   const formik = useFormik({
@@ -14,7 +14,6 @@ const ProfileForm = () => {
       console.log(values);
     },
   });
-  const marginElTop = "16px";
 
   return (
     <form onSubmit={formik.handleSubmit}>
@@ -24,19 +23,19 @@ const ProfileForm = () => {
             <FormLabel htmlFor="name">Name</FormLabel>
             <Input id="name" width={400} />
           </FormControl>
-          <FormControl mt={marginElTop}>
+          <FormControl>
             <FormLabel htmlFor="email">Email</FormLabel>
             <Input id="email" type="email" />
           </FormControl>
-          <FormControl mt={marginElTop}>
+          <FormControl>
             <FormLabel htmlFor="twitter">Twitter</FormLabel>
             <Input id="twitter" />
           </FormControl>
-          <FormControl mt={marginElTop}>
+          <FormControl>
             <FormLabel htmlFor="linkedin">Linkedin</FormLabel>
             <Input id="linkedin" />
           </FormControl>
-          <FormControl mt={marginElTop}>
+          <FormControl>
             <FormLabel htmlFor="biography">Biography</FormLabel>
             <Textarea
               id="biography"
@@ -44,9 +43,11 @@ const ProfileForm = () => {
               rows={6}
             />
           </FormControl>
-          <Button mt={4} type="submit">
-            Submit
-          </Button>
+          <FormControl>
+            <Button colorScheme="blue" size="md" type="submit">
+              Submit
+            </Button>
+          </FormControl>
         </VStack>
         <VStack
           w="full"

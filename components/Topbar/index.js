@@ -7,7 +7,7 @@ const Topbar = () => {
     <Flex
       w="100vw"
       h="54px"
-      bg="black"
+      bg="brand.300"
       position="fixed"
       top={0}
       left={0}
@@ -21,7 +21,7 @@ const Topbar = () => {
         w="90px"
         ml="15px"
         height="54px"
-        bgColor="black"
+        bgColor="brand.300"
         justifyContent="center"
         alignItems="center"
         cursor="pointer"
