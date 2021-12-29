@@ -1,6 +1,7 @@
 import { Button } from "@chakra-ui/button";
 import { Flex, Heading, VStack } from "@chakra-ui/layout";
 import { Table, Tbody, Td, Tr } from "@chakra-ui/table";
+import ReactMarkdown from "react-markdown";
 
 export const ProfileViewer = ({ profile, setEditMode }) => {
   const handleEditClick = (ev) => {
@@ -24,18 +25,24 @@ export const ProfileViewer = ({ profile, setEditMode }) => {
             {profile.twitter && (
               <Tr>
                 <Td fontWeight={700}>Twitter</Td>
-                <Td>{profile.twitter}</Td>
+                <Td>
+                  <a href={profile.twitter}>{profile.twitter}</a>
+                </Td>
               </Tr>
             )}
             {profile.linkedin && (
               <Tr>
                 <Td fontWeight={700}>LinkedIn</Td>
-                <Td>{profile.linkedin}</Td>
+                <Td>
+                  <a href={profile.linkedin}>{profile.linkedin}</a>
+                </Td>
               </Tr>
             )}
             <Tr>
               <Td fontWeight={700}>Biography</Td>
-              <Td>{profile.biography}</Td>
+              <Td>
+                <ReactMarkdown>{profile.biography}</ReactMarkdown>
+              </Td>
             </Tr>
           </Tbody>
         </Table>

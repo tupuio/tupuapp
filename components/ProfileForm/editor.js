@@ -1,5 +1,9 @@
 import { Button } from "@chakra-ui/button";
-import { FormControl, FormLabel } from "@chakra-ui/form-control";
+import {
+  FormControl,
+  FormHelperText,
+  FormLabel,
+} from "@chakra-ui/form-control";
 import { Input } from "@chakra-ui/input";
 import { Flex, HStack, VStack } from "@chakra-ui/layout";
 import { Textarea } from "@chakra-ui/textarea";
@@ -12,7 +16,7 @@ export const ProfileEditor = ({ profile, setEditMode, mutateProfile }) => {
 
   const onSubmit = async (data) => {
     console.log(data);
-    fetch("/api/profile", {
+    await fetch("/api/profile", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -41,11 +45,25 @@ export const ProfileEditor = ({ profile, setEditMode, mutateProfile }) => {
           </FormControl>
           <FormControl>
             <FormLabel htmlFor="twitter">Twitter</FormLabel>
-            <Input {...register("twitter")} id="twitter" />
+            <Input
+              placeholder="https://twitter.com/your_username"
+              {...register("twitter")}
+              id="twitter"
+            />
+            <FormHelperText>
+              Enter the URL of your Twitter profile.
+            </FormHelperText>
           </FormControl>
           <FormControl>
             <FormLabel htmlFor="linkedin">Linkedin</FormLabel>
-            <Input {...register("linkedin")} id="linkedin" />
+            <Input
+              placeholder="https://www.linkedin.com/in/your_username/"
+              {...register("linkedin")}
+              id="linkedin"
+            />
+            <FormHelperText>
+              Enter the URL of your LinkedIN profile.
+            </FormHelperText>
           </FormControl>
           <FormControl>
             <FormLabel htmlFor="biography">Biography</FormLabel>
@@ -55,6 +73,10 @@ export const ProfileEditor = ({ profile, setEditMode, mutateProfile }) => {
               placeholder="Write a bit about yourself"
               rows={6}
             />
+            <FormHelperText>
+              You can use Markdown for formatting. Leave an empty line for
+              paragraphs.
+            </FormHelperText>
           </FormControl>
           <FormControl>
             <HStack spacing="24px">
