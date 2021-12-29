@@ -11,7 +11,6 @@ export const ProfileViewer = ({ profile, setEditMode }) => {
   return (
     <Flex py={10} maxWidth={800}>
       <VStack>
-        <Heading mb={100}>Your profile</Heading>
         <Table variant="simple" size="lg">
           <Tbody>
             <Tr>

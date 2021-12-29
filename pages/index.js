@@ -1,22 +1,19 @@
-import { Center, Container, Heading } from "@chakra-ui/layout";
-import Head from "next/head";
+import { Box, Heading } from "@chakra-ui/layout";
 import ProfileForm from "../components/ProfileForm";
-import Topbar from "../components/Topbar";
+import SidebarWithHeader from "../components/Sidebar";
 
 export default function Home() {
   return (
-    <div>
-      <Head>
-        <title>Tupu App</title>
-        <meta name="description" content="Tupu app" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <Topbar />
-      <Container maxWidth="container.xl" padding={0}>
-        <Center mt="100px">
-          <ProfileForm />
-        </Center>
-      </Container>
-    </div>
+    <SidebarWithHeader>
+      <Heading mb={10}>Your Profile</Heading>
+      <Box
+        maxWidth="container.xl"
+        borderWidth="1px"
+        borderRadius="lg"
+        bg="white"
+      >
+        <ProfileForm />
+      </Box>
+    </SidebarWithHeader>
   );
 }
