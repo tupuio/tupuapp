@@ -5,10 +5,10 @@ import { FiHome, FiSettings, FiUser, FiUsers } from "react-icons/fi";
 import NavItem from "./NavItem";
 
 const LinkItems = [
-  { name: "Home", icon: FiHome },
-  { name: "Your profile", icon: FiUser },
-  { name: "Mentees", icon: FiUsers },
-  { name: "Settings", icon: FiSettings },
+  { name: "Home", icon: FiHome, href: "/" },
+  { name: "Your profile", icon: FiUser, href: "/profile" },
+  { name: "Mentees", icon: FiUsers, href: "/mentees" },
+  { name: "Settings", icon: FiSettings, href: "/settings" },
 ];
 
 const SidebarContent = ({ onClose, ...rest }) => {
@@ -35,7 +35,7 @@ const SidebarContent = ({ onClose, ...rest }) => {
       </Flex>
       <Box mt={50}>
         {LinkItems.map((link) => (
-          <NavItem key={link.name} icon={link.icon}>
+          <NavItem key={link.name} icon={link.icon} href={link.href}>
             {link.name}
           </NavItem>
         ))}
