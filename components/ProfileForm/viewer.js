@@ -8,14 +8,14 @@ export const ProfileViewer = ({ profile, setEditMode }) => {
     setEditMode(true);
   };
   return (
-    <Flex py={10}>
+    <Flex py={10} maxWidth={800}>
       <VStack>
-        <Heading>Your profile</Heading>
-        <Table variant="simple">
+        <Heading mb={100}>Your profile</Heading>
+        <Table variant="simple" size="lg">
           <Tbody>
             <Tr>
               <Td fontWeight={700}>Name</Td>
-              <Td>{profile.name}</Td>
+              <Td minWidth={400}>{profile.name}</Td>
             </Tr>
             <Tr>
               <Td fontWeight={700}>Email</Td>

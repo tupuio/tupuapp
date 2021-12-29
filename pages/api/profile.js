@@ -42,6 +42,8 @@ async function handlePUT(req, res) {
     body: JSON.stringify({
       name: profile.name,
       email: profile.email,
+      twitter: profile.twitter,
+      linkedin: profile.linkedin,
       biography: profile.biography,
     }),
   });
