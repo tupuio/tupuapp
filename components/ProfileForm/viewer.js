@@ -22,6 +22,10 @@ export const ProfileViewer = ({ profile, setEditMode }) => {
               <Td fontWeight={700}>Email</Td>
               <Td>{profile.email}</Td>
             </Tr>
+            <Tr>
+              <Td fontWeight={700}>Title</Td>
+              <Td>{profile.title}</Td>
+            </Tr>
             {profile.twitter && (
               <Tr>
                 <Td fontWeight={700}>Twitter</Td>

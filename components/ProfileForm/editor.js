@@ -44,6 +44,32 @@ export const ProfileEditor = ({ profile, setEditMode, mutateProfile }) => {
             <Input {...register("email")} id="email" type="email" />
           </FormControl>
           <FormControl>
+            <FormLabel htmlFor="title">Title</FormLabel>
+            <Input
+              placeholder="Principal Engineer, Microsoft"
+              {...register("title")}
+              id="title"
+              type="title"
+            />
+            <FormHelperText>
+              Enter your current role and company, or anything that is relevant
+              as your title.
+            </FormHelperText>
+          </FormControl>
+          <FormControl>
+            <FormLabel htmlFor="biography">Biography</FormLabel>
+            <Textarea
+              {...register("biography")}
+              id="biography"
+              placeholder="Write a bit about yourself"
+              rows={6}
+            />
+            <FormHelperText>
+              Please tell as a bit about yourself. You can use Markdown for
+              formatting. Leave an empty line for paragraphs.
+            </FormHelperText>
+          </FormControl>
+          <FormControl>
             <FormLabel htmlFor="twitter">Twitter</FormLabel>
             <Input
               placeholder="https://twitter.com/your_username"
@@ -63,19 +89,6 @@ export const ProfileEditor = ({ profile, setEditMode, mutateProfile }) => {
             />
             <FormHelperText>
               Enter the URL of your LinkedIN profile.
-            </FormHelperText>
-          </FormControl>
-          <FormControl>
-            <FormLabel htmlFor="biography">Biography</FormLabel>
-            <Textarea
-              {...register("biography")}
-              id="biography"
-              placeholder="Write a bit about yourself"
-              rows={6}
-            />
-            <FormHelperText>
-              You can use Markdown for formatting. Leave an empty line for
-              paragraphs.
             </FormHelperText>
           </FormControl>
           <FormControl>
