@@ -7,11 +7,10 @@ import SidebarWithHeader from "../components/Sidebar";
 const theme = extendTheme({
   colors: {
     brand: {
-      100: "#2F323A",
-      200: "#77567A",
-      300: "#C47AC0",
-      400: "#E39EC1",
-      500: "#DEBAC0",
+      blue: "#2e82ef",
+      orange: "#fe8464",
+      pink: "#fe6e9a",
+      green: "#33c8c1",
     },
   },
 });

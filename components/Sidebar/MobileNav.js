@@ -41,7 +41,7 @@ const MobileNav = ({ onOpen, mode, setMode, ...rest }) => {
       <Text
         display={{ base: "flex", md: "none" }}
         fontSize="2xl"
-        textColor="brand.400"
+        textColor="brand.pink"
         fontWeight="bold"
       >
         tupu
@@ -58,7 +58,7 @@ const MobileNav = ({ onOpen, mode, setMode, ...rest }) => {
               <HStack>
                 <Avatar
                   name={name || ""}
-                  bg="brand.400"
+                  bg="brand.pink"
                   w="36px"
                   h="36px"
                   mr="15px"

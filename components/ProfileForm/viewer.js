@@ -42,7 +42,7 @@ export const ProfileViewer = ({ profile, setEditMode }) => {
               </Tr>
             )}
             <Tr>
-              <Td fontWeight={700}>Biography</Td>
+              <Td fontWeight={700}>Biography / Motivation </Td>
               <Td>
                 <ReactMarkdown>{profile.biography}</ReactMarkdown>
               </Td>

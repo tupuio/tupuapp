@@ -5,5 +5,6 @@ table "mentors" {
     column "twitter" string {}
     column "linkedin" string {}
     column "biography" text {}
+    column "picture" string {}
 }
 

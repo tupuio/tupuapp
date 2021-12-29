@@ -57,7 +57,7 @@ export const ProfileEditor = ({ profile, setEditMode, mutateProfile }) => {
             </FormHelperText>
           </FormControl>
           <FormControl>
-            <FormLabel htmlFor="biography">Biography</FormLabel>
+            <FormLabel htmlFor="biography">Biography / Motivation</FormLabel>
             <Textarea
               {...register("biography")}
               id="biography"

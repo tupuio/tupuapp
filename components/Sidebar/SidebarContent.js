@@ -1,7 +1,7 @@
 import { CloseButton } from "@chakra-ui/close-button";
 import { useColorModeValue } from "@chakra-ui/color-mode";
 import { Box, Flex, Text } from "@chakra-ui/layout";
-import { FiHome, FiSettings, FiUser, FiUsers } from "react-icons/fi";
+import { FiHome, FiSearch, FiSettings, FiUser, FiUsers } from "react-icons/fi";
 import NavItem from "./NavItem";
 
 const MentorLinkItems = [
@@ -14,7 +14,7 @@ const MentorLinkItems = [
 const MenteeLinkItems = [
   { name: "Home", icon: FiHome, href: "/" },
   { name: "Your profile", icon: FiUser, href: "/profile" },
-  { name: "Find a mentor", icon: FiUsers, href: "/mentors" },
+  { name: "Find a mentor", icon: FiSearch, href: "/mentors" },
   { name: "Settings", icon: FiSettings, href: "/settings" },
 ];
 
@@ -23,16 +23,16 @@ const SidebarContent = ({ onClose, mode, ...rest }) => {
   return (
     <Box
       transition="3s ease"
-      bg="gray.900"
+      bg="brand.blue"
       borderRight="1px"
-      borderRightColor="gray.700"
+      borderRightColor="gray.400"
       w={{ base: "full", md: 60 }}
       pos="fixed"
       h="full"
       {...rest}
     >
       <Flex h="14" alignItems="center" mx="8" justifyContent="space-between">
-        <Text textColor="brand.400" fontSize="4xl" fontWeight="bold">
+        <Text textColor="white" fontSize="4xl" fontWeight="bold">
           tupu
         </Text>
         <CloseButton

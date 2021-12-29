@@ -15,8 +15,9 @@ const NavItem = ({ icon, children, href, ...rest }) => {
           cursor="pointer"
           color="white"
           _hover={{
-            bg: "brand.400",
-            color: "black",
+            //bgGradient: "linear(to-b, brand.green, brand.blue2)",
+            bg: "brand.green",
+            color: "white",
           }}
           {...rest}
         >
@@ -26,7 +27,7 @@ const NavItem = ({ icon, children, href, ...rest }) => {
               mr="4"
               fontSize="16"
               _groupHover={{
-                color: "black",
+                color: "white",
               }}
               as={icon}
             />
