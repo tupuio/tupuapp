@@ -4,14 +4,22 @@ import { Box, Flex, Text } from "@chakra-ui/layout";
 import { FiHome, FiSettings, FiUser, FiUsers } from "react-icons/fi";
 import NavItem from "./NavItem";
 
-const LinkItems = [
+const MentorLinkItems = [
   { name: "Home", icon: FiHome, href: "/" },
   { name: "Your profile", icon: FiUser, href: "/profile" },
   { name: "Mentees", icon: FiUsers, href: "/mentees" },
   { name: "Settings", icon: FiSettings, href: "/settings" },
 ];
 
-const SidebarContent = ({ onClose, ...rest }) => {
+const MenteeLinkItems = [
+  { name: "Home", icon: FiHome, href: "/" },
+  { name: "Your profile", icon: FiUser, href: "/profile" },
+  { name: "Find a mentor", icon: FiUsers, href: "/mentors" },
+  { name: "Settings", icon: FiSettings, href: "/settings" },
+];
+
+const SidebarContent = ({ onClose, mode, ...rest }) => {
+  const links = mode === "mentor" ? MentorLinkItems : MenteeLinkItems;
   return (
     <Box
       transition="3s ease"
@@ -34,7 +42,7 @@ const SidebarContent = ({ onClose, ...rest }) => {
         />
       </Flex>
       <Box mt={50}>
-        {LinkItems.map((link) => (
+        {links.map((link) => (
           <NavItem key={link.name} icon={link.icon} href={link.href}>
             {link.name}
           </NavItem>

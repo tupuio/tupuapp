@@ -11,8 +11,13 @@ import {
 } from "@chakra-ui/menu";
 import { FiChevronDown, FiMenu } from "react-icons/fi";
 
-const MobileNav = ({ onOpen, ...rest }) => {
+const MobileNav = ({ onOpen, mode, setMode, ...rest }) => {
   const name = "Madalina";
+
+  const toggleMode = () => {
+    setMode(mode === "mentor" ? "mentee" : "mentor");
+  };
+
   return (
     <Flex
       ml={{ base: 0, md: 60 }}
@@ -67,7 +72,7 @@ const MobileNav = ({ onOpen, ...rest }) => {
                 >
                   <Text fontSize="sm">{name}</Text>
                   <Text fontSize="xs" color="gray.600">
-                    Mentor
+                    {mode === "mentor" ? "Mentor" : "Mentee"}
                   </Text>
                 </VStack>
                 <Box display={{ base: "none", md: "flex" }}>
@@ -79,7 +84,9 @@ const MobileNav = ({ onOpen, ...rest }) => {
               bg={useColorModeValue("white", "gray.900")}
               borderColor={useColorModeValue("gray.200", "gray.700")}
             >
-              <MenuItem>Switch to mentee view</MenuItem>
+              <MenuItem onClick={toggleMode}>
+                Switch to {mode === "mentor" ? "Mentee" : "Mentor"} view
+              </MenuItem>
               <MenuDivider />
               <MenuItem>Sign out</MenuItem>
             </MenuList>

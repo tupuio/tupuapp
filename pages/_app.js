@@ -1,5 +1,8 @@
 import { ChakraProvider } from "@chakra-ui/react";
 import { extendTheme } from "@chakra-ui/react";
+import { mode } from "@chakra-ui/theme-tools";
+import { useState } from "react";
+import SidebarWithHeader from "../components/Sidebar";
 
 const theme = extendTheme({
   colors: {
@@ -14,9 +17,12 @@ const theme = extendTheme({
 });
 
 function TupuApp({ Component, pageProps }) {
+  const [mode, setMode] = useState("mentee");
   return (
     <ChakraProvider theme={theme}>
-      <Component {...pageProps} />
+      <SidebarWithHeader mode={mode} setMode={setMode}>
+        <Component {...pageProps} />
+      </SidebarWithHeader>
     </ChakraProvider>
   );
 }

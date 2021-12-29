@@ -1,9 +1,8 @@
 import { Box, Heading } from "@chakra-ui/layout";
-import SidebarWithHeader from "../components/Sidebar";
 
 export default function Home() {
   return (
-    <SidebarWithHeader>
+    <>
       <Heading mb={10}>Home</Heading>
       <Box
         maxWidth="container.xl"
@@ -11,6 +10,6 @@ export default function Home() {
         borderRadius="lg"
         bg="white"
       ></Box>
-    </SidebarWithHeader>
+    </>
   );
 }
