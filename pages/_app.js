@@ -12,6 +12,29 @@ const theme = extendTheme({
       pink: "#fe6e9a",
       green: "#33c8c1",
     },
+    blueButton: {
+      500: "#2e82ef",
+      600: "#1065d3",
+      700: "#0c4b9e",
+    },
+    grayButton: {
+      500: "#A0AEC0",
+      600: "#4A5568",
+      700: "#2D3748",
+    },
+    greenButton: {
+      500: "#33c8c1",
+      600: "#28a09a",
+      700: "#1e7873",
+    },
+  },
+  components: {
+    Button: {
+      baseStyle: {
+        rounded: "full",
+        fontSize: "sm",
+      },
+    },
   },
 });
 

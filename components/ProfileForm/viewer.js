@@ -48,7 +48,7 @@ export const ProfileViewer = ({ profile, setEditMode }) => {
             </Tr>
           </Tbody>
         </Table>
-        <Button onClick={handleEditClick} colorScheme="blue" size="md">
+        <Button onClick={handleEditClick} colorScheme="greenButton" size="md">
           Edit profile
         </Button>
       </VStack>

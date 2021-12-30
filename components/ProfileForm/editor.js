@@ -92,10 +92,14 @@ export const ProfileEditor = ({ profile, setEditMode, mutateProfile }) => {
           </FormControl>
           <FormControl>
             <HStack spacing="24px">
-              <Button colorScheme="blue" size="md" type="submit">
+              <Button colorScheme="greenButton" size="md" type="submit">
                 Save
               </Button>
-              <Button onClick={handleCancelClick} colorScheme="gray" size="md">
+              <Button
+                onClick={handleCancelClick}
+                colorScheme="grayButton"
+                size="md"
+              >
                 Cancel
               </Button>
             </HStack>

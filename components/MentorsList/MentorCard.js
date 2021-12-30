@@ -19,7 +19,7 @@ function trimString(string, length) {
     : string;
 }
 
-const MentorCard = ({ mentor }) => {
+const MentorCard = ({ mentor, handleRequest }) => {
   return (
     <Stack
       borderWidth="1px"
@@ -81,33 +81,13 @@ const MentorCard = ({ mentor }) => {
           justifyContent={"space-between"}
           alignItems={"center"}
         >
-          <Button
-            flex={1}
-            fontSize={"sm"}
-            rounded={"full"}
-            bg={"gray.300"}
-            color={"white"}
-            _hover={{
-              bg: "gray.500",
-            }}
-            _focus={{
-              bg: "gray.500",
-            }}
-          >
+          <Button flex={1} colorScheme="grayButton">
             View
           </Button>
           <Button
+            onClick={() => handleRequest(mentor)}
             flex={1}
-            fontSize={"sm"}
-            rounded={"full"}
-            bg={"brand.green"}
-            color={"white"}
-            _hover={{
-              bg: "blue.500",
-            }}
-            _focus={{
-              bg: "blue.500",
-            }}
+            colorScheme="greenButton"
           >
             Request
           </Button>
