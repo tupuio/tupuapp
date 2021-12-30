@@ -10,10 +10,10 @@ import {
   MenuList,
 } from "@chakra-ui/menu";
 import { FiChevronDown, FiMenu } from "react-icons/fi";
+import { signOut } from "next-auth/react";
 
-const MobileNav = ({ onOpen, mode, setMode, ...rest }) => {
-  const name = "Madalina";
-
+const MobileNav = ({ session, onOpen, mode, setMode, ...rest }) => {
+  const name = session?.user?.name;
   const toggleMode = () => {
     setMode(mode === "mentor" ? "mentee" : "mentor");
   };
@@ -88,7 +88,7 @@ const MobileNav = ({ onOpen, mode, setMode, ...rest }) => {
                 Switch to {mode === "mentor" ? "Mentee" : "Mentor"} view
               </MenuItem>
               <MenuDivider />
-              <MenuItem>Sign out</MenuItem>
+              <MenuItem onClick={() => signOut()}>Sign out</MenuItem>
             </MenuList>
           </Menu>
         </Flex>

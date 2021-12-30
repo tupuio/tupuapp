@@ -24,16 +24,13 @@ async function handleGET(req, res) {
     return;
   }
 
-  console.log(profile);
   res.status(200).json(profile);
 }
 
 async function handlePUT(req, res) {
   const profile = req.body.profile;
-  console.log("data received", profile);
 
   const data = await getByEmail("madalina@tupu.io");
-  console.log(`${DB_PATH}/users/${data["_id"]}`);
   const response = await fetch(`${DB_PATH}/users/${data["_id"]}`, {
     method: "PUT",
     headers: {
@@ -54,7 +51,6 @@ async function handlePUT(req, res) {
       },
     }),
   });
-  console.log(response, await response.json());
   if (response.status > 299) {
     res.status(500).json({ message: `save failed.` });
     return;

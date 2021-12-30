@@ -15,7 +15,6 @@ export const ProfileEditor = ({ profile, setEditMode, mutateProfile }) => {
   });
 
   const onSubmit = async (data) => {
-    console.log(data);
     await fetch("/api/profile", {
       method: "PUT",
       headers: {

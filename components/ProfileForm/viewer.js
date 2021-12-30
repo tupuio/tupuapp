@@ -5,7 +5,6 @@ import ReactMarkdown from "react-markdown";
 
 export const ProfileViewer = ({ profile, setEditMode }) => {
   const handleEditClick = (ev) => {
-    console.log("clicked");
     setEditMode(true);
   };
   return (

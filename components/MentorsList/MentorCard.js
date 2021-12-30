@@ -20,7 +20,6 @@ function trimString(string, length) {
 }
 
 const MentorCard = ({ mentor }) => {
-  console.log(mentor);
   return (
     <Stack
       borderWidth="1px"
