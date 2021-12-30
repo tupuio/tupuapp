@@ -1,7 +1,7 @@
 import { getXataHeaders, DB_PATH } from "../../services";
 
 async function getByEmail(email) {
-  const resp = await fetch(`${DB_PATH}/mentors/_query`, {
+  const resp = await fetch(`${DB_PATH}/users/_query`, {
     method: "POST",
     headers: {
       ...(await getXataHeaders()),
@@ -33,8 +33,8 @@ async function handlePUT(req, res) {
   console.log("data received", profile);
 
   const data = await getByEmail("madalina@tupu.io");
-  console.log(`${DB_PATH}/mentors/${data["_id"]}`);
-  const response = await fetch(`${DB_PATH}/mentors/${data["_id"]}`, {
+  console.log(`${DB_PATH}/users/${data["_id"]}`);
+  const response = await fetch(`${DB_PATH}/users/${data["_id"]}`, {
     method: "PUT",
     headers: {
       ...(await getXataHeaders()),
@@ -46,6 +46,12 @@ async function handlePUT(req, res) {
       twitter: profile.twitter,
       linkedin: profile.linkedin,
       biography: profile.biography,
+      roles: data.roles,
+      picture: data.picture,
+      mentor: {
+        status: data.mentor?.status,
+        hide: data.mentor?.hide,
+      },
     }),
   });
   console.log(response, await response.json());
