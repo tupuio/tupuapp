@@ -65,7 +65,7 @@ export const ProfileEditor = ({ profile, setEditMode, mutateProfile }) => {
             />
             <FormHelperText>
               Please tell as a bit about yourself. You can use Markdown for
-              formatting. Leave an empty line for paragraphs.
+              formatting. Leave an empty line between paragraphs.
             </FormHelperText>
           </FormControl>
           <FormControl>

@@ -22,3 +22,20 @@ export async function getXataHeaders() {
     Authorization: `Bearer ${token}`,
   };
 }
+
+export async function getUser(session) {
+  const resp = await fetch(`${DB_PATH}/users/_query`, {
+    method: "POST",
+    headers: {
+      ...(await getXataHeaders()),
+    },
+    body: JSON.stringify({
+      _filter: {
+        email: session.user.email,
+      },
+    }),
+  });
+
+  const { records } = await resp.json();
+  return records.length > 0 ? records[0] : null;
+}

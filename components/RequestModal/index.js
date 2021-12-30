@@ -1,4 +1,9 @@
 import { Button } from "@chakra-ui/button";
+import {
+  FormControl,
+  FormHelperText,
+  FormLabel,
+} from "@chakra-ui/form-control";
 import { Text } from "@chakra-ui/layout";
 import {
   Modal,
@@ -9,8 +14,42 @@ import {
   ModalHeader,
   ModalOverlay,
 } from "@chakra-ui/modal";
+import { Textarea } from "@chakra-ui/textarea";
+import { useToast } from "@chakra-ui/toast";
+import { useForm } from "react-hook-form";
 
 const RequestModal = ({ mentor, isOpen, onClose }) => {
+  const toast = useToast();
+  const { register, handleSubmit } = useForm({
+    defaultValues: {
+      message: "",
+    },
+  });
+
+  const onSubmit = async (data) => {
+    const resp = await fetch("/api/request", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        mentorId: mentor._id,
+        message: data.message,
+      }),
+    });
+    if (resp.status > 299) {
+      toast({
+        title: "Error",
+        description: "Error creating request",
+        status: "error",
+        position: "top",
+        isClosable: true,
+      });
+    } else {
+      onClose();
+    }
+  };
+
   if (!mentor) {
     return <>No mentor</>;
   }
@@ -18,22 +57,40 @@ const RequestModal = ({ mentor, isOpen, onClose }) => {
     <Modal size="xl" isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Request mentor</ModalHeader>
-        <ModalCloseButton />
-        <ModalBody>
-          <Text>
-            We will ask <b>{mentor.name}</b> for you if they can take you as a
-            mentee. You can customize the message that we'll send, which can
-            greatly improve your chances.
-          </Text>
-        </ModalBody>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <ModalHeader>Request mentor</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Text>
+              We will ask <b>{mentor.name}</b> for you if they can take you as a
+              mentee. You can customize the message that we'll send, which
+              greatly improves your chances.
+            </Text>
+            <FormControl mt={4}>
+              <FormLabel htmlFor="message">Your Message</FormLabel>
+              <Textarea
+                {...register("message")}
+                id="message"
+                placeholder="Hi, I would love to have you as a mentor for the following reasons:"
+                rows={6}
+              />
+              <FormHelperText>
+                Please tell {mentor.name} a bit about yourself and what are you
+                hoping to learconst or achieve. You can use Markdown for
+                formatting. Leave an empty line between paragraphs.
+              </FormHelperText>
+            </FormControl>
+          </ModalBody>
 
-        <ModalFooter>
-          <Button colorScheme={"grayButton"} mr={3} onClick={onClose}>
-            Close
-          </Button>
-          <Button colorScheme={"blueButton"}>Request</Button>
-        </ModalFooter>
+          <ModalFooter>
+            <Button colorScheme={"grayButton"} mr={3} onClick={onClose}>
+              Close
+            </Button>
+            <Button type="subit" colorScheme={"blueButton"}>
+              Request
+            </Button>
+          </ModalFooter>
+        </form>
       </ModalContent>
     </Modal>
   );

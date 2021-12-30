@@ -12,6 +12,7 @@ import {
   Text,
 } from "@chakra-ui/layout";
 import { FiUser } from "react-icons/fi";
+import { default as NextLink } from "next/link";
 
 function trimString(string, length) {
   return string.length > length
@@ -81,9 +82,11 @@ const MentorCard = ({ mentor, handleRequest }) => {
           justifyContent={"space-between"}
           alignItems={"center"}
         >
-          <Button flex={1} colorScheme="grayButton">
-            View
-          </Button>
+          <NextLink href={`/mentors/${mentor._id}`}>
+            <Button flex={1} colorScheme="grayButton">
+              View
+            </Button>
+          </NextLink>
           <Button
             onClick={() => handleRequest(mentor)}
             flex={1}

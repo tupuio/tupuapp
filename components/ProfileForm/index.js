@@ -2,6 +2,7 @@ import { useState } from "react";
 import { ProfileEditor } from "./editor";
 import { ProfileViewer } from "./viewer";
 import useSWR from "swr";
+import { Alert, AlertIcon } from "@chakra-ui/alert";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
@@ -10,7 +11,12 @@ const ProfileForm = ({}) => {
   const [editMode, setEditMode] = useState(false);
 
   if (error) {
-    return <div>failed to load</div>;
+    return (
+      <Alert status="error">
+        <AlertIcon />
+        Error getting data: {error}
+      </Alert>
+    );
   }
 
   if (!data) {

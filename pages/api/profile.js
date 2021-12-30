@@ -53,7 +53,7 @@ async function handlePUT(session, req, res) {
     }),
   });
   if (response.status > 299) {
-    res.status(500).json({ message: `save failed.` });
+    res.status(response.status).json(await response.json());
     return;
   }
 
@@ -75,7 +75,7 @@ export default async function handler(req, res) {
     return handlePUT(session, req, res);
   } else {
     res
-      .req(404)
+      .status(404)
       .json({ message: "Supported methods on this endpoint are GET and PUT" });
   }
 }

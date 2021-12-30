@@ -31,7 +31,7 @@ const theme = extendTheme({
   components: {
     Button: {
       baseStyle: {
-        rounded: "full",
+        rounded: "lg",
         fontSize: "sm",
       },
     },
