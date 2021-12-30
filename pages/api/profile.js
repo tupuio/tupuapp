@@ -1,3 +1,4 @@
+import { getSession } from "next-auth/react";
 import { getXataHeaders, DB_PATH } from "../../services";
 
 async function getByEmail(email) {
@@ -17,8 +18,8 @@ async function getByEmail(email) {
   return records.length > 0 ? records[0] : null;
 }
 
-async function handleGET(req, res) {
-  const profile = await getByEmail("madalina@tupu.io");
+async function handleGET(session, req, res) {
+  const profile = await getByEmail(session.user.email);
   if (profile === null) {
     res.status(404).json({ message: "Not found" });
     return;
@@ -27,10 +28,10 @@ async function handleGET(req, res) {
   res.status(200).json(profile);
 }
 
-async function handlePUT(req, res) {
+async function handlePUT(session, req, res) {
   const profile = req.body.profile;
 
-  const data = await getByEmail("madalina@tupu.io");
+  const data = await getByEmail(session.user.email);
   const response = await fetch(`${DB_PATH}/users/${data["_id"]}`, {
     method: "PUT",
     headers: {
@@ -60,10 +61,18 @@ async function handlePUT(req, res) {
 }
 
 export default async function handler(req, res) {
+  const session = await getSession({ req });
+  if (!session) {
+    res.status(403).json({
+      error: "You must be signed in to access this API.",
+    });
+    return;
+  }
+
   if (req.method === "GET") {
-    return handleGET(req, res);
+    return handleGET(session, req, res);
   } else if (req.method === "PUT") {
-    return handlePUT(req, res);
+    return handlePUT(session, req, res);
   } else {
     res
       .req(404)

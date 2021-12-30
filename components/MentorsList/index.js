@@ -35,6 +35,9 @@ const MentorsList = () => {
       );
     });
   }
+  if (!filtered) {
+    filtered = [];
+  }
 
   return (
     <Stack spacing={4}>

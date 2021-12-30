@@ -1,6 +1,7 @@
 import NextAuth from "next-auth";
 import LinkedInProvider from "next-auth/providers/linkedin";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { env } from "process";
 
 const providers = [
   LinkedInProvider({
@@ -48,6 +49,7 @@ if (process.env.NODE_ENV === "development") {
 export default NextAuth({
   session: {
     strategy: "jwt",
+    maxAge: 24 * 3600,
   },
   pages: {
     signIn: "/auth/signin",
