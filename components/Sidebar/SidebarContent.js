@@ -1,6 +1,7 @@
 import { CloseButton } from "@chakra-ui/close-button";
 import { useColorModeValue } from "@chakra-ui/color-mode";
 import { Box, Flex, Text } from "@chakra-ui/layout";
+import { Tag } from "@chakra-ui/tag";
 import {
   FiHome,
   FiInbox,
@@ -9,25 +10,36 @@ import {
   FiUser,
   FiUsers,
 } from "react-icons/fi";
+import useSWR from "swr";
 import NavItem from "./NavItem";
 
-const MentorLinkItems = [
-  { name: "Home", icon: FiHome, href: "/" },
-  { name: "Your profile", icon: FiUser, href: "/profile" },
-  { name: "Requests", icon: FiInbox, href: "/requests" },
-  { name: "Mentees", icon: FiUsers, href: "/mentees" },
-  { name: "Settings", icon: FiSettings, href: "/settings" },
-];
-
-const MenteeLinkItems = [
-  { name: "Home", icon: FiHome, href: "/" },
-  { name: "Your profile", icon: FiUser, href: "/profile" },
-  { name: "Find a mentor", icon: FiSearch, href: "/mentors" },
-  { name: "Settings", icon: FiSettings, href: "/settings" },
-];
+const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 const SidebarContent = ({ onClose, mode, ...rest }) => {
+  const { data } = useSWR("/api/requestsCount", fetcher);
+  const requestsCount = data?.count || 0;
+  const MentorLinkItems = [
+    { name: "Home", icon: FiHome, href: "/" },
+    { name: "Your profile", icon: FiUser, href: "/profile" },
+    {
+      name: "Requests",
+      icon: FiInbox,
+      href: "/requests",
+      tag: () => requestsCount,
+    },
+    { name: "Mentees", icon: FiUsers, href: "/mentees" },
+    { name: "Settings", icon: FiSettings, href: "/settings" },
+  ];
+
+  const MenteeLinkItems = [
+    { name: "Home", icon: FiHome, href: "/" },
+    { name: "Your profile", icon: FiUser, href: "/profile" },
+    { name: "Find a mentor", icon: FiSearch, href: "/mentors" },
+    { name: "Settings", icon: FiSettings, href: "/settings" },
+  ];
+
   const links = mode === "mentor" ? MentorLinkItems : MenteeLinkItems;
+
   return (
     <Box
       transition="3s ease"
@@ -53,6 +65,11 @@ const SidebarContent = ({ onClose, mode, ...rest }) => {
         {links.map((link) => (
           <NavItem key={link.name} icon={link.icon} href={link.href}>
             {link.name}
+            {link.tag && link.tag() > 0 && (
+              <Tag size="sm" colorScheme="teal" ml={2}>
+                {link.tag()}
+              </Tag>
+            )}
           </NavItem>
         ))}
       </Box>
