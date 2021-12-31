@@ -28,11 +28,10 @@ export default function MentorPage() {
   const { data, error } = useSWR(`/api/mentors/${id}`, fetcher);
 
   if (error) {
-    console.log(error);
     return (
       <Alert status="error">
         <AlertIcon />
-        Error getting data for mentor profile with id {id}.
+        Error getting data for mentor profile with id {id}. {error.toString()}
       </Alert>
     );
   }

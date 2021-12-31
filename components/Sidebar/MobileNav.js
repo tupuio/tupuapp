@@ -56,13 +56,7 @@ const MobileNav = ({ session, onOpen, mode, setMode, ...rest }) => {
               _focus={{ boxShadow: "none" }}
             >
               <HStack>
-                <Avatar
-                  name={name || ""}
-                  bg="brand.pink"
-                  w="36px"
-                  h="36px"
-                  mr="15px"
-                />
+                <Avatar name={name || ""} w="36px" h="36px" mr="15px" />
 
                 <VStack
                   display={{ base: "none", md: "flex" }}

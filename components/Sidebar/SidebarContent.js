@@ -1,12 +1,20 @@
 import { CloseButton } from "@chakra-ui/close-button";
 import { useColorModeValue } from "@chakra-ui/color-mode";
 import { Box, Flex, Text } from "@chakra-ui/layout";
-import { FiHome, FiSearch, FiSettings, FiUser, FiUsers } from "react-icons/fi";
+import {
+  FiHome,
+  FiInbox,
+  FiSearch,
+  FiSettings,
+  FiUser,
+  FiUsers,
+} from "react-icons/fi";
 import NavItem from "./NavItem";
 
 const MentorLinkItems = [
   { name: "Home", icon: FiHome, href: "/" },
   { name: "Your profile", icon: FiUser, href: "/profile" },
+  { name: "Requests", icon: FiInbox, href: "/requests" },
   { name: "Mentees", icon: FiUsers, href: "/mentees" },
   { name: "Settings", icon: FiSettings, href: "/settings" },
 ];
