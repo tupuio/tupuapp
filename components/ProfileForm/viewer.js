@@ -1,7 +1,15 @@
 import { Button } from "@chakra-ui/button";
-import { Flex, Heading, VStack } from "@chakra-ui/layout";
+import { Flex, Text, VStack } from "@chakra-ui/layout";
 import { Table, Tbody, Td, Tr } from "@chakra-ui/table";
 import ReactMarkdown from "react-markdown";
+import ChakraUIRenderer from "chakra-ui-markdown-renderer";
+
+const markdownTheme = {
+  p: (props) => {
+    const { children } = props;
+    return <Text mb={2}>{children}</Text>;
+  },
+};
 
 export const ProfileViewer = ({ profile, setEditMode }) => {
   const handleEditClick = (ev) => {
@@ -43,7 +51,12 @@ export const ProfileViewer = ({ profile, setEditMode }) => {
             <Tr>
               <Td fontWeight={700}>Biography / Motivation </Td>
               <Td>
-                <ReactMarkdown>{profile.biography}</ReactMarkdown>
+                <ReactMarkdown
+                  components={ChakraUIRenderer(markdownTheme)}
+                  skipHtml
+                >
+                  {profile.biography}
+                </ReactMarkdown>
               </Td>
             </Tr>
           </Tbody>

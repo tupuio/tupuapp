@@ -1,5 +1,5 @@
 import { getSession } from "next-auth/react";
-import { getXataHeaders, DB_PATH } from "../../services";
+import { getXataHeaders, DB_PATH } from "../../../services";
 
 export default async function handler(req, res) {
   const session = await getSession({ req });
@@ -15,11 +15,13 @@ export default async function handler(req, res) {
     headers: {
       ...(await getXataHeaders()),
     },
-    json: {
+    body: JSON.stringify({
       _filter: {
-        roles: "mentor",
+        roles: {
+          _includesAny: "mentor",
+        },
       },
-    },
+    }),
   });
   res.status(resp.status).json(await resp.json());
 }
