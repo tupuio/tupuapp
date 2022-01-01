@@ -38,7 +38,7 @@ const RequestCard = ({ request }) => {
         >
           <Avatar
             size="xl"
-            src={request.mentee.picture}
+            src={request.mentee.picture + "?tr=w-100,h-100,fo-auto"}
             name={request.mentee.name}
             alignSelf={"center"}
           />

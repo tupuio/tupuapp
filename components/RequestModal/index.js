@@ -23,7 +23,7 @@ const RequestModal = ({ mentor, isOpen, onClose }) => {
   const { register, handleSubmit } = useForm({
     defaultValues: {
       message:
-        "I'd love to have you as a mentor!\n\n\n I want to \u003c... insert what you'd like to achieve\u003e, and I think your mentorship would be really valuable.",
+        "I'd love to have you as a mentor!\n\n\n I want to \u003cinsert what you'd like to achieve\u003e, and I think your mentorship would be really valuable.",
     },
   });
 
