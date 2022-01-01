@@ -3,6 +3,7 @@ import { Flex, Text, VStack } from "@chakra-ui/layout";
 import { Table, Tbody, Td, Tr } from "@chakra-ui/table";
 import ReactMarkdown from "react-markdown";
 import ChakraUIRenderer from "chakra-ui-markdown-renderer";
+import { Image } from "@chakra-ui/image";
 
 const markdownTheme = {
   p: (props) => {
@@ -16,7 +17,7 @@ export const ProfileViewer = ({ profile, setEditMode }) => {
     setEditMode(true);
   };
   return (
-    <Flex py={10} maxWidth={800}>
+    <Flex py={10} px={10}>
       <VStack>
         <Table variant="simple" size="lg">
           <Tbody>
@@ -32,6 +33,20 @@ export const ProfileViewer = ({ profile, setEditMode }) => {
               <Td fontWeight={700}>Title</Td>
               <Td>{profile.title}</Td>
             </Tr>
+            {profile.picture && (
+              <Tr>
+                <Td fontWeight={700}>Picture</Td>
+                <Td>
+                  <Image
+                    rounded={"md"}
+                    alt={profile.name}
+                    maxHeight={540}
+                    src={profile.picture + "?tr=w-300,h-300,fo-auto"}
+                    objectFit={"cover"}
+                  />
+                </Td>
+              </Tr>
+            )}
             {profile.twitter && (
               <Tr>
                 <Td fontWeight={700}>Twitter</Td>

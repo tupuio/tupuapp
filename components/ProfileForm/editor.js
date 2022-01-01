@@ -60,7 +60,7 @@ export const ProfileEditor = ({ profile, setEditMode, mutateProfile }) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Flex h="100vh" py={10}>
+      <Flex py={10}>
         <VStack w="full" h="full" p={10} spacing={10} alignItems="flex-start">
           <FormControl>
             <FormLabel htmlFor="name">Name</FormLabel>
@@ -142,18 +142,26 @@ export const ProfileEditor = ({ profile, setEditMode, mutateProfile }) => {
           bg="gray.50"
         >
           <FormControl>
+            <FormLabel htmlFor="picture">Picture</FormLabel>
             <IKContext
               publicKey={ikPublicKey}
               urlEndpoint={ikUrlEndpoint}
               authenticationEndpoint={ikAuthenticationEndpoint}
             >
               <IKUpload
+                id="picture"
                 onError={onImgUploadError}
                 onSuccess={onImgUploadSuccess}
               />
             </IKContext>
+            <FormHelperText>
+              Upload a photo of you. Images that are square and have a witdh of
+              at least 600px tend to work best.
+            </FormHelperText>
           </FormControl>
-          {pictureUrl && <Image src={pictureUrl + "?tr=w-300,h-300,fo-auto"} />}
+          {pictureUrl && (
+            <Image alt="Preview" src={pictureUrl + "?tr=w-300,h-300,fo-auto"} />
+          )}
         </VStack>
       </Flex>
     </form>
