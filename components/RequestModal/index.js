@@ -51,6 +51,9 @@ const RequestModal = ({ mentor, isOpen, onClose }) => {
     }
   };
 
+  if (!isOpen) {
+    return <></>;
+  }
   if (!mentor) {
     return <>No mentor</>;
   }
