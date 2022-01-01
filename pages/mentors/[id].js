@@ -54,6 +54,7 @@ export default function MentorPage() {
           <Image
             rounded={"md"}
             alt={data.name}
+            maxHeight={540}
             src={data.picture}
             objectFit={"cover"}
           />

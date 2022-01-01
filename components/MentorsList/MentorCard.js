@@ -38,7 +38,7 @@ const MentorCard = ({ mentor, handleRequest }) => {
             objectFit="cover"
             alt="Profile picture"
             boxSize="100%"
-            src={mentor.picture}
+            src={mentor.picture + "?tr=w-300,h-300,fo-auto"}
           />
         )}
         {!mentor.picture && (

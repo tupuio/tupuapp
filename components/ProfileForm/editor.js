@@ -8,13 +8,26 @@ import { Input } from "@chakra-ui/input";
 import { Flex, HStack, VStack } from "@chakra-ui/layout";
 import { Textarea } from "@chakra-ui/textarea";
 import { useForm } from "react-hook-form";
+import { IKContext, IKImage, IKUpload } from "imagekitio-react";
+import { useState } from "react";
+import { Image } from "@chakra-ui/image";
+import { useToast } from "@chakra-ui/toast";
 
 export const ProfileEditor = ({ profile, setEditMode, mutateProfile }) => {
   const { register, handleSubmit } = useForm({
     defaultValues: profile,
   });
+  const [pictureUrl, setPictureUrl] = useState(profile.picture || "");
+  const toast = useToast();
+
+  const ikPublicKey = process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY;
+  const ikUrlEndpoint = process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT;
+  const ikAuthenticationEndpoint = "/api/imagekit/auth";
 
   const onSubmit = async (data) => {
+    if (pictureUrl) {
+      data.picture = pictureUrl;
+    }
     await fetch("/api/profile", {
       method: "PUT",
       headers: {
@@ -24,6 +37,21 @@ export const ProfileEditor = ({ profile, setEditMode, mutateProfile }) => {
     });
     mutateProfile(data);
     setEditMode(false);
+  };
+
+  const onImgUploadError = async (err) => {
+    toast({
+      title: "Error",
+      description: "Error uploading image",
+      status: "error",
+      position: "top",
+      isClosable: true,
+    });
+    console.log("error uploading image", err);
+  };
+
+  const onImgUploadSuccess = async (data) => {
+    setPictureUrl(data.url);
   };
 
   const handleCancelClick = () => {
@@ -112,7 +140,21 @@ export const ProfileEditor = ({ profile, setEditMode, mutateProfile }) => {
           spacing={10}
           alignItems="flex-start"
           bg="gray.50"
-        ></VStack>
+        >
+          <FormControl>
+            <IKContext
+              publicKey={ikPublicKey}
+              urlEndpoint={ikUrlEndpoint}
+              authenticationEndpoint={ikAuthenticationEndpoint}
+            >
+              <IKUpload
+                onError={onImgUploadError}
+                onSuccess={onImgUploadSuccess}
+              />
+            </IKContext>
+          </FormControl>
+          {pictureUrl && <Image src={pictureUrl + "?tr=w-300,h-300,fo-auto"} />}
+        </VStack>
       </Flex>
     </form>
   );

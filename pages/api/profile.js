@@ -44,8 +44,8 @@ async function handlePUT(session, req, res) {
       twitter: profile.twitter,
       linkedin: profile.linkedin,
       biography: profile.biography,
+      picture: profile.picture,
       roles: data.roles,
-      picture: data.picture,
       mentor: {
         status: data.mentor?.status,
         hide: data.mentor?.hide,
