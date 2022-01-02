@@ -1,8 +1,14 @@
 import env from "../constants";
 
-const { BASE_URL, PRIV_BASE_URL, PRIV_API_USERNAME, PRIV_API_PASSWORD } = env;
+const {
+  BASE_URL,
+  PRIV_BASE_URL,
+  PRIV_API_USERNAME,
+  PRIV_API_PASSWORD,
+  XATA_BRANCH,
+} = env;
 
-export const DB_PATH = `${BASE_URL}/tupu-app/main`;
+export const DB_PATH = `${BASE_URL}/tupu-app/${XATA_BRANCH}`;
 
 export async function getXataHeaders() {
   const response = await fetch(`${PRIV_BASE_URL}/_users/xatacli/_accessToken`, {

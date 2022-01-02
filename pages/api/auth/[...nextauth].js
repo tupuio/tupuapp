@@ -1,12 +1,17 @@
 import NextAuth from "next-auth";
 import LinkedInProvider from "next-auth/providers/linkedin";
+import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { env } from "process";
+import XataAdapter from "../../../auth";
 
 const providers = [
   LinkedInProvider({
     clientId: process.env.LINKEDIN_CLIENT_ID,
     clientSecret: process.env.LINKEDIN_CLIENT_SECRET,
+  }),
+  GoogleProvider({
+    clientId: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
   }),
 ];
 
@@ -52,7 +57,10 @@ if (process.env.NODE_ENV === "development") {
   );
 }
 
+const xataAdapter = XataAdapter();
+
 export default NextAuth({
+  adapter: xataAdapter,
   session: {
     strategy: "jwt",
     maxAge: 24 * 3600,
