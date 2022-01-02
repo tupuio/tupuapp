@@ -39,6 +39,12 @@ if (process.env.NODE_ENV === "development") {
             email: "madalina@tupu.io",
             roles: ["mentor", "mentee", "admin"],
           };
+        } else if (credentials.username === "test") {
+          return {
+            name: "Test",
+            email: "test@tupu.io",
+            roles: ["mentor", "mentee", "admin"],
+          };
         }
         return null;
       },
