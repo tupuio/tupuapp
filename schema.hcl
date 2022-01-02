@@ -18,3 +18,9 @@ table "requests" {
     column "mentee" link { table="users" }
     column "message" text {}
 }
+
+table "nextauth_providers" {
+    column user link{ table="users" }
+    column provider string{}
+    column providerAccountId string{}
+}

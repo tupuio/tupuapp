@@ -8,6 +8,7 @@ const env = {
   PRIV_BASE_URL: `${baseURL}/_priv`,
   PRIV_API_USERNAME: getEnv("PRIV_API_USERNAME") || "nextauth",
   PRIV_API_PASSWORD: getEnv("PRIV_API_PASSWORD"),
+  XATA_BRANCH: getEnv("BRANCH"),
 };
 
 export default env;
