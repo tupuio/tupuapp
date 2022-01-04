@@ -19,6 +19,9 @@ async function getByEmail(email) {
 }
 
 async function handleGET(session, req, res) {
+  if (!session.user.email) {
+    res.status(500).json({ message: "Session doesn't have email" });
+  }
   const profile = await getByEmail(session.user.email);
   if (profile === null) {
     res.status(404).json({ message: "Not found" });
