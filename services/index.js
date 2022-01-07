@@ -11,7 +11,19 @@ const {
 export const DB_PATH = `${BASE_URL}/tupu-app/${XATA_BRANCH}`;
 
 export async function getXataHeaders() {
-  const response = await fetch(`${PRIV_BASE_URL}/_users/xatacli/_accessToken`, {
+  const respUser = await fetch(`${PRIV_BASE_URL}/_users/_lookup`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Basic ${Buffer.from(
+        `${PRIV_API_USERNAME}:${PRIV_API_PASSWORD}`
+      ).toString("base64")}`,
+    },
+    body: JSON.stringify({ email: "xatacli@xata.io" }),
+  });
+  const { id } = await respUser.json();
+
+  const response = await fetch(`${PRIV_BASE_URL}/_users/${id}/_accessToken`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
