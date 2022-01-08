@@ -2,7 +2,7 @@ import { getSession } from "next-auth/react";
 import { getXataHeaders, DB_PATH } from "../../services";
 
 async function getByEmail(email) {
-  const resp = await fetch(`${DB_PATH}/users/_query`, {
+  const resp = await fetch(`${DB_PATH}/tables/users/query`, {
     method: "POST",
     headers: {
       ...(await getXataHeaders()),
@@ -35,7 +35,7 @@ async function handlePUT(session, req, res) {
   const profile = req.body.profile;
 
   const data = await getByEmail(session.user.email);
-  const response = await fetch(`${DB_PATH}/users/${data["_id"]}`, {
+  const response = await fetch(`${DB_PATH}/tables/users/data/${data["_id"]}`, {
     method: "PUT",
     headers: {
       ...(await getXataHeaders()),

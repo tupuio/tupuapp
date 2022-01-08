@@ -10,7 +10,7 @@ export default async function handler(req, res) {
     return;
   }
 
-  const resp = await fetch(`${DB_PATH}/users/_query`, {
+  const resp = await fetch(`${DB_PATH}/tables/users/query`, {
     method: "POST",
     headers: {
       ...(await getXataHeaders()),

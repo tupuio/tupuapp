@@ -8,7 +8,7 @@ const {
   XATA_BRANCH,
 } = env;
 
-export const DB_PATH = `${BASE_URL}/tupu-app/${XATA_BRANCH}`;
+export const DB_PATH = `${BASE_URL}/db/tupu-app:${XATA_BRANCH}`;
 
 export async function getXataHeaders() {
   const respUser = await fetch(`${PRIV_BASE_URL}/_users/_lookup`, {
@@ -42,7 +42,7 @@ export async function getXataHeaders() {
 }
 
 export async function getUser(session) {
-  const resp = await fetch(`${DB_PATH}/users/_query`, {
+  const resp = await fetch(`${DB_PATH}/tables/users/query`, {
     method: "POST",
     headers: {
       ...(await getXataHeaders()),
@@ -54,6 +54,11 @@ export async function getUser(session) {
     }),
   });
 
+  if (resp.status > 299) {
+    throw new Error(
+      `Error getting user: ${resp.status} ${await response.text()}`
+    );
+  }
   const { records } = await resp.json();
   return records.length > 0 ? records[0] : null;
 }

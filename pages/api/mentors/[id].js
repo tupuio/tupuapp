@@ -20,7 +20,7 @@ export default async function handler(req, res) {
 }
 
 async function handleGET(session, req, res) {
-  const resp = await fetch(`${DB_PATH}/users/${req.query.id}`, {
+  const resp = await fetch(`${DB_PATH}/tables/users/data/${req.query.id}`, {
     method: "GET",
     headers: {
       ...(await getXataHeaders()),

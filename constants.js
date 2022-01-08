@@ -1,11 +1,8 @@
 const getEnv = (name) => process.env[`XATA_${name}`];
 
-// Temporary workaround because we are putting a hardcoded team in `BASE_URL`. This line removes it
-const baseURL = process.env.XATA_URL;
-
 const env = {
-  BASE_URL: `${baseURL}/xata`,
-  PRIV_BASE_URL: `${baseURL}/_priv`,
+  BASE_URL: process.env.XATA_DATA_URL,
+  PRIV_BASE_URL: `${process.env.XATA_URL}/_priv`,
   PRIV_API_USERNAME: getEnv("PRIV_API_USERNAME") || "nextauth",
   PRIV_API_PASSWORD: getEnv("PRIV_API_PASSWORD"),
   XATA_BRANCH: getEnv("BRANCH"),

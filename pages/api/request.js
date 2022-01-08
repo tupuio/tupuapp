@@ -33,7 +33,7 @@ async function handlePOST(session, req, res) {
     message: req.body.message,
   };
 
-  const resp = await fetch(`${DB_PATH}/requests`, {
+  const resp = await fetch(`${DB_PATH}/tables/requests/data`, {
     method: "POST",
     headers: {
       ...(await getXataHeaders()),

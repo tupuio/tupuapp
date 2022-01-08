@@ -26,7 +26,7 @@ async function handleGET(session, req, res) {
     return;
   }
 
-  const resp = await fetch(`${DB_PATH}/requests/_query`, {
+  const resp = await fetch(`${DB_PATH}/tables/requests/query`, {
     method: "POST",
     headers: {
       ...(await getXataHeaders()),
