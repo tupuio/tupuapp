@@ -8,7 +8,7 @@ async function getByEmail(email) {
       ...(await getXataHeaders()),
     },
     body: JSON.stringify({
-      _filter: {
+      filter: {
         email,
       },
     }),
