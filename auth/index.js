@@ -3,7 +3,7 @@ import { getXataHeaders, DB_PATH } from "../services";
 export default function XataAdapter(client, options = {}) {
   return {
     async createUser(user) {
-      const response = await fetch(`${DB_PATH}/users`, {
+      const response = await fetch(`${DB_PATH}/tables/users/data`, {
         method: "POST",
         headers: {
           ...(await getXataHeaders()),
@@ -30,7 +30,7 @@ export default function XataAdapter(client, options = {}) {
 
     async getUser(id) {
       console.log("getUser", id);
-      const response = await fetch(`${DB_PATH}/users/${id}`, {
+      const response = await fetch(`${DB_PATH}/tables/users/data/${id}`, {
         method: "GET",
         headers: {
           ...(await getXataHeaders()),
@@ -57,13 +57,13 @@ export default function XataAdapter(client, options = {}) {
     async getUserByEmail(email) {
       console.log("getUserByEmail", email);
 
-      const response = await fetch(`${DB_PATH}/users/_query`, {
+      const response = await fetch(`${DB_PATH}/tables/users/query`, {
         method: "POST",
         headers: {
           ...(await getXataHeaders()),
         },
         body: JSON.stringify({
-          _filter: {
+          filter: {
             email,
           },
         }),
@@ -91,19 +91,22 @@ export default function XataAdapter(client, options = {}) {
     async getUserByAccount({ provider, providerAccountId }) {
       console.log("getUserByAccount", provider, providerAccountId);
 
-      const response = await fetch(`${DB_PATH}/nextauth_providers/_query`, {
-        method: "POST",
-        headers: {
-          ...(await getXataHeaders()),
-        },
-        body: JSON.stringify({
-          _columns: ["*", "user.*"],
-          _filter: {
-            provider,
-            providerAccountId,
+      const response = await fetch(
+        `${DB_PATH}/tables/nextauth_providers/query`,
+        {
+          method: "POST",
+          headers: {
+            ...(await getXataHeaders()),
           },
-        }),
-      });
+          body: JSON.stringify({
+            columns: ["*", "user.*"],
+            filter: {
+              provider,
+              providerAccountId,
+            },
+          }),
+        }
+      );
       if (response.status > 299) {
         throw new Error(`Getting account from Xata: ${await response.text()}`);
       }
@@ -147,13 +150,16 @@ export default function XataAdapter(client, options = {}) {
         providerAccountId: account.providerAccountId,
       };
 
-      const response = await fetch(`${DB_PATH}/nextauth_providers`, {
-        method: "POST",
-        headers: {
-          ...(await getXataHeaders()),
-        },
-        body: JSON.stringify(link),
-      });
+      const response = await fetch(
+        `${DB_PATH}/tables/nextauth_providers/data`,
+        {
+          method: "POST",
+          headers: {
+            ...(await getXataHeaders()),
+          },
+          body: JSON.stringify(link),
+        }
+      );
       if (response.status > 299) {
         throw new Error(`Creating link in Xata: ${await response.text()}`);
       }

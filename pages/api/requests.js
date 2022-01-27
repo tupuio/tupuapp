@@ -32,8 +32,8 @@ async function handleGET(session, req, res) {
       ...(await getXataHeaders()),
     },
     body: JSON.stringify({
-      _columns: ["*", "mentee.*"],
-      _filter: {
+      columns: ["*", "mentee.*"],
+      filter: {
         mentor: user._id,
       },
     }),

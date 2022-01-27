@@ -16,9 +16,9 @@ export default async function handler(req, res) {
       ...(await getXataHeaders()),
     },
     body: JSON.stringify({
-      _filter: {
+      filter: {
         roles: {
-          _includesAny: "mentor",
+          $includesAny: "mentor",
         },
       },
     }),
