@@ -1,6 +1,6 @@
 module.exports = {
   reactStrictMode: true,
-  serverRuntimeConfig: {
+  env: {
     NEXTAUTH_URL: process.env.DEPLOY_PRIME_URL, // read from netlify env
   },
 };
