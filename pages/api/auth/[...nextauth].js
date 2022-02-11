@@ -15,7 +15,10 @@ const providers = [
   }),
 ];
 
-if (process.env.NODE_ENV === "development") {
+if (
+  process.env.NODE_ENV === "development" ||
+  process.env.NEXT_PUBLIC_DEV_LOGIN === "true"
+) {
   providers.push(
     CredentialsProvider({
       name: "Development credentials",

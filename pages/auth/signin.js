@@ -77,7 +77,8 @@ export default function SignIn({ csrfToken, ...props }) {
             </Stack>
           )}
 
-          {process.env.NODE_ENV === "development" && (
+          {(process.env.NODE_ENV === "development" ||
+            process.env.NEXT_PUBLIC_DEV_LOGIN === "true") && (
             <>
               <Heading size="lg" mb={4}>
                 Development Login
