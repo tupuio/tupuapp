@@ -1,4 +1,5 @@
 import { Box, Heading } from "@chakra-ui/layout";
+import MenteesList from "../../components/MenteesList";
 
 export default function MenteesPage() {
   return (
@@ -8,8 +9,9 @@ export default function MenteesPage() {
         maxWidth="container.xl"
         borderWidth="1px"
         borderRadius="lg"
-        bg="white"
-      ></Box>
+        bg="white">
+        <MenteesList />
+      </Box>
     </>
   );
 }
