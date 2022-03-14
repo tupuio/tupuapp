@@ -34,7 +34,7 @@ const RequestModal = ({ mentor, isOpen, onClose }) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        mentorId: mentor._id,
+        mentorId: mentor.id,
         message: data.message,
       }),
     });

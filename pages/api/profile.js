@@ -35,7 +35,7 @@ async function handlePUT(session, req, res) {
   const profile = req.body.profile;
 
   const data = await getByEmail(session.user.email);
-  const response = await fetch(`${DB_PATH}/tables/users/data/${data["_id"]}`, {
+  const response = await fetch(`${DB_PATH}/tables/users/data/${data["id"]}`, {
     method: "PUT",
     headers: {
       ...(await getXataHeaders()),

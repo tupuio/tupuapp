@@ -17,7 +17,7 @@ export default function XataAdapter(client, options = {}) {
       if (response.status > 299) {
         throw new Error(`Creating user in Xata: ${await response.text()}`);
       }
-      const { _id: userId } = await response.json();
+      const { id: userId } = await response.json();
       console.log(`createUser: created user with id ${userId}`);
       // returns AdapterUser
       return {
@@ -44,10 +44,10 @@ export default function XataAdapter(client, options = {}) {
       }
 
       const user = await response.json();
-      console.log("getUser: found user with id", user._id);
+      console.log("getUser: found user with id", user.id);
 
       return {
-        id: user._id,
+        id: user.id,
         name: user.name,
         email: user.email,
         emailVerified: null,
@@ -78,10 +78,10 @@ export default function XataAdapter(client, options = {}) {
       }
       const user = records[0];
 
-      console.log("getUserByEmail: found user with id", user._id);
+      console.log("getUserByEmail: found user with id", user.id);
 
       return {
-        id: user._id,
+        id: user.id,
         name: user.name,
         email: user.email,
         emailVerified: null,
@@ -121,10 +121,10 @@ export default function XataAdapter(client, options = {}) {
         );
       }
       const account = records[0];
-      console.log("getUserByAccount: returning user with id", account.user._id);
+      console.log("getUserByAccount: returning user with id", account.user.id);
 
       return {
-        id: account.user._id,
+        id: account.user.id,
         name: account.user.name,
         email: account.user.email,
         emailVerified: null,

@@ -64,7 +64,7 @@ const MentorsList = () => {
         <SimpleGrid minChildWidth="540px" spacing="24px">
           {filtered.map((mentor) => (
             <MentorCard
-              key={mentor._id}
+              key={mentor.id}
               mentor={mentor}
               handleRequest={handleRequestMentor}
             />

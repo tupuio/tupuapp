@@ -33,7 +33,7 @@ const RequestsList = () => {
   return (
     <SimpleGrid mt={10} columns={1} spacing={10}>
       {data.records.map((request) => (
-        <RequestCard key={request._id} request={request} />
+        <RequestCard key={request.id} request={request} />
       ))}
     </SimpleGrid>
   );

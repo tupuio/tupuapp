@@ -34,7 +34,7 @@ async function handleGET(session, req, res) {
     body: JSON.stringify({
       columns: ["*", "mentee.*"],
       filter: {
-        mentor: user._id,
+        mentor: user.id,
       },
     }),
   });
