@@ -63,7 +63,7 @@ const MenteesList = () => {
         <SimpleGrid minChildWidth="540px" spacing="24px">
           {filtered.map((mentee) => (
             <MenteeCard
-              key={mentee._id}
+              key={mentee.id}
               mentee={mentee}
               handleRequest={handleRequestMentee}
             />
