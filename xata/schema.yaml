@@ -39,6 +39,21 @@ tables:
   - name: message
     type: text
 
+- name: relationships
+  columns:
+  - name: mentor
+    type: link
+    link:
+      table: users
+  - name: mentee
+    type: link
+    link:
+      table: users
+  - name: status
+    type: string
+  - name: startDate
+    type: string
+
 - name: nextauth_providers
   columns:
   - name: user
