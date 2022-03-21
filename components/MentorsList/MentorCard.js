@@ -82,7 +82,7 @@ const MentorCard = ({ mentor, handleRequest }) => {
           justifyContent={"space-between"}
           alignItems={"center"}
         >
-          <NextLink href={`/mentors/${mentor._id}`}>
+          <NextLink href={`/mentors/${mentor.id}`}>
             <Button flex={1} colorScheme="grayButton">
               View
             </Button>

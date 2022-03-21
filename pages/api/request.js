@@ -29,7 +29,7 @@ async function handlePOST(session, req, res) {
 
   const reqObj = {
     mentor: req.body.mentorId,
-    mentee: user._id,
+    mentee: user.id,
     message: req.body.message,
   };
 

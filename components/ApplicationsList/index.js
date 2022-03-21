@@ -24,7 +24,7 @@ const ApplicationsList = () => {
   if (data.records.length == 0) {
     return (
       <Text mt={10} fontWeight={700}>
-        You didn&apos;t send any application for mentorship yet. Please, go to 
+        You didn&apos;t send any application for mentorship yet. Please, go to
         Find a mentor, and send your first one soon!
       </Text>
     );
@@ -33,7 +33,7 @@ const ApplicationsList = () => {
   return (
     <SimpleGrid mt={10} columns={1} spacing={10}>
       {data.records.map((application) => (
-        <ApplicationCard key={application._id} application={application} />
+        <ApplicationCard key={application.id} application={application} />
       ))}
     </SimpleGrid>
   );
