@@ -82,7 +82,7 @@ const MenteeCard = ({ mentee, handleRequest }) => {
           justifyContent={"space-between"}
           alignItems={"center"}
         >
-          <NextLink href={`/mentees/${mentee._id}`}>
+          <NextLink href={`/mentees/${mentee.id}`}>
             <Button flex={1} colorScheme="grayButton">
               View
             </Button>
