@@ -1,6 +1,7 @@
 import { Avatar } from "@chakra-ui/avatar";
 import { Button } from "@chakra-ui/button";
 import { Heading, Link, Stack, Text } from "@chakra-ui/layout";
+import { Select } from '@chakra-ui/react'
 import ReactMarkdown from "react-markdown";
 import ChakraUIRenderer from "chakra-ui-markdown-renderer";
 import Icon from "@chakra-ui/icon";
@@ -73,6 +74,21 @@ const RequestCard = ({ request }) => {
           <ReactMarkdown components={ChakraUIRenderer(markdownTheme)} skipHtml>
             {request.message}
           </ReactMarkdown>
+        </Stack>
+
+        <Stack
+          direction={"column"}
+          textAlign={"right"}
+          justifyContent={"center"}
+        >
+          <Select placeholder="Please choose a status" variant="filled" >
+            <option value="option1">Mentorship started</option>
+            <option value="option2">Mentorship finished</option>
+            <option value="option3">Not a good fit</option>
+            <option value="option4">Request expired</option>
+            <option value="option5">Mentor busy</option>
+          </Select>
+
         </Stack>
 
         <Stack
