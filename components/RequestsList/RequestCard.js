@@ -81,7 +81,8 @@ const RequestCard = ({ request }) => {
           textAlign={"right"}
           justifyContent={"center"}
         >
-          <Select placeholder="Please choose a status" variant="filled" >
+          {/* set a label "status", make some status read-only */}
+          <Select placeholder="Pending" variant="filled" >
             <option value="option1">Mentorship started</option>
             <option value="option2">Mentorship finished</option>
             <option value="option3">Not a good fit</option>
@@ -98,6 +99,7 @@ const RequestCard = ({ request }) => {
         >
           <Button colorScheme={"greenButton"}>Accept</Button>
           <Button colorScheme={"grayButton"}>Reject</Button>
+          <Button colorScheme={"blueButton"}>Contact</Button>
         </Stack>
       </Stack>
     </Stack>
