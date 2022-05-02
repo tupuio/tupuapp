@@ -1,6 +1,8 @@
 import { Avatar } from "@chakra-ui/avatar";
 import { Button } from "@chakra-ui/button";
 import { Heading, Link, Stack, Text } from "@chakra-ui/layout";
+import { MenuButton, Menu, MenuList, MenuItem } from '@chakra-ui/react'
+import { ChevronDownIcon } from '@chakra-ui/icons'
 import ReactMarkdown from "react-markdown";
 import ChakraUIRenderer from "chakra-ui-markdown-renderer";
 import Icon from "@chakra-ui/icon";
@@ -75,13 +77,23 @@ const RequestCard = ({ request }) => {
           </ReactMarkdown>
         </Stack>
 
+
         <Stack
           direction={"column"}
           textAlign={"right"}
           justifyContent={"center"}
         >
           <Button colorScheme={"greenButton"}>Accept</Button>
-          <Button colorScheme={"grayButton"}>Reject</Button>
+          <Menu>
+            <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+              Reject
+            </MenuButton>
+            <MenuList>
+              <MenuItem>Not a good fit</MenuItem>
+              <MenuItem>I&apos;m busy</MenuItem>
+            </MenuList>
+          </Menu>
+          <Button colorScheme={"blueButton"}>Contact</Button>
         </Stack>
       </Stack>
     </Stack>
