@@ -99,9 +99,6 @@ export const ProfileViewer = ({ profile, setEditMode }) => {
                 </Td>
               </Tr>
             )}
-
-            {/* the following need Xata database column under user, equivalent in editor.js; for  some drop-down menu?*/}
-
             <Tr>
               <Td fontWeight={700}>Languages </Td>
               <Td>
