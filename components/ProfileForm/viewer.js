@@ -33,6 +33,42 @@ export const ProfileViewer = ({ profile, setEditMode }) => {
               <Td fontWeight={700}>Title</Td>
               <Td>{profile.title}</Td>
             </Tr>
+            <Tr>
+              <Td fontWeight={700}>Company </Td>
+              <Td>
+                <ReactMarkdown
+                  components={ChakraUIRenderer(markdownTheme)}
+                  skipHtml
+                >
+
+                  {profile.company}
+                </ReactMarkdown>
+              </Td>
+            </Tr>
+            <Tr></Tr>
+            <Tr>
+              <Td fontWeight={700}>Seniority </Td>
+              <Td>
+                <ReactMarkdown
+                  components={ChakraUIRenderer(markdownTheme)}
+                  skipHtml
+                >
+
+                  {profile.seniority}
+                </ReactMarkdown>
+              </Td>
+            </Tr>
+            <Tr>
+              <Td fontWeight={700}>Biography / Motivation </Td>
+              <Td>
+                <ReactMarkdown
+                  components={ChakraUIRenderer(markdownTheme)}
+                  skipHtml
+                >
+                  {profile.biography}
+                </ReactMarkdown>
+              </Td>
+            </Tr>
             {profile.picture && (
               <Tr>
                 <Td fontWeight={700}>Picture</Td>
@@ -63,43 +99,9 @@ export const ProfileViewer = ({ profile, setEditMode }) => {
                 </Td>
               </Tr>
             )}
-            <Tr>
-              <Td fontWeight={700}>Biography / Motivation </Td>
-              <Td>
-                <ReactMarkdown
-                  components={ChakraUIRenderer(markdownTheme)}
-                  skipHtml
-                >
-                  {profile.biography}
-                </ReactMarkdown>
-              </Td>
-            </Tr>
-            {/* all following need Xata database column under user, equivalent in editor.js; for  some drop-down menu?*/}
-            <Tr>
-              <Td fontWeight={700}>Company </Td>
-              <Td>
-                <ReactMarkdown
-                  components={ChakraUIRenderer(markdownTheme)}
-                  skipHtml
-                >
 
-                  {profile.company}
-                </ReactMarkdown>
-              </Td>
-            </Tr>
-            <Tr></Tr>
-            <Tr>
-              <Td fontWeight={700}>Seniority </Td>
-              <Td>
-                <ReactMarkdown
-                  components={ChakraUIRenderer(markdownTheme)}
-                  skipHtml
-                >
+            {/* the following need Xata database column under user, equivalent in editor.js; for  some drop-down menu?*/}
 
-                  {profile.seniority}
-                </ReactMarkdown>
-              </Td>
-            </Tr>
             <Tr>
               <Td fontWeight={700}>Languages </Td>
               <Td>

@@ -79,8 +79,30 @@ export const ProfileEditor = ({ profile, setEditMode, mutateProfile }) => {
               type="title"
             />
             <FormHelperText>
-              Enter your current role and company, or anything that is relevant
+              Enter your current role or anything that is relevant
               as your title.
+            </FormHelperText>
+          </FormControl>
+          <FormControl>
+            <FormLabel htmlFor="company">Company</FormLabel>
+            <Input
+              {...register("company")}
+              id="company"
+              type="company"
+            />
+            <FormHelperText>
+              Enter your current company, if you like.
+            </FormHelperText>
+          </FormControl>
+          <FormControl>
+            <FormLabel htmlFor="seniority">Seniority</FormLabel>
+            <Input
+              {...register("seniority")}
+              id="seniority"
+              type="seniority"
+            />
+            <FormHelperText>
+              How many years of experience do you have?
             </FormHelperText>
           </FormControl>
           <FormControl>
@@ -116,6 +138,28 @@ export const ProfileEditor = ({ profile, setEditMode, mutateProfile }) => {
             />
             <FormHelperText>
               Enter the URL of your LinkedIN profile.
+            </FormHelperText>
+          </FormControl>
+          <FormControl>
+            <FormLabel htmlFor="languages">Languages</FormLabel>
+            <Input
+              {...register("languages")}
+              id="languages"
+              type="languages"
+            />
+            <FormHelperText>
+              Which languages do you speak?
+            </FormHelperText>
+          </FormControl>
+          <FormControl>
+            <FormLabel htmlFor="timezone">Timezone</FormLabel>
+            <Input
+              {...register("timezone")}
+              id="timezone"
+              type="timezone"
+            />
+            <FormHelperText>
+              What is your current timezone?
             </FormHelperText>
           </FormControl>
           <FormControl>
