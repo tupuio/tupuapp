@@ -10,6 +10,7 @@ import { Textarea } from "@chakra-ui/textarea";
 import { useForm } from "react-hook-form";
 import { IKContext, IKImage, IKUpload } from "imagekitio-react";
 import { useState } from "react";
+import TimezoneSelect from "react-timezone-select";
 import { Image } from "@chakra-ui/image";
 import { useToast } from "@chakra-ui/toast";
 
@@ -56,7 +57,9 @@ export const ProfileEditor = ({ profile, setEditMode, mutateProfile }) => {
 
   const handleCancelClick = () => {
     setEditMode(false);
-  };
+  }
+
+  const [selectedTimezone, setSelectedTimezone] = useState({})
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -153,7 +156,9 @@ export const ProfileEditor = ({ profile, setEditMode, mutateProfile }) => {
           </FormControl>
           <FormControl>
             <FormLabel htmlFor="timezone">Timezone</FormLabel>
-            <Input
+            <TimezoneSelect
+              value={selectedTimezone}
+              onChange={setSelectedTimezone}
               {...register("timezone")}
               id="timezone"
               type="timezone"
