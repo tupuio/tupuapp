@@ -35,28 +35,12 @@ export const ProfileViewer = ({ profile, setEditMode }) => {
             </Tr>
             <Tr>
               <Td fontWeight={700}>Company </Td>
-              <Td>
-                <ReactMarkdown
-                  components={ChakraUIRenderer(markdownTheme)}
-                  skipHtml
-                >
-
-                  {profile.company}
-                </ReactMarkdown>
-              </Td>
+              <Td>{profile.company}</Td>
             </Tr>
             <Tr></Tr>
             <Tr>
               <Td fontWeight={700}>Seniority </Td>
-              <Td>
-                <ReactMarkdown
-                  components={ChakraUIRenderer(markdownTheme)}
-                  skipHtml
-                >
-
-                  {profile.seniority}
-                </ReactMarkdown>
-              </Td>
+              <Td>{profile.seniority}</Td>
             </Tr>
             <Tr>
               <Td fontWeight={700}>Biography / Motivation </Td>
@@ -101,25 +85,11 @@ export const ProfileViewer = ({ profile, setEditMode }) => {
             )}
             <Tr>
               <Td fontWeight={700}>Languages </Td>
-              <Td>
-                <ReactMarkdown
-                  components={ChakraUIRenderer(markdownTheme)}
-                  skipHtml
-                >
-                  {profile.languages}
-                </ReactMarkdown>
-              </Td>
+              <Td>{profile.languages}</Td>
             </Tr>
             <Tr>
               <Td fontWeight={700}>Timezone </Td>
-              <Td>
-                <ReactMarkdown
-                  components={ChakraUIRenderer(markdownTheme)}
-                  skipHtml
-                >
-                  {profile.timezone}
-                </ReactMarkdown>
-              </Td>
+              <Td>{profile.timezone}</Td>
             </Tr>
           </Tbody>
         </Table>
