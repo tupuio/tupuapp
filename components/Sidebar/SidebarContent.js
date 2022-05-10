@@ -7,6 +7,7 @@ import {
   FiInbox,
   FiSearch,
   FiSettings,
+  FiSliders,
   FiUser,
   FiUsers,
 } from "react-icons/fi";
@@ -23,6 +24,7 @@ const SidebarContent = ({ onClose, mode, ...rest }) => {
   const MentorLinkItems = [
     { name: "Home", icon: FiHome, href: "/" },
     { name: "Your profile", icon: FiUser, href: "/profile" },
+    { name: "Preferences", icon: FiSliders, href: "/preferences" },
     {
       name: "Requests",
       icon: FiInbox,
