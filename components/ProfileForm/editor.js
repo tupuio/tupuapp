@@ -1,9 +1,5 @@
 import { Button } from "@chakra-ui/button";
-import {
-  FormControl,
-  FormHelperText,
-  FormLabel,
-} from "@chakra-ui/form-control";
+import { FormControl, FormHelperText, FormLabel } from "@chakra-ui/form-control";
 import { Input } from "@chakra-ui/input";
 import { Flex, HStack, VStack } from "@chakra-ui/layout";
 import { Textarea } from "@chakra-ui/textarea";
@@ -65,19 +61,25 @@ export const ProfileEditor = ({ profile, setEditMode, mutateProfile }) => {
         <VStack w="full" h="full" p={10} spacing={10} alignItems="flex-start">
           <FormControl>
             <FormLabel htmlFor="name">Name</FormLabel>
-            <Input {...register("name")} id="name" width={400} />
+            <Input
+              {...register("name")}
+              id="name"
+              width={400}
+            />
           </FormControl>
           <FormControl>
             <FormLabel htmlFor="email">Email</FormLabel>
-            <Input {...register("email")} id="email" type="email" />
+            <Input
+              {...register("email")}
+              id="email"
+              type="email"
+            />
           </FormControl>
           <FormControl>
             <FormLabel htmlFor="title">Title</FormLabel>
             <Input
-              placeholder="Principal Engineer, Microsoft"
               {...register("title")}
               id="title"
-              type="title"
             />
             <FormHelperText>
               Enter your current role or anything that is relevant
@@ -89,7 +91,6 @@ export const ProfileEditor = ({ profile, setEditMode, mutateProfile }) => {
             <Input
               {...register("company")}
               id="company"
-              type="company"
             />
             <FormHelperText>
               Enter your current company, if you like.
@@ -100,7 +101,6 @@ export const ProfileEditor = ({ profile, setEditMode, mutateProfile }) => {
             <Input
               {...register("seniority")}
               id="seniority"
-              type="seniority"
             />
             <FormHelperText>
               How many years of experience do you have?
@@ -125,6 +125,7 @@ export const ProfileEditor = ({ profile, setEditMode, mutateProfile }) => {
               placeholder="https://twitter.com/your_username"
               {...register("twitter")}
               id="twitter"
+              type="url"
             />
             <FormHelperText>
               Enter the URL of your Twitter profile.
@@ -136,6 +137,7 @@ export const ProfileEditor = ({ profile, setEditMode, mutateProfile }) => {
               placeholder="https://www.linkedin.com/in/your_username/"
               {...register("linkedin")}
               id="linkedin"
+              type="url"
             />
             <FormHelperText>
               Enter the URL of your LinkedIN profile.
@@ -146,7 +148,6 @@ export const ProfileEditor = ({ profile, setEditMode, mutateProfile }) => {
             <Input
               {...register("languages")}
               id="languages"
-              type="languages"
             />
             <FormHelperText>
               Which languages do you speak?
@@ -155,7 +156,7 @@ export const ProfileEditor = ({ profile, setEditMode, mutateProfile }) => {
           <FormControl>
             <FormLabel htmlFor="timezone">Timezone</FormLabel>
             <Select placeholder='Select option'>
-              <option value="Pacific/Midway">Midway Island, Samoa</option>
+              <option value="option1">Option 1</option>
               <option value='option2'>Option 2</option>
               <option value='option3'>Option 3</option>
             </Select>
