@@ -7,10 +7,10 @@ import {
 import { Input } from "@chakra-ui/input";
 import { Flex, HStack, VStack } from "@chakra-ui/layout";
 import { Textarea } from "@chakra-ui/textarea";
+import { Select } from '@chakra-ui/react'
 import { useForm } from "react-hook-form";
 import { IKContext, IKImage, IKUpload } from "imagekitio-react";
 import { useState } from "react";
-import TimezoneSelect from "react-timezone-select";
 import { Image } from "@chakra-ui/image";
 import { useToast } from "@chakra-ui/toast";
 
@@ -58,8 +58,6 @@ export const ProfileEditor = ({ profile, setEditMode, mutateProfile }) => {
   const handleCancelClick = () => {
     setEditMode(false);
   }
-
-  const [selectedTimezone, setSelectedTimezone] = useState({})
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -156,13 +154,11 @@ export const ProfileEditor = ({ profile, setEditMode, mutateProfile }) => {
           </FormControl>
           <FormControl>
             <FormLabel htmlFor="timezone">Timezone</FormLabel>
-            <TimezoneSelect
-              value={selectedTimezone}
-              onChange={setSelectedTimezone}
-              {...register("timezone")}
-              id="timezone"
-              type="timezone"
-            />
+            <Select placeholder='Select option'>
+              <option value="Pacific/Midway">Midway Island, Samoa</option>
+              <option value='option2'>Option 2</option>
+              <option value='option3'>Option 3</option>
+            </Select>
             <FormHelperText>
               What is your current timezone?
             </FormHelperText>
