@@ -9,6 +9,7 @@ import { IKContext, IKImage, IKUpload } from "imagekitio-react";
 import { useState } from "react";
 import { Image } from "@chakra-ui/image";
 import { useToast } from "@chakra-ui/toast";
+import allTimezones from "./timezone-list";
 
 export const ProfileEditor = ({ profile, setEditMode, mutateProfile }) => {
   const { register, handleSubmit } = useForm({
@@ -20,6 +21,10 @@ export const ProfileEditor = ({ profile, setEditMode, mutateProfile }) => {
   const ikPublicKey = process.env.NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY;
   const ikUrlEndpoint = process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT;
   const ikAuthenticationEndpoint = "/api/imagekit/auth";
+
+  // returns client's timezone, could use as default value
+  // const { timeZone } = Intl.DateTimeFormat().resolvedOptions();
+  // to test use: console.log(timeZone);
 
   const onSubmit = async (data) => {
     if (pictureUrl) {
@@ -156,7 +161,7 @@ export const ProfileEditor = ({ profile, setEditMode, mutateProfile }) => {
           <FormControl>
             <FormLabel htmlFor="timezone">Timezone</FormLabel>
             <Select
-              placeholder='Select option'
+              placeholder="Select an option"
               {...register("timezone")}
               id="timezone"
               type="">
