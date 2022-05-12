@@ -155,7 +155,11 @@ export const ProfileEditor = ({ profile, setEditMode, mutateProfile }) => {
           </FormControl>
           <FormControl>
             <FormLabel htmlFor="timezone">Timezone</FormLabel>
-            <Select placeholder='Select option'>
+            <Select
+              placeholder='Select option'
+              {...register("timezone")}
+              id="timezone"
+              type="">
               <option value="option1">Option 1</option>
               <option value='option2'>Option 2</option>
               <option value='option3'>Option 3</option>
