@@ -33,6 +33,16 @@ tables:
             type: string
           - name: hide
             type: bool
+          - name: incognito
+            type: bool
+          - name: shortterm
+            type: bool
+          - name: longterm
+            type: bool
+          - name: notifications
+            type: bool
+          - name: calendly
+            type: string
 
   - name: requests
     columns:
