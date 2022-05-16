@@ -6,9 +6,11 @@ import { Textarea } from "@chakra-ui/textarea";
 import { Select } from '@chakra-ui/react'
 import { useForm } from "react-hook-form";
 import { IKContext, IKImage, IKUpload } from "imagekitio-react";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Image } from "@chakra-ui/image";
 import { useToast } from "@chakra-ui/toast";
+import spacetime from 'spacetime'
+import soft from 'timezone-soft'
 import allTimezones from "./timezone-list";
 
 export const ProfileEditor = ({ profile, setEditMode, mutateProfile }) => {
@@ -59,6 +61,38 @@ export const ProfileEditor = ({ profile, setEditMode, mutateProfile }) => {
   const handleCancelClick = () => {
     setEditMode(false);
   }
+  
+  const timezonesOptions = useMemo(() => {
+    return Object.entries(allTimezones)
+      .reduce((selectOptions, zone) => {
+        const now = spacetime.now(zone[0])
+        const tz = now.timezone()
+        const tzStrings = soft(zone[0])
+
+        let abbr = now.isDST() 
+          ? tzStrings[0].daylight?.abbr : tzStrings[0].standard?.abbr
+        let altName = now.isDST()
+          ? tzStrings[0].daylight?.name
+          : tzStrings[0].standard?.name
+
+        const min = tz.current.offset * 60
+        const hr =
+          `${(min / 60) ^ 0}:` + (min % 60 === 0 ? '00' : Math.abs(min % 60))
+        const label = `(GMT${hr.includes('-') ? hr : `+${hr}`}) ${zone[1]}`
+
+        selectOptions.push({
+          value: tz.name,
+          label: label,
+          offset: tz.current.offset,
+          abbrev: abbr,
+          altName: altName,
+          selected: false,
+        })
+
+        return selectOptions
+      }, [])
+      .sort((a, b) => a.offset - b.offset)
+  }, [allTimezones])
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -161,13 +195,13 @@ export const ProfileEditor = ({ profile, setEditMode, mutateProfile }) => {
           <FormControl>
             <FormLabel htmlFor="timezone">Timezone</FormLabel>
             <Select
-              placeholder="Select an option"
+              placeholder="Select your timezone"
               {...register("timezone")}
               id="timezone"
-              type="">
-              <option value="option1">Option 1</option>
-              <option value='option2'>Option 2</option>
-              <option value='option3'>Option 3</option>
+              >
+              {timezonesOptions.map( option =>
+                <option key={option.value} value={option.value} defaultValue={option.selected}>{option.label}</option> )
+              }
             </Select>
             <FormHelperText>
               What is your current timezone?
