@@ -1,74 +1,74 @@
-formatVersion: '1.0'
+formatVersion: "1.0"
 tables:
-- name: users
-  columns:
-  - name: name
-    type: string
-  - name: email
-    type: email
-  - name: title
-    type: string
-  - name: company
-    type: string
-  - name: seniority
-    type: string  
-  - name: biography
-    type: text
-  - name: twitter
-    type: string
-  - name: linkedin
-    type: string
-  - name: languages
-    type: string
-  - name: timezone
-    type: string
-  - name: picture
-    type: string
-  - name: roles
-    type: multiple
-  - name: mentor
-    type: object
+  - name: users
     columns:
-    - name: status
-      type: string
-    - name: hide
-      type: bool
-      
-- name: requests
-  columns:
-  - name: mentor
-    type: link
-    link:
-      table: users
-  - name: mentee
-    type: link
-    link:
-      table: users
-  - name: message
-    type: text
+      - name: name
+        type: string
+      - name: email
+        type: email
+      - name: title
+        type: string
+      - name: company
+        type: string
+      - name: seniority
+        type: string
+      - name: biography
+        type: text
+      - name: twitter
+        type: string
+      - name: linkedin
+        type: string
+      - name: languages
+        type: string
+      - name: timezone
+        type: string
+      - name: picture
+        type: string
+      - name: roles
+        type: multiple
+      - name: mentor
+        type: object
+        columns:
+          - name: status
+            type: string
+          - name: hide
+            type: bool
 
-- name: relationships
-  columns:
-  - name: mentor
-    type: link
-    link:
-      table: users
-  - name: mentee
-    type: link
-    link:
-      table: users
-  - name: status
-    type: string
-  - name: startDate
-    type: string
+  - name: requests
+    columns:
+      - name: mentor
+        type: link
+        link:
+          table: users
+      - name: mentee
+        type: link
+        link:
+          table: users
+      - name: message
+        type: text
 
-- name: nextauth_providers
-  columns:
-  - name: user
-    type: link
-    link:
-      table: users
-  - name: provider
-    type: string
-  - name: providerAccountId
-    type: string
+  - name: relationships
+    columns:
+      - name: mentor
+        type: link
+        link:
+          table: users
+      - name: mentee
+        type: link
+        link:
+          table: users
+      - name: status
+        type: string
+      - name: startDate
+        type: string
+
+  - name: nextauth_providers
+    columns:
+      - name: user
+        type: link
+        link:
+          table: users
+      - name: provider
+        type: string
+      - name: providerAccountId
+        type: string
