@@ -34,16 +34,16 @@ export const ProfileViewer = ({ profile, setEditMode }) => {
               <Td>{profile.title}</Td>
             </Tr>
             <Tr>
-              <Td fontWeight={700}>Company </Td>
+              <Td fontWeight={700}>Company</Td>
               <Td>{profile.company}</Td>
             </Tr>
             <Tr></Tr>
             <Tr>
-              <Td fontWeight={700}>Seniority </Td>
+              <Td fontWeight={700}>Seniority</Td>
               <Td>{profile.seniority}</Td>
             </Tr>
             <Tr>
-              <Td fontWeight={700}>Biography / Motivation </Td>
+              <Td fontWeight={700}>Biography / Motivation</Td>
               <Td>
                 <ReactMarkdown
                   components={ChakraUIRenderer(markdownTheme)}
@@ -53,7 +53,7 @@ export const ProfileViewer = ({ profile, setEditMode }) => {
                 </ReactMarkdown>
               </Td>
             </Tr>
-            {profile.picture && (
+            {profile.picture ? (
               <Tr>
                 <Td fontWeight={700}>Picture</Td>
                 <Td>
@@ -66,29 +66,29 @@ export const ProfileViewer = ({ profile, setEditMode }) => {
                   />
                 </Td>
               </Tr>
-            )}
-            {profile.twitter && (
+            ): null}
+            {profile.twitter ? (
               <Tr>
                 <Td fontWeight={700}>Twitter</Td>
                 <Td>
                   <a href={profile.twitter}>{profile.twitter}</a>
                 </Td>
               </Tr>
-            )}
-            {profile.linkedin && (
+            ) : null }
+            {profile.linkedin ? (
               <Tr>
                 <Td fontWeight={700}>LinkedIn</Td>
                 <Td>
                   <a href={profile.linkedin}>{profile.linkedin}</a>
                 </Td>
               </Tr>
-            )}
+            ): null}
             <Tr>
-              <Td fontWeight={700}>Languages </Td>
+              <Td fontWeight={700}>Languages</Td>
               <Td>{profile.languages}</Td>
             </Tr>
             <Tr>
-              <Td fontWeight={700}>Timezone </Td>
+              <Td fontWeight={700}>Timezone</Td>
               <Td>{profile.timezone}</Td>
             </Tr>
           </Tbody>
