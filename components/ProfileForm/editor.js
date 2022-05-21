@@ -61,9 +61,28 @@ export const ProfileEditor = ({ profile, setEditMode, mutateProfile }) => {
   const handleCancelClick = () => {
     setEditMode(false);
   }
+
+  const timezonesEntries = useMemo(() => {
+    return Object.entries(allTimezones);
+  }, [allTimezones])
   
+  const currentTimezone = spacetime.now().timezone().name;
+  const [currentArea, currentCity] = currentTimezone.split('/');
+  // if currentTimezone === "Europe/Berlin" then select
+  // ['Europe/Amsterdam', 'Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna']
+  // and returns the index [0] -> 'Europe/Amsterdam'
+  const timezonesDefaultValue = useMemo(() => {
+    const timezone = timezonesEntries.filter(
+      ([key, value]) => {
+        const area = key.split('/')[0]; // 'Europe/Amsterdam'
+        const cities = value.split(', '); // 'Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna'
+        return currentArea === area && cities.includes(currentCity);
+      }); // [['Europe/Amsterdam']]
+    return (timezone.length > 0) ? timezone[0][0] : null;
+  }, [timezonesEntries, currentArea, currentCity]);
+
   const timezonesOptions = useMemo(() => {
-    return Object.entries(allTimezones)
+    return timezonesEntries
       .reduce((selectOptions, zone) => {
         const now = spacetime.now(zone[0])
         const tz = now.timezone()
@@ -79,14 +98,12 @@ export const ProfileEditor = ({ profile, setEditMode, mutateProfile }) => {
         const hr =
           `${(min / 60) ^ 0}:` + (min % 60 === 0 ? '00' : Math.abs(min % 60))
         const label = `(GMT${hr.includes('-') ? hr : `+${hr}`}) ${zone[1]}`
-
         selectOptions.push({
           value: tz.name,
           label: label,
           offset: tz.current.offset,
           abbrev: abbr,
           altName: altName,
-          selected: false,
         })
 
         return selectOptions
@@ -198,9 +215,10 @@ export const ProfileEditor = ({ profile, setEditMode, mutateProfile }) => {
               placeholder="Select your timezone"
               {...register("timezone")}
               id="timezone"
+              defaultValue={timezonesDefaultValue}
               >
               {timezonesOptions.map( option =>
-                <option key={option.value} value={option.value} defaultValue={option.selected}>{option.label}</option> )
+                <option key={option.value} value={option.value}>{option.label}</option> )
               }
             </Select>
             <FormHelperText>
