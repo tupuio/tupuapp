@@ -52,6 +52,11 @@ async function handlePUT(session, req, res) {
       mentor: {
         status: data.mentor?.status,
         hide: data.mentor?.hide,
+        calendly: profile.mentor?.calendly,
+        longterm: profile.mentor?.longterm,
+        shortterm: profile.mentor?.shortterm,
+        notifications: profile.mentor?.notifications,
+        incognito: profile.mentor?.incognito,
       },
     }),
   });

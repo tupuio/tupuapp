@@ -41,7 +41,7 @@ export default function SidebarWithHeader({ mode, setMode, children }) {
         size="full"
       >
         <DrawerContent>
-          <SidebarContent onClose={onClose} />
+          <SidebarContent mode={mode} onClose={onClose} />
         </DrawerContent>
       </Drawer>
       <MobileNav
