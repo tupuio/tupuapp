@@ -22,7 +22,14 @@ const mentorship = () => {
           Save
         </Button>
 
+        <FormLabel>Mentorship Status</FormLabel>
+        <Select placeholder='End Mentorship?'>
+          <option>Fisnish</option>
+          <option>Long-term Mentorship</option>
+        </Select>
+
       </FormControl></>
   );
 }
 
+export default Mentorship;
