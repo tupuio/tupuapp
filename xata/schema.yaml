@@ -25,6 +25,12 @@ tables:
       type: string
     - name: hide
       type: bool
+    - name: other_knowledge
+      type: string
+    - name: dev_expertise
+      type: string
+    - name: general_expertise
+      type: string
       
 - name: requests
   columns:

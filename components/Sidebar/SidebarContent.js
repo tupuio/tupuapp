@@ -23,6 +23,7 @@ const SidebarContent = ({ onClose, mode, ...rest }) => {
   const MentorLinkItems = [
     { name: "Home", icon: FiHome, href: "/" },
     { name: "Your profile", icon: FiUser, href: "/profile" },
+    { name: "Your expertise", icon: FiUser, href: "/expertise" },
     {
       name: "Requests",
       icon: FiInbox,
