@@ -6,7 +6,7 @@ import { Alert, AlertIcon } from "@chakra-ui/alert";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
-const ProfileForm = ({}) => {
+const ProfileForm = ({ }) => {
   const { data, error, mutate } = useSWR("/api/profile", fetcher);
   const [editMode, setEditMode] = useState(false);
 

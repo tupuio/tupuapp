@@ -8,12 +8,20 @@ tables:
         type: email
       - name: title
         type: string
+      - name: company
+        type: string
+      - name: seniority
+        type: string
+      - name: biography
+        type: text
       - name: twitter
         type: string
       - name: linkedin
         type: string
-      - name: biography
-        type: text
+      - name: languages
+        type: string
+      - name: timezone
+        type: string
       - name: picture
         type: string
       - name: roles
