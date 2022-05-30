@@ -1,3 +1,5 @@
+// taken from https://github.com/ndom91/react-timezone-select
+
 const allTimezones = {
   "Pacific/Midway": "Midway Island, Samoa",
   "Pacific/Honolulu": "Hawaii",
