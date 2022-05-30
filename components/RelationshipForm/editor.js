@@ -12,7 +12,7 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { useToast } from "@chakra-ui/toast";
 
-export const RelationshipEditor = ({ relationship, setEditMode, mutateRelationship }) => {
+export const RelationshipEditor = ({ relationship, mutateRelationship }) => {
   const { register, handleSubmit } = useForm({
     defaultValues: relationship,
   });
@@ -28,8 +28,7 @@ export const RelationshipEditor = ({ relationship, setEditMode, mutateRelationsh
       },
       body: JSON.stringify({ relationship: data }),
     });
-    mutateRelationship(data);
-    setEditMode(false);
+    // mutateRelationship(data);
   };
 
   return (
@@ -38,17 +37,7 @@ export const RelationshipEditor = ({ relationship, setEditMode, mutateRelationsh
         <VStack w="full" h="full" p={10} spacing={10} alignItems="flex-start">
           <FormControl>
             <FormLabel htmlFor="mentee.name">Mentee Name</FormLabel>
-            <Input
-              placeholder=""
-              readonly
-              {...register("mentee.name")}
-              id="mentee.name"
-              type="text"
-            />
-            {/* <FormHelperText>
-              Enter your current role and company, or anything that is relevant
-              as your title.
-            </FormHelperText> */}
+            <div>{relationship?.mentee.name}</div>
           </FormControl>
 
           <FormControl>
@@ -67,11 +56,18 @@ export const RelationshipEditor = ({ relationship, setEditMode, mutateRelationsh
 
           <FormControl>
 
-            <FormLabel>Notes</FormLabel>
-            <Textarea placeholder='Write some Notes' />
+            <FormLabel htmlFor="notes">Notes</FormLabel>
+            <Textarea
+              placeholder='Write some Notes'
+              {...register("notes")}
+              id="notes"
+              rows={6} />
+            <FormHelperText>
+              notes helper.
+            </FormHelperText>
           </FormControl>
           <FormControl>
-            <Button colorScheme="greenButton" variant='outline'>
+            <Button colorScheme="greenButton" size="md" type="submit">
               Save
             </Button>
           </FormControl>

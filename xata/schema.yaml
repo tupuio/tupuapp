@@ -63,6 +63,10 @@ tables:
         type: string
       - name: startDate
         type: string
+      - name: goals
+        type: string
+      - name: notes
+        type: string
 
   - name: nextauth_providers
     columns:

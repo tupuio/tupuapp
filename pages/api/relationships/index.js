@@ -1,5 +1,5 @@
 import { getSession } from "next-auth/react";
-import { getXataHeaders, DB_PATH, getUser } from "../../services";
+import { getXataHeaders, DB_PATH, getUser } from "../../../services";
 
 export default async function handler(req, res) {
   const session = await getSession({ req });
@@ -33,7 +33,6 @@ async function handleGET(session, req, res) {
     body: JSON.stringify({
       columns: ["*", "mentee.*"],
       filter: {
-        id: "rec_caad4rdvg35c8ken8ml0",
         mentor: user.id,
       },
     }),
