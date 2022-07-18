@@ -1,0 +1,6 @@
+Hi [[firstName]]!
+
+We just want to let you know that your preferences were updated!
+
+Have a great day,
+Tupu app team
