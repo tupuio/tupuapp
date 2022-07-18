@@ -1,6 +1,7 @@
 import path from 'path';
 import fs from 'fs';
 import sendgridEmail from '@sendgrid/mail';
+import mjml2html from "mjml";
 
 if (process.env.SENDGRID_API_KEY) {
   sendgridEmail.setApiKey(process.env.SENDGRID_API_KEY);
@@ -43,7 +44,17 @@ const resolveTemplatesPath = () => {
   return path.resolve(process.cwd(), 'utils', 'email', 'templates');
 }
 
-const convertTemplateToTxt = (templateName) => {
+const loadHTMLTemplate = (templateName) => {
+  const templatesPath = resolveTemplatesPath();
+  const templateFilename = path.join(templatesPath, `${templateName}.mjml`);
+  const mjmlTemplateContent = fs.readFileSync(templateFilename, 'utf8');
+  const parsedTemplate = mjml2html(mjmlTemplateContent, {
+    filePath: templatesPath,
+  });
+  return parsedTemplate.html;
+}
+
+const loadTXTTemplate = (templateName) => {
   const templateFilename = path.join(resolveTemplatesPath(), `${templateName}.txt`);
   const txtTemplateContent = fs.readFileSync(templateFilename, 'utf8');
   return txtTemplateContent;
@@ -53,12 +64,14 @@ export const sendPreferencesUpdatedEmail = (recipient, firstName) => {
   const templateName = 'preferences-updated-email';
   const subject = "Your preferences were updated!";
   firstName = firstName.split(" ")[0];
-  const preferencesUpdatedEmailTxt = convertTemplateToTxt(templateName)
+  const preferencesUpdatedEmailHTML = loadHTMLTemplate(templateName)
+    .replace(/\[\[firstName\]\]/g, firstName);
+  const preferencesUpdatedEmailTxt = loadTXTTemplate(templateName)
     .replace(/\[\[firstName\]\]/g, firstName);
   const msg = { 
     recipient: recipient,
     subject: subject,
-    htmlBody: preferencesUpdatedEmailTxt.replace(/\n/g, "<br />"),
+    htmlBody: preferencesUpdatedEmailHTML,
     textBody: preferencesUpdatedEmailTxt,
   };
   sendEmail(msg);
