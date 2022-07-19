@@ -71,7 +71,8 @@ async function handlePUT(session, req, res) {
   }
 
   if (process.env.DEV_EMAIL_RECIPIENT) {
-    sendPreferencesUpdatedEmail(profile.email, profile.name);
+    const firstName = profile.name.split(" ")[0];
+    sendPreferencesUpdatedEmail(profile.email, firstName);
   }
 
   res.status(200).json({ message: "ok" });

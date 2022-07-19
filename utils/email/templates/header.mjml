@@ -1,0 +1,15 @@
+<mjml>
+  <mj-body>
+    <mj-section>
+      <mj-column width="100%">
+        <mj-image href="https://www.tupu.io" src="https://www.tupu.io/images/mentorship-map.svg"></mj-image>
+      </mj-column>
+    </mj-section>
+    <mj-section padding-top="30px">
+      <mj-column width="45%">
+        <mj-text align="center" font-weight="500" padding="0px" font-size="18px">[[mailTitle]]</mj-text>
+        <mj-divider border-width="1px" border-color="#616161"></mj-divider>
+      </mj-column>
+    </mj-section>    
+  </mj-body>
+</mjml>

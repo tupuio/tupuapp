@@ -58,20 +58,33 @@ const loadHTMLTemplate = (templateName) => {
   return parsedTemplate.html;
 }
 
+// load the HTML template for the notifications
+const tupuAppNotificationEmailHTML = () => loadHTMLTemplate('tupu-app-notification');
+
 const loadTXTTemplate = (templateName) => {
   const templateFilename = path.join(resolveTemplatesPath(), `${templateName}.txt`);
   const txtTemplateContent = fs.readFileSync(templateFilename, 'utf8');
   return txtTemplateContent;
 }
 
+const createNotificationHTMLEmail = (mailTitle, mailText) => {
+  const notificationBodyHTML = `<p>${mailText.replace(/\r?\n|\r/g, "<br />")}</p>`;
+  const notificationEmailHTML = tupuAppNotificationEmailHTML()
+    .replace(/\[\[NOTIFICATION_BODY\]\]/g, notificationBodyHTML)
+    .replace(/\[\[mailTitle\]\]/g, mailTitle);  
+  return notificationEmailHTML;
+}
+
 export const sendPreferencesUpdatedEmail = (recipient, firstName) => {
   const templateName = 'preferences-updated-email';
+  const mailTitle = "Tupu App Preferences";
   const subject = "Your preferences were updated!";
-  firstName = firstName.split(" ")[0];
-  const preferencesUpdatedEmailHTML = loadHTMLTemplate(templateName)
-    .replace(/\[\[firstName\]\]/g, firstName);
+  
   const preferencesUpdatedEmailTxt = loadTXTTemplate(templateName)
     .replace(/\[\[firstName\]\]/g, firstName);
+  
+  const preferencesUpdatedEmailHTML = createNotificationHTMLEmail(mailTitle, preferencesUpdatedEmailTxt);
+
   const msg = { 
     recipient: recipient,
     subject: subject,
