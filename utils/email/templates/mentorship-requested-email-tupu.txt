@@ -1,0 +1,16 @@
+Hi Tupu App Team!
+
+The mentee [[menteeFirstName]] requested a [[longOrShortTerm]] mentorship to the mentor [[mentorFirstName]].
+
+This is the message that the mentee [[menteeFirstName]] wrote in the request:
+
+---
+
+[[menteeMessageRequest]]
+
+---
+
+[[mentorFirstName]] will review the application and let [[menteeFirstName]] know as soon as possible if this is going to happen or not!
+
+Have a great day,
+Tupu App Robot

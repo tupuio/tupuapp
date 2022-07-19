@@ -3,6 +3,8 @@ import fs from 'fs';
 import sendgridEmail from '@sendgrid/mail';
 import mjml2html from "mjml";
 
+const TUPU_EMAIL = 'mentors@tupu.io'; // Change to your verified sender
+
 if (process.env.SENDGRID_API_KEY) {
   sendgridEmail.setApiKey(process.env.SENDGRID_API_KEY);
 }
@@ -67,30 +69,52 @@ const loadTXTTemplate = (templateName) => {
   return txtTemplateContent;
 }
 
-const createNotificationHTMLEmail = (mailTitle, mailText) => {
-  const notificationBodyHTML = `<p>${mailText.replace(/\r?\n|\r/g, "<br />")}</p>`;
+const createNotificationHTMLEmail = (emailTitle, emailText) => {
+  const notificationBodyHTML = `<p>${emailText.replace(/\r?\n|\r/g, "<br />")}</p>`;
   const notificationEmailHTML = tupuAppNotificationEmailHTML()
     .replace(/\[\[NOTIFICATION_BODY\]\]/g, notificationBodyHTML)
-    .replace(/\[\[mailTitle\]\]/g, mailTitle);  
+    .replace(/\[\[emailTitle\]\]/g, emailTitle);  
   return notificationEmailHTML;
 }
 
 export const sendPreferencesUpdatedEmail = (recipient, firstName) => {
   const templateName = 'preferences-updated-email';
-  const mailTitle = "Tupu App Preferences";
+  const emailTitle = "Tupu App Preferences";
   const subject = "Your preferences were updated!";
   
   const preferencesUpdatedEmailTxt = loadTXTTemplate(templateName)
     .replace(/\[\[firstName\]\]/g, firstName);
-  
-  const preferencesUpdatedEmailHTML = createNotificationHTMLEmail(mailTitle, preferencesUpdatedEmailTxt);
+  sendNotificationEmail(recipient, subject, emailTitle, preferencesUpdatedEmailTxt);  
+}
 
+const sendNotificationEmail = (recipient, subject, emailTitle, emailTxt) => {
+  const emailHTML = createNotificationHTMLEmail(emailTitle, emailTxt);
   const msg = { 
     recipient: recipient,
     subject: subject,
-    htmlBody: preferencesUpdatedEmailHTML,
-    textBody: preferencesUpdatedEmailTxt,
+    htmlBody: emailHTML,
+    textBody: emailTxt,
   };
   sendEmail(msg);
 }
 
+export const sendMentorshipRequestedEmail = (mentorshipRequest) => {
+  const { mentee, mentor, messageRequest, longTerm } = mentorshipRequest;
+  // mentee and mentor = { name: "", email: "" }
+  const templateName = 'mentorship-requested-email';
+  const emailTitle = "New Mentorship request!";
+  const subject = "New Mentorship request!";
+  const longOrShortTerm = (longTerm ? "long":"short") + " term";
+
+  const users = [["mentee", mentee.email], ["mentor", mentor.email], ["tupu", TUPU_EMAIL]];
+  for (const user of users) {
+    const [userType, userEmail] = user;
+    console.log("writing to", userEmail, "as", userType);
+    const emailTxt = loadTXTTemplate(`${templateName}-${userType}`)
+      .replace(/\[\[menteeFirstName\]\]/g, mentee.name)
+      .replace(/\[\[mentorFirstName\]\]/g, mentor.name)
+      .replace(/\[\[menteeMessageRequest\]\]/g, messageRequest)
+      .replace(/\[\[longOrShortTerm\]\]/g, longOrShortTerm);
+    sendNotificationEmail(userEmail, subject, emailTitle, emailTxt);
+  }
+}

@@ -7,7 +7,7 @@
     </mj-section>
     <mj-section padding-top="30px">
       <mj-column width="45%">
-        <mj-text align="center" font-weight="500" padding="0px" font-size="18px">[[mailTitle]]</mj-text>
+        <mj-text align="center" font-weight="500" padding="0px" font-size="18px">[[emailTitle]]</mj-text>
         <mj-divider border-width="1px" border-color="#616161"></mj-divider>
       </mj-column>
     </mj-section>    

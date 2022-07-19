@@ -1,6 +1,6 @@
 <mj-head>
   <mj-include path="./style.mjml" />
-  <mj-title>[[mailTitle]]</mj-title>
+  <mj-title>[[emailTitle]]</mj-title>
   <mj-font name="Roboto" href="https://fonts.googleapis.com/css?family=Roboto:300,500"></mj-font>
   <mj-attributes>
     <mj-all font-family="Roboto, Helvetica, sans-serif"></mj-all>
