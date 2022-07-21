@@ -27,3 +27,20 @@ export async function getUser(session) {
   const { records } = await resp.json();
   return records.length > 0 ? records[0] : null;
 }
+
+export async function getUserById(id) {
+  console.log(DB_PATH);
+  const resp = await fetch(`${DB_PATH}/tables/users/data/${id}`, {
+    method: "GET",
+    headers: {
+      ...(await getXataHeaders()),
+    },
+  });
+
+  if (resp.status > 299) {
+    throw new Error(`Error getting user: ${resp.status} ${await resp.text()}`);
+  }
+  const user = await resp.json();
+  console.log("getUserById: found user with id", user.id);  
+  return user;
+}
