@@ -16,7 +16,7 @@ const markdownTheme = {
   },
 };
 
-const RequestCard = ({ request }) => {
+const RequestCard = ({ request, handleContact }) => {
   console.log(request);
   return (
     <Stack
@@ -93,7 +93,10 @@ const RequestCard = ({ request }) => {
               <MenuItem>I&apos;m busy</MenuItem>
             </MenuList>
           </Menu>
-          <Button colorScheme={"blueButton"}>Contact</Button>
+          <Button
+            onClick={() => handleContact(request.mentee)}
+            colorScheme={"blueButton"}
+          >Contact</Button>
         </Stack>
       </Stack>
     </Stack>

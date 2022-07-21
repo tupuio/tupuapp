@@ -1,13 +1,23 @@
 import { Alert, AlertIcon } from "@chakra-ui/alert";
 import { SimpleGrid, Text } from "@chakra-ui/layout";
+import { useDisclosure } from "@chakra-ui/hooks";
+import { useState } from "react";
 import useSWR from "swr";
 import RequestCard from "./RequestCard";
+import MentorContactMenteeModal from "../MentorContactMenteeModal";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 const RequestsList = () => {
   const { data, error } = useSWR("/api/requests", fetcher);
-
+  const [contactedMentee, setContactedMentee] = useState(null);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  
+  const handleContactMentee = (mentee) => {
+    setContactedMentee(mentee);
+    onOpen();
+  };
+  
   if (error) {
     return (
       <Alert mt={10} status="error">
@@ -31,11 +41,22 @@ const RequestsList = () => {
   }
 
   return (
-    <SimpleGrid mt={10} columns={1} spacing={10}>
-      {data.records.map((request) => (
-        <RequestCard key={request.id} request={request} />
-      ))}
-    </SimpleGrid>
+    <>
+      <SimpleGrid mt={10} columns={1} spacing={10}>
+        {data.records.map((request) => (
+          <RequestCard
+            key={request.id}
+            request={request}
+            handleContact={handleContactMentee}
+          />
+        ))}
+      </SimpleGrid>
+      <MentorContactMenteeModal
+        mentee={contactedMentee}
+        isOpen={isOpen}
+        onClose={onClose}
+      />
+    </>    
   );
 };
 
