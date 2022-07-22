@@ -30,8 +30,6 @@ const RequestsList = () => {
       const updatedRequest = { ...request, status };
       const newDataRecords = data.records.map( req => request.id === req.id ? updatedRequest : req );
       const newData = { ...data, records: newDataRecords };
-      console.log('data',data);
-      console.log('new data', newData);
       mutate(newData);
   }
   
@@ -45,6 +43,7 @@ const RequestsList = () => {
       },
       body: JSON.stringify({
         requestId: request.id,
+        requestStatus: status,
       }),
     });
     if (resp.status > 299) {
@@ -80,13 +79,13 @@ const RequestsList = () => {
     changeMentorshipRequest(params);
   }
 
-  const rejectMentorshipRequest = async (request) => {
+  const rejectMentorshipRequest = async (request, status) => {
     const params = { 
       request,
       endpoint: "rejectMentorship",
       errorMsg: "Error rejecting mentorship request",
       successMsg: "The mentorship request was successfully rejected.",
-      status: RequestStatusEnum.Rejected,
+      status,
     };
     changeMentorshipRequest(params);
   }
@@ -107,12 +106,12 @@ const RequestsList = () => {
     handleMentorshipAction(params);
   };
     
-  const handleRejectMentorship = (request) => {
+  const handleRejectMentorship = (request, status) => {
     const params = { 
       title: "Reject mentorship",
       message: "Are you sure you want to reject this mentorship?",
       action: "Reject",
-      onConfirm: () => rejectMentorshipRequest(request)
+      onConfirm: () => rejectMentorshipRequest(request, status)
     };
     handleMentorshipAction(params);
   };    

@@ -8,6 +8,7 @@ import ChakraUIRenderer from "chakra-ui-markdown-renderer";
 import Icon from "@chakra-ui/icon";
 import { default as NextLink } from "next/link";
 import { FaTwitterSquare, FaLinkedin } from "react-icons/fa";
+import { RequestStatusEnum } from "../../types/dbTablesEnums";
 
 const markdownTheme = {
   p: (props) => {
@@ -17,7 +18,7 @@ const markdownTheme = {
 };
 
 const RequestCard = ({ request, handleContact, handleAccept, handleReject }) => {
-  console.log(request);
+  // console.log(request);
   return (
     <Stack
       borderWidth="1px"
@@ -95,8 +96,15 @@ const RequestCard = ({ request, handleContact, handleAccept, handleReject }) => 
               Reject
             </MenuButton>
             <MenuList>
-              <MenuItem>Not a good fit</MenuItem>
-              <MenuItem>I&apos;m busy</MenuItem>
+              <MenuItem 
+                onClick={() => handleReject(request, RequestStatusEnum.RejectedNoGoodFit)}
+              >Not a good fit</MenuItem>
+              <MenuItem 
+                onClick={() => handleReject(request, RequestStatusEnum.RejectedBusy)}
+              >I&apos;m busy</MenuItem>
+              <MenuItem 
+                onClick={() => handleReject(request, RequestStatusEnum.Rejected)}
+              >Prefer not to say</MenuItem>
             </MenuList>
           </Menu>
           <Button

@@ -1,6 +1,6 @@
 import { getSession } from "next-auth/react";
 import { getUser } from "../../services";
-import { updateRequest } from "../../services/requests";
+import { updateRequest, getRequestByQuery } from "../../services/requests";
 import { RequestStatusEnum } from "../../types/dbTablesEnums";
 
 export default async function handler(req, res) {
@@ -28,13 +28,40 @@ async function handlePOST(session, req, res) {
     return;
   }
 
+  const requestQuery = {
+    requestId: req.body.requestId,
+    mentorId: user.id,
+  };
+
+  // get the request data with this id and mentor
+  const request = await getRequestByQuery(requestQuery);
+  if (!request) {
+    res.status(500).json({ message: "Can't get request data" });
+    return;
+  }
+
   // set the request as rejected
   // FIXME: or delete it?
 
-  const responseRequest = await updateRequest({
-    id: req.body.requestId,
-    status: RequestStatusEnum.Rejected,
-  });
+  // just make sure that the request has a valid status
+  let requestStatus = RequestStatusEnum.Rejected;
+  switch (req.body.requestStatus) {
+    case RequestStatusEnum.Rejected:
+    case RequestStatusEnum.RejectedNoGoodFit:
+    case RequestStatusEnum.RejectedBusy:
+      requestStatus = req.body.requestStatus;
+      break;
+    default:
+      requestStatus = RequestStatusEnum.Rejected;
+  }
+  // remove xata column, update mentee/mentor as links, update new status
+  const { xata, ...updatedRequest } = { 
+    ...request,
+    mentee: request.mentee.id,
+    mentor: request.mentor.id,
+    status: requestStatus,
+  };
+  const responseRequest = await updateRequest(updatedRequest);
   if (!responseRequest) {
     res.status(500).json({ message: "Can't update request data" });
     return;
@@ -44,6 +71,6 @@ async function handlePOST(session, req, res) {
   // TODO:
   console.error("TODO: send email notification");
 
-  res.status(200).json(relationship);
+  res.status(200).json(responseRequest);
 
 }

@@ -12,7 +12,7 @@ const TupuAlertDialog = ({ isOpen, onClose, params, cancelRef, isLoading }) => {
   if (!params) {
     return (<></>)
   }
-  console.log(params);
+  // console.log(params);
   const {
     title, message, action, onConfirm
   } = params;
