@@ -16,7 +16,7 @@ const markdownTheme = {
   },
 };
 
-const RequestCard = ({ request, handleContact }) => {
+const RequestCard = ({ request, handleContact, handleAccept, handleReject }) => {
   console.log(request);
   return (
     <Stack
@@ -83,9 +83,15 @@ const RequestCard = ({ request, handleContact }) => {
           textAlign={"right"}
           justifyContent={"center"}
         >
-          <Button colorScheme={"greenButton"}>Accept</Button>
+          <Button
+            colorScheme={"greenButton"}
+            onClick={() => handleAccept(request)}
+          >Accept</Button>
           <Menu>
-            <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+            <MenuButton
+              as={Button}
+              rightIcon={<ChevronDownIcon />}
+            >
               Reject
             </MenuButton>
             <MenuList>
