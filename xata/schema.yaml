@@ -71,9 +71,17 @@ tables:
         type: link
         link:
           table: users
+      - name: message
+        type: text
       - name: status
         type: string
       - name: startDate
+        type: string
+      - name: endDate
+        type: string
+      - name: goals
+        type: string
+      - name: notes
         type: string
 
   - name: nextauth_providers
