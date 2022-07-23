@@ -10,6 +10,22 @@ export default async function handler(req, res) {
     return;
   }
 
+  // this does not work:
+  // $includesAll: [{ $contains: "mentor" }, { $contains: "test" }],
+
+  const allFilters = [
+    {$exists: "roles"},
+    {roles: {
+      $includes: "mentor",
+    }},
+  ];
+  if (
+    process.env.NODE_ENV === "development" ||
+    process.env.NEXT_PUBLIC_DEV_LOGIN === "true"
+  ) {
+    allFilters.push({roles: { $includes: "test", }});
+  }
+  
   const resp = await fetch(`${DB_PATH}/tables/users/query`, {
     method: "POST",
     headers: {
@@ -17,9 +33,7 @@ export default async function handler(req, res) {
     },
     body: JSON.stringify({
       filter: {
-        roles: {
-          $includesAny: "mentor",
-        },
+        $all: allFilters
       },
     }),
   });

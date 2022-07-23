@@ -39,21 +39,28 @@ if (
           return {
             name: "Tudor Golubenco",
             email: "tudor.g@gmail.com",
-            roles: ["mentor", "mentee", "admin"],
+            roles: ["mentor", "mentee", "admin", "test"],
           };
         } else if (credentials.username === "madalina") {
           return {
             name: "Madalina",
             email: "madalina@tupu.io",
-            roles: ["mentor", "mentee", "admin"],
+            roles: ["mentor", "mentee", "admin", "test"],
           };
         } else if (credentials.username === "test") {
           return {
             name: "Test",
             email: "test@tupu.io",
-            roles: ["mentor", "mentee", "admin"],
+            roles: ["mentor", "mentee", "admin", "test"],
+          };
+        } else if (credentials.username === "lorepirri") {
+          return {
+            name: "Lorenzo",
+            email: "lorepirri+tupu@gmail.com",
+            roles: ["mentor", "mentee", "admin", "test"],
           };
         }
+        
         return null;
       },
     })
