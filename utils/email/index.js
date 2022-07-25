@@ -3,8 +3,6 @@ import fs from 'fs';
 import sendgridEmail from '@sendgrid/mail';
 import mjml2html from "mjml";
 
-const TUPU_EMAIL = 'mentors@tupu.io'; // Change to your verified sender
-
 if (process.env.SENDGRID_API_KEY) {
   sendgridEmail.setApiKey(process.env.SENDGRID_API_KEY);
 }
