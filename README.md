@@ -55,6 +55,8 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 1. We use SendGrid in order to send notification emails. This requires a SendGrid API's key. Please, create one and add it to your `.env.local` file under `SENDGRID_API_KEY`. 
 
+1. Set a `SENDGRID_EMAIL_VERIFIED_SENDER` in your `.env.local` with a SendGrid verified sender (for the same API key).
+
 1. In order to not spam real people with notifications while developing, set `DEV_EMAIL_RECIPIENT` in `.env.local` with your email to receive all the notification emails to your inbox while developing.
 
 1. After filling in the file `.env.local`,if you use VSCode, you could open a new terminal (`Terminal` -> `New Terminal` or simply `` Ctrl+Shift+` ``), or use again the previous terminal, and start the the development server with:
