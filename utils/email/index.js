@@ -13,13 +13,17 @@ function sendEmail({recipient, subject, htmlBody, textBody}) {
     console.error('SendGrid error: SENDGRID_API_KEY is not set');
     return;
   }
-  const from = 'mentors@tupu.io'; // Change to your verified sender
+  if (!process.env.SENDGRID_EMAIL_VERIFIED_SENDER) {
+    console.error('SendGrid error: SENDGRID_EMAIL_VERIFIED_SENDER is not set');
+    return;
+  }  
+  const from = process.env.SENDGRID_EMAIL_VERIFIED_SENDER;
   recipient = process.env.DEV_EMAIL_RECIPIENT || recipient;
   subject = buildSubjectLine(subject);
   const msg = {
     to: recipient,
-    from: process.env.DEV_EMAIL_RECIPIENT || from, 
-    subject: subject,
+    from, 
+    subject,
     text: textBody,
     html: htmlBody,
   };
