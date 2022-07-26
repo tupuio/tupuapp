@@ -1,5 +1,5 @@
 import { getSession } from "next-auth/react";
-import { getUserById, getUser } from "../../services";
+import { getRequestById, getUser } from "../../services";
 
 export default async function handler(req, res) {
   const session = await getSession({ req });
@@ -25,19 +25,27 @@ async function handlePOST(session, req, res) {
     res.status(500).json({ message: "Can't get user data" });
     return;
   }
+  const { requestId, message } = req.body;
 
-  const mentee = await getUserById(req.body.menteeId);
-  if (!mentee) {
-    res.status(500).json({ message: "Can't get mentee data" });
+  const request = await getRequestById(requestId);
+  if (!request) {
+    res.status(500).json({ message: "Can't get request data" });
     return;
   }
-
-  const message = req.body.message;
+  const { mentee, mentor } = request;
+  // console.log(request);
+  // the mentor in the request must be the same as this current user
+  if (mentor.id !== user.id) {
+    res.status(500).json({ message: "Can't get correct request data" });
+    return;
+  }
 
   // TODO: send email to mentee, replyto mentor's email
   console.error("TODO:");
   console.log(`recipient: ${mentee.email}`);
-  console.log(`from: ${user.email}`);
+  console.log(`from: verified tupu email`);
+  console.log(`reply to: ${mentor.email}`);
+  console.log(`message: ${message}`);
 
   {
     res.status(500).json({ message: "TODO: send email to mentee, coming from mentor" });

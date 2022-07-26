@@ -10,11 +10,11 @@ const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 const RequestsList = () => {
   const { data, error } = useSWR("/api/requests", fetcher);
-  const [contactedMentee, setContactedMentee] = useState(null);
+  const [contactedMenteeRequest, setContactedMenteeRequest] = useState(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
   
-  const handleContactMentee = (mentee) => {
-    setContactedMentee(mentee);
+  const handleContactMentee = (request) => {
+    setContactedMenteeRequest(request);
     onOpen();
   };
   
@@ -52,7 +52,7 @@ const RequestsList = () => {
         ))}
       </SimpleGrid>
       <MentorContactMenteeModal
-        mentee={contactedMentee}
+        request={contactedMenteeRequest}
         isOpen={isOpen}
         onClose={onClose}
       />

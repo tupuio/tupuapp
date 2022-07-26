@@ -20,12 +20,12 @@ import { Checkbox } from '@chakra-ui/react'
 import { useToast } from "@chakra-ui/toast";
 import { useForm } from "react-hook-form";
 
-const MentorContactMenteeModal = ({ mentee, isOpen, onClose }) => {
+const MentorContactMenteeModal = ({ request, isOpen, onClose }) => {
   const toast = useToast();
   const { register, handleSubmit } = useForm({
     defaultValues: {
       message:
-        `Hi there!\n\nI've seen your mentorship request and I'd like to ask you a couple of questions!\n\n\u003cinsert what you'd like to ask, clarify\u003e \n\nI hope to hear from you soon!`,
+      `Hi there!\n\nI've seen your mentorship request and I'd like to ask you a couple of questions!\n\n\u003cinsert what you'd like to ask, clarify\u003e \n\nI hope to hear from you soon!`,
     },
   });
   const onSubmit = async (data) => {
@@ -35,7 +35,7 @@ const MentorContactMenteeModal = ({ mentee, isOpen, onClose }) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        menteeId: mentee.id,
+        requestId: request.id,
         message: data.message,
       }),
     });
@@ -51,13 +51,14 @@ const MentorContactMenteeModal = ({ mentee, isOpen, onClose }) => {
       onClose();
     }
   };
-
+  
   if (!isOpen) {
     return <></>;
   }
-  if (!mentee) {
+  if (!request) {
     return <>No mentee</>;
   }
+  const { mentee } = request;
   
   return (
     <Modal size="xl" isOpen={isOpen} onClose={onClose}>

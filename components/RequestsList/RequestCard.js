@@ -94,7 +94,7 @@ const RequestCard = ({ request, handleContact }) => {
             </MenuList>
           </Menu>
           <Button
-            onClick={() => handleContact(request.mentee)}
+            onClick={() => handleContact(request)}
             colorScheme={"blueButton"}
           >Contact</Button>
         </Stack>
