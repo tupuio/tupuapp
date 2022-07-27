@@ -1,9 +1,5 @@
-import { useDisclosure } from "@chakra-ui/hooks";
-import Icon from "@chakra-ui/icon";
-import { Input, InputGroup, InputLeftElement } from "@chakra-ui/input";
-import { SimpleGrid, Stack } from "@chakra-ui/layout";
-import { useState } from "react";
-import { FiSearch } from "react-icons/fi";
+import { Alert, AlertIcon } from "@chakra-ui/alert";
+import { SimpleGrid, Text } from "@chakra-ui/layout";
 import useSWR from "swr";
 import MenteeCard from "./MenteeCard";
 
@@ -11,65 +7,38 @@ const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 const MenteesList = () => {
   const { data, error } = useSWR("/api/mentees", fetcher);
-  const [query, setQuery] = useState("");
-  // const [requestedMentor, setRequestedMentor] = useState(null);
-  const { isOpen, onOpen, onClose } = useDisclosure();
-
-  const handleSearch = (ev) => {
-    setQuery(ev.target.value);
-  };
-
-  const handleRequestMentee = (mentee) => {
-    setRequestedMentee(mentee);
-    onOpen();
-  };
-
   if (error) {
-    return <div>failed to load</div>;
+    return (
+      <Alert mt={10} status="error">
+        <AlertIcon />
+        Error retrieving the mentees list. {error.toString()}
+      </Alert>
+    );
   }
 
   if (!data) {
     return <div>Loading..</div>;
   }
 
-  let filtered = data.records;
-  if (query !== "") {
-    filtered = data.records.filter((mentee) => {
-      const lowerQuery = query.toLowerCase();
-      return (
-        mentee.name.toLowerCase().includes(lowerQuery) ||
-        mentee.title?.toLowerCase().includes(lowerQuery) ||
-        mentee.biography?.toLowerCase().includes(lowerQuery)
-      );
-    });
-  }
-  if (!filtered) {
-    filtered = [];
+  if (data.records.length == 0) {
+    return (
+      <Text mt={10} fontWeight={700}>
+        You don&apos;t have any active mentorship going on. If you did not request any mentor for mentorship, please do so. We will notify you when
+        a mentor reply to your application.
+      </Text>
+    );
   }
 
   return (
     <>
-      <Stack spacing={4}>
-        <InputGroup maxWidth="540px">
-          <InputLeftElement pointerEvents="none">
-            <Icon as={FiSearch} />
-          </InputLeftElement>
-          <Input
-            background="white"
-            placeholder="Search"
-            onChange={handleSearch}
-          />
-        </InputGroup>
-        <SimpleGrid minChildWidth="540px" spacing="24px">
-          {filtered.map((mentee) => (
-            <MenteeCard
-              key={mentee.id}
-              mentee={mentee}
-              handleRequest={handleRequestMentee}
-            />
-          ))}
-        </SimpleGrid>
-      </Stack>
+      <Text>
+        These are your current mentees. You committed to mentor them. Go to details to manage the mentorship.
+      </Text>
+      <SimpleGrid mt={10} columns={1} spacing={10}>
+        {data.records.map((mentorship) => (
+          <MenteeCard key={mentorship.id} mentorship={mentorship} />
+        ))}
+      </SimpleGrid> 
     </>
   );
 };

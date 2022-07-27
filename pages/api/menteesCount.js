@@ -1,5 +1,5 @@
 import { getSession } from "next-auth/react";
-import { getXataHeaders, DB_PATH, getUser } from "../../../services";
+import { getXataHeaders, DB_PATH, getUser } from "../../services";
 
 export default async function handler(req, res) {
   const session = await getSession({ req });
@@ -31,11 +31,18 @@ async function handleGET(session, req, res) {
       ...(await getXataHeaders()),
     },
     body: JSON.stringify({
-      columns: ["*", "mentee.*"],
+      columns: ["*"],
       filter: {
         mentor: user.id,
       },
     }),
   });
-  res.status(resp.status).json(await resp.json());
+
+  if (resp.status > 299) {
+    res.status(resp.status).json(await resp.json());
+    return;
+  }
+
+  const { records } = await resp.json();
+  res.status(200).json({ count: records.length });
 }
