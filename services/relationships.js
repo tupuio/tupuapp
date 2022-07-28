@@ -21,7 +21,5 @@ export async function createRelationship(request, res) {
     throw new Error(`Error creating relationship from request <${request.id}>: ${resp.status} ${await resp.text()}`);
   }
   const relationshipResponse = await resp.json();
-  // relationshipResponse = { id: 'rec_cbd9furdi4p4jb0ing0g', xata: { version: 0 } }
-  // console.log('createRelationship relationship', relationshipResponse);
   return relationshipResponse;
 }
