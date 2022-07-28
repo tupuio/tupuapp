@@ -1,5 +1,6 @@
 import { getSession } from "next-auth/react";
 import { getXataHeaders, DB_PATH } from "../../services";
+import { sendPreferencesUpdatedEmail } from "../../utils/email";
 
 async function getByEmail(email) {
   const resp = await fetch(`${DB_PATH}/tables/users/query`, {
@@ -67,6 +68,10 @@ async function handlePUT(session, req, res) {
   if (response.status > 299) {
     res.status(response.status).json(await response.json());
     return;
+  }
+
+  if (process.env.DEV_EMAIL_RECIPIENT) {
+    sendPreferencesUpdatedEmail(profile.email, profile.name);
   }
 
   res.status(200).json({ message: "ok" });
