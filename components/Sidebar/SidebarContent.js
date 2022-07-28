@@ -1,5 +1,4 @@
 import { CloseButton } from "@chakra-ui/close-button";
-import { useColorModeValue } from "@chakra-ui/color-mode";
 import { Box, Flex, Text } from "@chakra-ui/layout";
 import { Tag } from "@chakra-ui/tag";
 import {
@@ -20,9 +19,11 @@ const SidebarContent = ({ onClose, mode, ...rest }) => {
   const { mentorshipsData } = useSWR("/api/mentorshipsCount", fetcher);
   const { requestsData } = useSWR("/api/requestsCount", fetcher);
   const { applicationsData } = useSWR("/api/applicationsCount", fetcher);
+  const { menteesData } = useSWR("/api/menteesCount", fetcher);
   const mentorshipsCount = mentorshipsData?.count || 0;
   const requestsCount = requestsData?.count || 0;
   const applicationsCount = applicationsData?.count || 0;
+  const menteesCount = menteesData?.count || 0;
   const MentorLinkItems = [
     { name: "Home", icon: FiHome, href: "/" },
     { name: "Your profile", icon: FiUser, href: "/profile" },
@@ -33,7 +34,7 @@ const SidebarContent = ({ onClose, mode, ...rest }) => {
       href: "/requests",
       tag: () => requestsCount,
     },
-    { name: "Mentees", icon: FiUsers, href: "/mentees" },
+    { name: "Mentees", icon: FiUsers, href: "/mentees", tag: () => menteesCount },
     { name: "Settings", icon: FiSettings, href: "/settings" },
   ];
 
