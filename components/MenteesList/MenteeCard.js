@@ -7,12 +7,6 @@ import Icon from "@chakra-ui/icon";
 import { default as NextLink } from "next/link";
 import { FaTwitterSquare, FaLinkedin } from "react-icons/fa";
 
-// function trimString(string, length) {
-//   return string.length > length
-//     ? string.substring(0, length - 3) + "..."
-//     : string;
-// }
-
 
 const markdownTheme = {
   p: (props) => {
