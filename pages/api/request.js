@@ -1,6 +1,7 @@
 import { getSession } from "next-auth/react";
 import { getUser } from "../../services";
 import { getXataHeaders, DB_PATH } from "../../services";
+import { RequestStatusEnum } from "../../types/dbTablesEnums";
 
 export default async function handler(req, res) {
   const session = await getSession({ req });
@@ -31,6 +32,8 @@ async function handlePOST(session, req, res) {
     mentor: req.body.mentorId,
     mentee: user.id,
     message: req.body.message,
+    status: RequestStatusEnum.Pending,
+    lastUpdateDate: (new Date()).toJSON(), /* UTC */
   };
 
   const resp = await fetch(`${DB_PATH}/tables/requests/data`, {
