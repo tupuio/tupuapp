@@ -17,8 +17,10 @@ import NavItem from "./NavItem";
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 const SidebarContent = ({ onClose, mode, ...rest }) => {
+  const { mentorshipsData } = useSWR("/api/mentorshipsCount", fetcher);
   const { requestsData } = useSWR("/api/requestsCount", fetcher);
   const { applicationsData } = useSWR("/api/applicationsCount", fetcher);
+  const mentorshipsCount = mentorshipsData?.count || 0;
   const requestsCount = requestsData?.count || 0;
   const applicationsCount = applicationsData?.count || 0;
   const MentorLinkItems = [
@@ -40,6 +42,7 @@ const SidebarContent = ({ onClose, mode, ...rest }) => {
     { name: "Your profile", icon: FiUser, href: "/profile" },
     { name: "Find a mentor", icon: FiSearch, href: "/mentors" },
     { name: "Applications", icon: FiInbox, href: "/applications", tag: () => applicationsCount, },
+    { name: "Mentorships", icon: FiUsers, href: "/mentorships", tag: () => mentorshipsCount, },
     { name: "Settings", icon: FiSettings, href: "/settings" },
   ];
 
