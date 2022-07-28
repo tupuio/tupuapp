@@ -1,5 +1,6 @@
 import { getSession } from "next-auth/react";
 import { getXataHeaders, DB_PATH, getUser } from "../../../services";
+import { RelationshipStatusEnum } from "../../../types/dbTablesEnums";
 
 export default async function handler(req, res) {
   const session = await getSession({ req });
@@ -34,6 +35,7 @@ async function handleGET(session, req, res) {
       columns: ["*", "mentee.*"],
       filter: {
         mentor: user.id,
+        status: RelationshipStatusEnum.Started,        
       },
     }),
   });
