@@ -1,7 +1,7 @@
 import { getSession } from "next-auth/react";
 import { getUser } from "../../services";
 import { updateRequest, getRequestByQuery } from "../../services/requests";
-import { RequestStatusEnum } from "../../types/dbTablesEnums";
+import { IsRequestStatusValid } from "../../types/dbTablesEnums";
 
 export default async function handler(req, res) {
   const session = await getSession({ req });
@@ -43,17 +43,13 @@ async function handlePOST(session, req, res) {
   // set the request as rejected
   // FIXME: or delete it?
 
-  // just make sure that the request has a valid status
-  let requestStatus = RequestStatusEnum.Rejected;
-  switch (req.body.requestStatus) {
-    case RequestStatusEnum.Rejected:
-    case RequestStatusEnum.RejectedNoGoodFit:
-    case RequestStatusEnum.RejectedBusy:
-      requestStatus = req.body.requestStatus;
-      break;
-    default:
-      requestStatus = RequestStatusEnum.Rejected;
+  // just make sure that the request status is valid
+  const requestStatus = req.body.requestStatus;
+  if (!IsRequestStatusValid(requestStatus)) {
+    res.status(400).json({ message: "Invalid request status" });
+    return;
   }
+
   // remove xata column, update mentee/mentor as links, update new status
   const { xata, ...updatedRequest } = { 
     ...request,
