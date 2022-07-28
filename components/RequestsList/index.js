@@ -129,7 +129,7 @@ const RequestsList = () => {
     return <div><br />Loading..</div>;
   }
 
-  let requestsList = data.records.filter((request) => request.status === RequestStatusEnum.Pending);
+  let requestsList = data.records;
   
   if (requestsList.length == 0) {
     return (
