@@ -1,0 +1,37 @@
+<mjml>
+  <mj-body>
+    <mj-section>
+      <mj-column width="100%">
+        <mj-divider border-width="1px" border-color="#616161"></mj-divider>
+        <mj-text align="center">Tupu is a non-profit initiative to offer free mentorship to women, people of color, and LGBT in the tech industry.</mj-text>
+        <mj-divider border-width="1px" border-color="#616161"></mj-divider>
+      </mj-column>
+    </mj-section>  
+    <mj-section>
+      <mj-column width="65%">
+        <mj-image align="left" width="80px" href="https://www.tupu.io" src="https://www.tupu.io/images/logo-2.svg"></mj-image>
+      </mj-column>
+      <mj-column width="35%">
+        <mj-table>
+          <tr style="list-style: none;line-height:1">
+            <td> <a href="#">
+                <img width="25" src="https://cdn.recast.ai/newsletter/twitter.png" />
+              </a> </td>
+            <td> <a href="#">
+                <img width="25" src="https://cdn.recast.ai/newsletter/facebook.png" />
+              </a> </td>
+            <td> <a href="#">
+                <img width="25" src="https://cdn.recast.ai/newsletter/medium.png" />
+              </a> </td>
+            <td> <a href="#">
+                <img width="25" src="https://cdn.recast.ai/newsletter/youtube.png" />
+              </a> </td>
+            <td> <a href="#">
+                <img width="25" src="https://cdn.recast.ai/newsletter/google%2B.png" />
+              </a> </td>
+          </tr>
+        </mj-table>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>
