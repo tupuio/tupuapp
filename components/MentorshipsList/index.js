@@ -23,8 +23,8 @@ const MentorshipsList = () => {
   if (data.records.length == 0) {
     return (
       <Text mt={10} fontWeight={700}>
-        You don&apos;t have any active mentorship going on. We will notify you when
-        someone requests you as a mentor.
+        You don&apos;t have any active mentorship going on. If you did not request any mentor for mentorship, please do so. We will notify you when
+        a mentor reply to your application.
       </Text>
     );
   }
@@ -32,7 +32,7 @@ const MentorshipsList = () => {
   return (
     <>
       <Text>
-        These are your active mentorships. You can go to their details, and from there you can update them, and eventually terminate them.
+        These are your active mentorships. Go to their details, and from there you can book a call with the mentor, and manage the mentorship.
       </Text>
       <SimpleGrid mt={10} columns={1} spacing={10}>
         {data.records.map((mentorship) => (
