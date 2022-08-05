@@ -55,9 +55,11 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 1. We use SendGrid in order to send notification emails. 
 Create a free acount on https://sendgrid.com/go/email-smtp-service-signup-sales-1. 
-Afterwards create a SendGrid API's key and add it to your `.env.local` file under `SENDGRID_API_KEY`. 
+Afterwards create a SendGrid API's key https://docs.sendgrid.com/ui/account-and-settings/api-keys#creating-an-api-key
+and add it to your `.env.local` file under `SENDGRID_API_KEY`. 
 
 1. Set a `SENDGRID_EMAIL_VERIFIED_SENDER` in your `.env.local` with a SendGrid verified sender (for the same API key).
+https://docs.sendgrid.com/ui/sending-email/sender-verification
 
 1. In order to not spam real people with notifications while developing, set `DEV_EMAIL_RECIPIENT` in `.env.local` with your email to receive all the notification emails to your inbox while developing.
 
