@@ -7,6 +7,7 @@ import {
   sendMentorContactMenteeEmail,
   sendMentorMentorshipClosedEmail,
   sendMentorshipRequestAcceptedEmail,
+  sendMentorshipRequestCancelledEmail,
   sendMentorshipRequestRejectedEmail
 } from "../../utils/email";
 import { RequestStatusEnum } from "../../types/dbTablesEnums";
@@ -64,7 +65,7 @@ async function handleGET(session, req, res) {
     // });
 
     // sendMentorshipRequestAcceptedEmail({ mentee, mentor, longTerm: false });
-
+    // sendMentorshipRequestCancelledEmail({ mentee, mentor, longTerm: false });
     // sendMentorshipRequestRejectedEmail({ mentee, mentor, longTerm: true, requestStatus: RequestStatusEnum.Rejected });
     // sendMentorshipRequestRejectedEmail({ mentee, mentor, longTerm: true, requestStatus: RequestStatusEnum.RejectedBusy });
     // sendMentorshipRequestRejectedEmail({ mentee, mentor, longTerm: false, requestStatus: RequestStatusEnum.RejectedNoGoodFit });

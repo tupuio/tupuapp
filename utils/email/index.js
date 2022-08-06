@@ -206,6 +206,22 @@ export const sendMentorshipRequestAcceptedEmail = ({ mentee, mentor, longTerm })
   sendNotificationEmailToUsers(params);
 }
 
+export const sendMentorshipRequestCancelledEmail = ({ mentee, mentor, longTerm }) => {
+  // mentee and mentor = { name: "", email: "" }
+  const params = {
+    mentee, 
+    mentor,
+    templateName: 'mentorship-request-cancelled-email',
+    subject: "Mentorship request cancelled!",
+    fillInFieldsFn: (txtTemplate) => {
+      return txtTemplate
+        .replace(/\[\[menteeName\]\]/g, mentee.name)
+        .replace(/\[\[mentorName\]\]/g, mentor.name)
+        .replace(/\[\[longOrShortTerm\]\]/g, buildLongOrShortTermLabel(longTerm));
+    }
+  };
+  sendNotificationEmailToUsers(params);
+}
 export const sendMentorshipRequestRejectedEmail = ({ mentee, mentor, longTerm, requestStatus }) => {
   // mentee and mentor = { name: "", email: "" }
   const params = {
