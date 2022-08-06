@@ -1,0 +1,10 @@
+Hi [[menteeName]],
+
+You changed your mind and cancelled the request for a [[longOrShortTerm]] mentorship with the mentor [[mentorName]].
+
+This is ok, but should not happen often!
+
+Mentors offer their time on a volunteer basis and we'd like to lower their wasted time on the platform.
+
+Have a great day,
+Tupu App Team

@@ -1,8 +1,8 @@
-Hi [[mentorFirstName]]!
+Hi [[mentorName]]!
 
-[[menteeFirstName]] has requested you for a [[longOrShortTerm]] mentorship.
+[[menteeName]] has requested you for a [[longOrShortTerm]] mentorship.
 
-This is the message that [[menteeFirstName]] wrote for you in the request:
+This is the message that [[menteeName]] wrote for you in the request:
 
 ---
 
@@ -10,7 +10,7 @@ This is the message that [[menteeFirstName]] wrote for you in the request:
 
 ---
 
-Please, go to your dashboard of the Tupu App, review this application and let [[menteeFirstName]] know as soon as possible if this is going to happen or not!
+Please, go to your dashboard of the Tupu App, review this application and let [[menteeName]] know as soon as possible if this is going to happen or not!
 
 Have a great day,
 Tupu App Team

@@ -1,0 +1,12 @@
+Hi [[menteeName]],
+
+Unfortunately the mentor [[mentorName]] rejected your request for a [[longOrShortTerm]] mentorship.
+
+This is unfortunate but do not give up!
+
+[[reason]]
+
+Go to the Find a Mentor page and send a request to another mentor that could be a good fit!
+
+Have a great day,
+Tupu App Team

@@ -1,0 +1,16 @@
+Hi Tupu App Team!
+
+The mentor [[mentorName]] sent this message to the mentee [[menteeName]]:
+
+---
+
+[[mentorMessage]]
+
+---
+
+[[menteeName]] will be able to reply directly to [[mentorName]]'s email.
+
+You won't receive further information about their communication.
+
+Have a great day,
+Tupu App Team

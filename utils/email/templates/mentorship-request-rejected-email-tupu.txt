@@ -1,0 +1,10 @@
+Hi Tupu App Team,
+
+It was not a match.
+
+The mentor [[mentorName]] rejected the request of the mentee [[menteeName]] for a [[longOrShortTerm]] mentorship.
+
+[[reason]]
+
+Have a great day,
+Tupu App Team

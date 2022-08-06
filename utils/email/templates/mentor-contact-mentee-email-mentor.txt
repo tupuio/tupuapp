@@ -1,0 +1,14 @@
+Hi [[mentorName]]!
+
+You have sent this message to [[menteeName]]:
+
+---
+
+[[mentorMessage]]
+
+---
+
+[[menteeName]] will reply soon directly to your email.
+
+Have a great day,
+Tupu App Team

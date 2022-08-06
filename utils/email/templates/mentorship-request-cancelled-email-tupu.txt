@@ -1,0 +1,8 @@
+Hi Tupu App Team,
+
+The mentee [[menteeName]] cancelled the request for a [[longOrShortTerm]] mentorship with the mentor [[mentorName]].
+
+This is ok, but should not happen many time! Keep an eye on these kind of episodes.
+
+Have a great day,
+Tupu App Team

@@ -1,0 +1,10 @@
+Hi Tupu App Team!
+
+The mentor [[mentorName]] accepted the request of the mentee [[menteeName]] for a [[longOrShortTerm]] mentorship!
+
+This is great news!
+
+[[menteeName]] will book a slot for a call with [[mentorName]] as soon as possible.
+
+Have a great day,
+Tupu App Team
