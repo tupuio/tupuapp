@@ -37,8 +37,8 @@ async function handleGET(session, req, res) {
     sendPreferencesUpdatedEmail(profile.email, "Lorenzo")
 
     const mentorshipRequest = { 
-      mentee: { name: "Mentee", email: "lorepirri+mentee@gmail.com" }, 
-      mentor: { name: "Mentor", email: "lorepirri+mentor@gmail.com" }, 
+      mentee: { name: "Mentee", email: process.env.DEV_EMAIL_RECIPIENT }, 
+      mentor: { name: "Mentor", email: process.env.DEV_EMAIL_RECIPIENT }, 
       messageRequest: "Hi! I would like to talk to you!", 
       longTerm: true
     };  
