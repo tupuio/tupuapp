@@ -43,7 +43,7 @@ async function handlePUT(session, req, res) {
     },
     body: JSON.stringify({
       name: profile.name,
-      email: profile.email,
+      email: data.email, // email is readonly, overwrite what comes from the form #57
       title: profile.title,
       company: profile.company,
       seniority: profile.seniority,

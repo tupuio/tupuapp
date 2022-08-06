@@ -127,6 +127,8 @@ export const ProfileEditor = ({ profile, setEditMode, mutateProfile }) => {
             <FormLabel htmlFor="email">Email</FormLabel>
             <Input
               {...register("email")}
+              isReadOnly="true"
+              isDisabled="true"
               id="email"
               type="email"
             />
