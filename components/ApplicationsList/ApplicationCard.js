@@ -14,8 +14,7 @@ const markdownTheme = {
   },
 };
 
-const ApplicationCard = ({ application }) => {
-  console.log('Application', application);
+const ApplicationCard = ({ application, handleCancel }) => {
   return (
     <Stack
       borderWidth="1px"
@@ -80,7 +79,10 @@ const ApplicationCard = ({ application }) => {
           textAlign={"right"}
           justifyContent={"center"}
         >
-          <Button colorScheme={"grayButton"}>Cancel application</Button>
+          <Button
+            onClick={() => handleCancel(application)} 
+            colorScheme={"grayButton"}
+          >Cancel application</Button>
         </Stack>
       </Stack>
     </Stack>

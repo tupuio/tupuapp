@@ -5,6 +5,7 @@ export const RequestStatusEnum = Object.freeze({
   RejectedNoGoodFit: "rejected.nogoodfit",
   Accepted: "accepted",
   Expired: "expired",
+  Cancelled: "cancelled",
 });
 export const IsRequestStatusValid = (status) => Object.values(RequestStatusEnum).includes(status);
 
