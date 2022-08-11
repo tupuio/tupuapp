@@ -20,7 +20,7 @@ const ApplicationsList = () => {
   if (!data) {
     return <div>Loading..</div>;
   }
-
+ console.log(data);
   if (data.records.length == 0) {
     return (
       <Text mt={10} fontWeight={700}>
