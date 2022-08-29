@@ -45,8 +45,8 @@ async function handleGET(session, req, res) {
     // careful, the free quota is 100/day
     sendPreferencesUpdatedEmail(profile.email, "Lorenzo")
 
-    const mentee = { name: "Mentee", email: process.env.DEV_EMAIL_RECIPIENT };
-    const mentor = { name: "Mentor", email: process.env.DEV_EMAIL_RECIPIENT };
+    // const mentee = { name: "Mentee", email: process.env.DEV_EMAIL_RECIPIENT };
+    // const mentor = { name: "Mentor", email: process.env.DEV_EMAIL_RECIPIENT };
 
     // sendMenteeMentorshipClosedEmail({ 
     //   mentee, 
