@@ -2,8 +2,15 @@ import { getSession } from "next-auth/react";
 import { getXataHeaders, DB_PATH } from "../../services";
 import { 
   sendPreferencesUpdatedEmail,
-  sendMentorshipRequestedEmail
+  sendMentorshipRequestedEmail,
+  sendMenteeMentorshipClosedEmail,
+  sendMentorContactMenteeEmail,
+  sendMentorMentorshipClosedEmail,
+  sendMentorshipRequestAcceptedEmail,
+  sendMentorshipRequestCancelledEmail,
+  sendMentorshipRequestRejectedEmail
 } from "../../utils/email";
+import { RequestStatusEnum } from "../../types/dbTablesEnums";
 
 async function getByEmail(email) {
   const resp = await fetch(`${DB_PATH}/tables/users/query`, {
@@ -34,15 +41,42 @@ async function handleGET(session, req, res) {
   }
 
   if (process.env.DEV_EMAIL_RECIPIENT) {
+    
+    // careful, the free quota is 100/day
     sendPreferencesUpdatedEmail(profile.email, "Lorenzo")
 
-    const mentorshipRequest = { 
-      mentee: { name: "Mentee", email: "lorepirri+mentee@gmail.com" }, 
-      mentor: { name: "Mentor", email: "lorepirri+mentor@gmail.com" }, 
-      messageRequest: "Hi! I would like to talk to you!", 
-      longTerm: true
-    };  
-    sendMentorshipRequestedEmail(mentorshipRequest);
+    const mentee = { name: "Mentee", email: process.env.DEV_EMAIL_RECIPIENT };
+    const mentor = { name: "Mentor", email: process.env.DEV_EMAIL_RECIPIENT };
+
+    // sendMenteeMentorshipClosedEmail({ 
+    //   mentee, 
+    //   mentor, 
+    //   menteeFeedback: "the mentee feedback!", 
+    //   tupuFeedback: "the feedback for tupu" 
+    // });
+
+    // sendMentorContactMenteeEmail({ mentee, mentor, mentorMessage: "this is a message for you mentee!" });
+    
+    // sendMentorMentorshipClosedEmail({ 
+    //   mentee, 
+    //   mentor, 
+    //   mentorFeedback: "the mentor feedback!", 
+    //   tupuFeedback: "the feedback for tupu" 
+    // });
+
+    // sendMentorshipRequestAcceptedEmail({ mentee, mentor, longTerm: false });
+    // sendMentorshipRequestCancelledEmail({ mentee, mentor, longTerm: false });
+    // sendMentorshipRequestRejectedEmail({ mentee, mentor, longTerm: true, requestStatus: RequestStatusEnum.Rejected });
+    // sendMentorshipRequestRejectedEmail({ mentee, mentor, longTerm: true, requestStatus: RequestStatusEnum.RejectedBusy });
+    // sendMentorshipRequestRejectedEmail({ mentee, mentor, longTerm: false, requestStatus: RequestStatusEnum.RejectedNoGoodFit });
+
+    // const mentorshipRequest = { 
+    //   mentee,
+    //   mentor,
+    //   messageRequest: "Hi! I would like to talk to you!", 
+    //   longTerm: true
+    // };  
+    // sendMentorshipRequestedEmail(mentorshipRequest);
   }
 
   res.status(200).json(profile);

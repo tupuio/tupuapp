@@ -1,6 +1,6 @@
-Hi [[menteeFirstName]]!
+Hi [[menteeName]]!
 
-We forwarded your request for a [[longOrShortTerm]] mentorship to [[mentorFirstName]].
+We forwarded your request for a [[longOrShortTerm]] mentorship to [[mentorName]].
 
 This is the message you wrote in the request:
 
@@ -10,7 +10,7 @@ This is the message you wrote in the request:
 
 ---
 
-[[mentorFirstName]] will review your application and let you know as soon as possible if this is going to happen or not!
+[[mentorName]] will review your application and let you know as soon as possible if this is going to happen or not!
 
 Have a great day,
 Tupu App Team

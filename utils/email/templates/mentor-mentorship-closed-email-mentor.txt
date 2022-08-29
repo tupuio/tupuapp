@@ -1,0 +1,24 @@
+Hi [[mentorName]],
+
+You've decided to close the mentorship with the mentor [[menteeName]].
+
+Hopefully you've anticipated the reason during a conversation or by a message.
+
+This is the feedback you left for [[menteeName]]:
+
+---
+
+[[mentorFeedback]]
+
+---
+
+This is the feedback you left for the Tupu App Team:
+
+---
+
+[[tupuFeedback]]
+
+---
+
+Have a great day,
+Tupu App Team

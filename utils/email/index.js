@@ -2,6 +2,7 @@ import path from 'path';
 import fs from 'fs';
 import sendgridEmail from '@sendgrid/mail';
 import mjml2html from "mjml";
+import { RequestStatusEnum } from "../../types/dbTablesEnums";
 
 const TUPU_EMAIL = 'mentors@tupu.io'; // used for tupu add team recipient
 
@@ -10,7 +11,7 @@ if (process.env.SENDGRID_API_KEY) {
 }
 
 
-function sendEmail({recipient, subject, htmlBody, textBody}) {
+function sendEmail({ recipient, subject, htmlBody, textBody, replyTo }) {
   if (!process.env.SENDGRID_API_KEY) {
     console.error('SendGrid error: SENDGRID_API_KEY is not set');
     return;
@@ -22,13 +23,16 @@ function sendEmail({recipient, subject, htmlBody, textBody}) {
   const from = process.env.SENDGRID_EMAIL_VERIFIED_SENDER;
   recipient = process.env.DEV_EMAIL_RECIPIENT || recipient;
   subject = buildSubjectLine(subject);
-  const msg = {
+  let msg = {
     to: recipient,
     from, 
     subject,
     text: textBody,
     html: htmlBody,
   };
+  if (replyTo) {
+    msg = { replyTo, ...msg };
+  }
   sendgridEmail
     .send(msg)
     .then(() => {
@@ -36,6 +40,7 @@ function sendEmail({recipient, subject, htmlBody, textBody}) {
     })
     .catch((error) => {
       console.error('SendGrid error:', error)
+      console.error('SendGrid error:', error.response.body);
       console.error(`Could not deliver email to <${recipient}>,\n subject "${subject}"`);
     });
 }
@@ -84,37 +89,172 @@ export const sendPreferencesUpdatedEmail = (recipient, firstName) => {
   
   const preferencesUpdatedEmailTxt = loadTXTTemplate(templateName)
     .replace(/\[\[firstName\]\]/g, firstName);
-  sendNotificationEmail(recipient, subject, emailTitle, preferencesUpdatedEmailTxt);  
+  sendNotificationEmail(recipient, subject, preferencesUpdatedEmailTxt);  
 }
 
-const sendNotificationEmail = (recipient, subject, emailTitle, emailTxt) => {
-  const emailHTML = createNotificationHTMLEmail(emailTitle, emailTxt);
+const sendNotificationEmail = (recipient, subject, emailTxt, replyTo) => {
+  const emailHTML = createNotificationHTMLEmail(subject, emailTxt);
   const msg = { 
     recipient: recipient,
     subject: subject,
     htmlBody: emailHTML,
     textBody: emailTxt,
+    replyTo
   };
   sendEmail(msg);
+}
+
+const sendNotificationEmailToUsers = ({
+  mentee, 
+  mentor,
+  templateName,
+  subject,
+  fillInFieldsFn,
+  replyTo
+}) => {
+  const recipients = [["mentee", mentee.email], ["mentor", mentor.email], ["tupu", TUPU_EMAIL]];
+  for (const recipient of recipients) {
+    const [userType, userEmail] = recipient;
+    console.log("writing to", userEmail, "as", userType);
+    const emailTxt = fillInFieldsFn(loadTXTTemplate(`${templateName}-${userType}`))
+    sendNotificationEmail(userEmail, subject, emailTxt, replyTo);
+  }  
+}
+
+const buildLongOrShortTermLabel = (longTerm) => (longTerm ? "long":"short") + " term";
+
+const buildReasonString = (requestStatus) => {
+  switch(requestStatus) {
+    case RequestStatusEnum.Rejected:
+      return "While we do not know the reason, we're sure it's nothing personal.";
+    case RequestStatusEnum.RejectedBusy:
+      return "This period might be not the right one.";
+    case RequestStatusEnum.RejectedNoGoodFit:
+    default:
+      return "There could be another mentor that might be a better fit.";
+  }
+};
+
+export const sendMenteeMentorshipClosedEmail = ({ mentee, mentor, menteeFeedback, tupuFeedback, }) => {
+  // mentee and mentor = { name: "", email: "" }
+  const params = {
+    mentee, 
+    mentor,
+    templateName: 'mentee-mentorship-closed-email',
+    subject: "Mentorship closed",
+    fillInFieldsFn: (txtTemplate) => {
+      return txtTemplate
+        .replace(/\[\[menteeName\]\]/g, mentee.name)
+        .replace(/\[\[mentorName\]\]/g, mentor.name)
+        .replace(/\[\[menteeFeedback\]\]/g, menteeFeedback)
+        .replace(/\[\[tupuFeedback\]\]/g, tupuFeedback);
+    }
+  };
+  sendNotificationEmailToUsers(params);
+}
+
+export const sendMentorContactMenteeEmail = ({ mentee, mentor, mentorMessage }) => {
+  // mentee and mentor = { name: "", email: "" }
+  const params = {
+    mentee, 
+    mentor,
+    templateName: 'mentor-contact-mentee-email',
+    subject: "New message from a mentor",
+    replyTo: mentor.email,
+    fillInFieldsFn: (txtTemplate) => {
+      return txtTemplate
+        .replace(/\[\[menteeName\]\]/g, mentee.name)
+        .replace(/\[\[mentorName\]\]/g, mentor.name)
+        .replace(/\[\[mentorMessage\]\]/g, mentorMessage);
+    }
+  };
+  sendNotificationEmailToUsers(params);
+}
+
+export const sendMentorMentorshipClosedEmail = ({ mentee, mentor, mentorFeedback, tupuFeedback, }) => {
+  // mentee and mentor = { name: "", email: "" }
+  const params = {
+    mentee, 
+    mentor,
+    templateName: 'mentor-mentorship-closed-email',
+    subject: "Mentorship closed",
+    fillInFieldsFn: (txtTemplate) => {
+      return txtTemplate
+        .replace(/\[\[menteeName\]\]/g, mentee.name)
+        .replace(/\[\[mentorName\]\]/g, mentor.name)
+        .replace(/\[\[mentorFeedback\]\]/g, mentorFeedback)
+        .replace(/\[\[tupuFeedback\]\]/g, tupuFeedback);
+    }
+  };
+  sendNotificationEmailToUsers(params);
+}
+
+export const sendMentorshipRequestAcceptedEmail = ({ mentee, mentor, longTerm }) => {
+  // mentee and mentor = { name: "", email: "" }
+  const params = {
+    mentee, 
+    mentor,
+    templateName: 'mentorship-request-accepted-email',
+    subject: "Mentorship accepted!",
+    fillInFieldsFn: (txtTemplate) => {
+      return txtTemplate
+        .replace(/\[\[menteeName\]\]/g, mentee.name)
+        .replace(/\[\[mentorName\]\]/g, mentor.name)
+        .replace(/\[\[longOrShortTerm\]\]/g, buildLongOrShortTermLabel(longTerm));
+    }
+  };
+  sendNotificationEmailToUsers(params);
+}
+
+export const sendMentorshipRequestCancelledEmail = ({ mentee, mentor, longTerm }) => {
+  // mentee and mentor = { name: "", email: "" }
+  const params = {
+    mentee, 
+    mentor,
+    templateName: 'mentorship-request-cancelled-email',
+    subject: "Mentorship request cancelled!",
+    fillInFieldsFn: (txtTemplate) => {
+      return txtTemplate
+        .replace(/\[\[menteeName\]\]/g, mentee.name)
+        .replace(/\[\[mentorName\]\]/g, mentor.name)
+        .replace(/\[\[longOrShortTerm\]\]/g, buildLongOrShortTermLabel(longTerm));
+    }
+  };
+  sendNotificationEmailToUsers(params);
+}
+export const sendMentorshipRequestRejectedEmail = ({ mentee, mentor, longTerm, requestStatus }) => {
+  // mentee and mentor = { name: "", email: "" }
+  const params = {
+    mentee, 
+    mentor,
+    templateName: 'mentorship-request-rejected-email',
+    subject: "Mentorship rejected :(",
+    fillInFieldsFn: (txtTemplate) => {
+      return txtTemplate
+        .replace(/\[\[menteeName\]\]/g, mentee.name)
+        .replace(/\[\[mentorName\]\]/g, mentor.name)
+        .replace(/\[\[reason\]\]/g, buildReasonString(requestStatus))
+        .replace(/\[\[longOrShortTerm\]\]/g, buildLongOrShortTermLabel(longTerm));
+    }
+  };
+  sendNotificationEmailToUsers(params);
 }
 
 export const sendMentorshipRequestedEmail = (mentorshipRequest) => {
   const { mentee, mentor, messageRequest, longTerm } = mentorshipRequest;
   // mentee and mentor = { name: "", email: "" }
-  const templateName = 'mentorship-requested-email';
-  const emailTitle = "New Mentorship request!";
-  const subject = "New Mentorship request!";
-  const longOrShortTerm = (longTerm ? "long":"short") + " term";
-
-  const users = [["mentee", mentee.email], ["mentor", mentor.email], ["tupu", TUPU_EMAIL]];
-  for (const user of users) {
-    const [userType, userEmail] = user;
-    console.log("writing to", userEmail, "as", userType);
-    const emailTxt = loadTXTTemplate(`${templateName}-${userType}`)
-      .replace(/\[\[menteeFirstName\]\]/g, mentee.name)
-      .replace(/\[\[mentorFirstName\]\]/g, mentor.name)
-      .replace(/\[\[menteeMessageRequest\]\]/g, messageRequest)
-      .replace(/\[\[longOrShortTerm\]\]/g, longOrShortTerm);
-    sendNotificationEmail(userEmail, subject, emailTitle, emailTxt);
-  }
+  const params = {
+    mentee, 
+    mentor,
+    templateName: 'mentorship-requested-email',
+    subject: "New Mentorship request!",
+    fillInFieldsFn: (txtTemplate) => {
+      return txtTemplate
+        .replace(/\[\[menteeName\]\]/g, mentee.name)
+        .replace(/\[\[mentorName\]\]/g, mentor.name)
+        .replace(/\[\[menteeMessageRequest\]\]/g, messageRequest)
+        .replace(/\[\[longOrShortTerm\]\]/g, buildLongOrShortTermLabel(longTerm));
+    }    
+  };
+  sendNotificationEmailToUsers(params);
 }
