@@ -1,0 +1,10 @@
+Hi [[mentorName]],
+
+You have decided to not take on a new mentee.
+
+You have rejected the request of [[menteeName]] for a [[longOrShortTerm]] mentorship.
+
+[[reason]]
+
+Have a great day,
+Tupu App Team

@@ -1,0 +1,12 @@
+Hi [[mentorName]],
+
+The mentee [[menteeName]] changed their mind and cancelled the request for a [[longOrShortTerm]] mentorship with you.
+
+This is ok, there might be several reasons for this (e.g. wrong click), please do not take this personally.
+
+We are all here to learn.
+
+This should not happen many time! Keep an eye on these kind of episodes and notify the Tupu App team in case you suspect an abuse of the platform.
+
+Have a great day,
+Tupu App Team
