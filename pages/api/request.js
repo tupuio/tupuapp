@@ -1,6 +1,8 @@
 import { getSession } from "next-auth/react";
-import { getUser } from "../../services";
+import { getUser, getUserById } from "../../services";
 import { getXataHeaders, DB_PATH } from "../../services";
+import { RequestStatusEnum } from "../../types/dbTablesEnums";
+import { sendMentorshipRequestedEmail } from "../../utils/email";
 
 export default async function handler(req, res) {
   const session = await getSession({ req });
@@ -26,11 +28,13 @@ async function handlePOST(session, req, res) {
     res.status(500).json({ message: "Can't get user data" });
     return;
   }
-
+  const { mentorId, message } = req.body;
   const reqObj = {
-    mentor: req.body.mentorId,
+    mentor: mentorId,
     mentee: user.id,
-    message: req.body.message,
+    message,
+    status: RequestStatusEnum.Pending,
+    lastUpdateDate: (new Date()).toJSON(), /* UTC */
   };
 
   const resp = await fetch(`${DB_PATH}/tables/requests/data`, {
@@ -40,6 +44,26 @@ async function handlePOST(session, req, res) {
     },
     body: JSON.stringify(reqObj),
   });
+
+  if (resp.status > 299) {
+    res.status(resp.status).json(await resp.json());
+    return;
+  }
+
+  // get mentor name/email to send notification
+  // the mentee is the current user
+  const mentor = await getUserById(mentorId);
+  if (!mentor) {
+    res.status(500).json({ message: "Can't get mentor data" });
+    return;
+  }
+  const mentorshipRequest = { 
+    mentee: { name: user.name, email: user.email }, 
+    mentor: { name: mentor.name, email: mentor.email }, 
+    messageRequest: message,
+    longTerm: true
+  };
+  sendMentorshipRequestedEmail(mentorshipRequest);        
 
   res.status(resp.status).json(await resp.json());
 }

@@ -4,17 +4,33 @@ import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import XataAdapter from "../../../auth";
 
-const providers = [
-  LinkedInProvider({
+// const providers = [
+//   LinkedInProvider({
+//     clientId: process.env.LINKEDIN_CLIENT_ID,
+//     clientSecret: process.env.LINKEDIN_CLIENT_SECRET,
+//   }),
+//   GoogleProvider({
+//     clientId: process.env.GOOGLE_CLIENT_ID,
+//     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+//   }),
+// ];
+
+const providers = [];
+
+if (process.env.LINKEDIN_CLIENT_ID && 
+  process.env.LINKEDIN_CLIENT_SECRET) {
+    providers.push(LinkedInProvider({
     clientId: process.env.LINKEDIN_CLIENT_ID,
     clientSecret: process.env.LINKEDIN_CLIENT_SECRET,
-  }),
-  GoogleProvider({
+    }));
+}
+if (process.env.GOOGLE_CLIENT_ID && 
+  process.env.GOOGLE_CLIENT_SECRET) {
+    providers.push(GoogleProvider({
     clientId: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  }),
-];
-
+    }));
+}
 if (
   process.env.NODE_ENV === "development" ||
   process.env.NEXT_PUBLIC_DEV_LOGIN === "true"
@@ -39,21 +55,28 @@ if (
           return {
             name: "Tudor Golubenco",
             email: "tudor.g@gmail.com",
-            roles: ["mentor", "mentee", "admin"],
+            roles: ["mentor", "mentee", "admin", "test"],
           };
         } else if (credentials.username === "madalina") {
           return {
             name: "Madalina",
             email: "madalina@tupu.io",
-            roles: ["mentor", "mentee", "admin"],
+            roles: ["mentor", "mentee", "admin", "test"],
           };
         } else if (credentials.username === "test") {
           return {
             name: "Test",
             email: "test@tupu.io",
-            roles: ["mentor", "mentee", "admin"],
+            roles: ["mentor", "mentee", "admin", "test"],
+          };
+        } else if (credentials.username === "lorepirri") {
+          return {
+            name: "Lorenzo",
+            email: "lorepirri+tupu@gmail.com",
+            roles: ["mentor", "mentee", "admin", "test"],
           };
         }
+        
         return null;
       },
     })

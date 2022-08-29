@@ -1,0 +1,15 @@
+<mjml>
+  <mj-include path="./head.mjml" />
+  <mj-body>
+    <mj-include path="./header.mjml" />
+    <mj-section>
+      <mj-column width="100%">
+        <mj-text>
+          [[NOTIFICATION_BODY]]
+        </mj-text>
+      </mj-column>
+    </mj-section>
+    <mj-include path="./footer-madalina-tupu-team.mjml" />
+    <mj-include path="./footer.mjml" />
+  </mj-body>
+</mjml>

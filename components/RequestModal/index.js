@@ -75,7 +75,7 @@ const RequestModal = ({ mentor, isOpen, onClose }) => {
               <Textarea {...register("message")} id="message" rows={6} />
               <FormHelperText>
                 Please tell {mentor.name} a bit about yourself and what are you
-                hoping to learconst or achieve. You can use Markdown for
+                hoping to learn or achieve. You can use Markdown for
                 formatting. Leave an empty line between paragraphs.
               </FormHelperText>
             </FormControl>
@@ -85,7 +85,7 @@ const RequestModal = ({ mentor, isOpen, onClose }) => {
             <Button colorScheme={"grayButton"} mr={3} onClick={onClose}>
               Close
             </Button>
-            <Button type="subit" colorScheme={"blueButton"}>
+            <Button type="submit" colorScheme={"blueButton"}>
               Request
             </Button>
           </ModalFooter>

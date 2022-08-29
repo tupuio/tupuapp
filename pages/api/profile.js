@@ -1,5 +1,6 @@
 import { getSession } from "next-auth/react";
 import { getXataHeaders, DB_PATH } from "../../services";
+import { sendPreferencesUpdatedEmail } from "../../utils/email";
 
 async function getByEmail(email) {
   const resp = await fetch(`${DB_PATH}/tables/users/query`, {
@@ -42,11 +43,15 @@ async function handlePUT(session, req, res) {
     },
     body: JSON.stringify({
       name: profile.name,
-      email: profile.email,
+      email: data.email, // email is readonly, overwrite what comes from the form #57
       title: profile.title,
+      company: profile.company,
+      seniority: profile.seniority,
+      biography: profile.biography,
       twitter: profile.twitter,
       linkedin: profile.linkedin,
-      biography: profile.biography,
+      languages: profile.languages,
+      timezone: profile.timezone,
       picture: profile.picture,
       roles: data.roles,
       mentor: {
@@ -63,6 +68,11 @@ async function handlePUT(session, req, res) {
   if (response.status > 299) {
     res.status(response.status).json(await response.json());
     return;
+  }
+
+  if (process.env.DEV_EMAIL_RECIPIENT) {
+    const firstName = profile.name.split(" ")[0];
+    sendPreferencesUpdatedEmail(profile.email, firstName);
   }
 
   res.status(200).json({ message: "ok" });

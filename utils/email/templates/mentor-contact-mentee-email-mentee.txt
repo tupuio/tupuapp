@@ -1,0 +1,16 @@
+Hi [[menteeName]]!
+
+You've previously sent a mentorship request to [[mentorName]].
+
+They decided to contact you first, and wrote you this message:
+
+---
+
+[[mentorMessage]]
+
+---
+
+You can contact [[mentorName]] by replying directly to this email!
+
+Have a great day,
+Tupu App Team
