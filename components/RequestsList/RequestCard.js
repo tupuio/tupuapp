@@ -18,7 +18,6 @@ const markdownTheme = {
 };
 
 const RequestCard = ({ request, handleContact, handleAccept, handleReject }) => {
-  // request.mentee.picture = null;
   return (
     <Stack
       borderWidth="1px"
