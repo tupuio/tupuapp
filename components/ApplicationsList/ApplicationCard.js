@@ -36,12 +36,20 @@ const ApplicationCard = ({ application }) => {
           textAlign={"center"}
           justifyContent={"center"}
         >
-          <Avatar
-            size="xl"
-            src={application.mentor.picture + "?tr=w-100,h-100,fo-auto"}
-            name={application.mentor.name}
-            alignSelf={"center"}
-          />
+          {application.mentor.picture ? (
+              <Avatar
+                  size="xl"
+                  src={application.mentee.picture + "?tr=w-100,h-100,fo-auto"}
+                  name={application.mentee.name}
+                  alignSelf={"center"}
+              />
+          ) : (
+              <Avatar
+                  size="xl"
+                  name={application.mentee.name}
+                  alignSelf={"center"}
+              />
+          )}
           <Heading size="sm">{application.mentor.name}</Heading>
           <Stack
             direction={"row"}

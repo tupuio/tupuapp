@@ -18,7 +18,7 @@ const markdownTheme = {
 };
 
 const RequestCard = ({ request, handleContact, handleAccept, handleReject }) => {
-  // console.log(request);
+  // request.mentee.picture = null;
   return (
     <Stack
       borderWidth="1px"
@@ -39,12 +39,20 @@ const RequestCard = ({ request, handleContact, handleAccept, handleReject }) => 
           textAlign={"center"}
           justifyContent={"center"}
         >
-          <Avatar
-            size="xl"
-            src={request.mentee.picture + "?tr=w-100,h-100,fo-auto"}
-            name={request.mentee.name}
-            alignSelf={"center"}
-          />
+          {request.mentor.picture ? (
+              <Avatar
+                  size="xl"
+                  src={request.mentee.picture + "?tr=w-100,h-100,fo-auto"}
+                  name={request.mentee.name}
+                  alignSelf={"center"}
+              />
+          ) : (
+              <Avatar
+                  size="xl"
+                  name={request.mentee.name}
+                  alignSelf={"center"}
+              />
+          )}
           <Heading size="sm">{request.mentee.name}</Heading>
           <Stack
             direction={"row"}
