@@ -2,7 +2,7 @@ import { getSession } from "next-auth/react";
 import { getUser } from "../../services";
 import { updateRequest, getRequestByQuery } from "../../services/requests";
 import { createRelationship } from "../../services/relationships";
-
+import { sendMentorshipRequestAcceptedEmail } from "../../utils/email";
 import { RequestStatusEnum } from "../../types/dbTablesEnums";
 
 export default async function handler(req, res) {
@@ -66,10 +66,9 @@ async function handlePOST(session, req, res) {
     return;
   } 
 
-  //   send email notification
-  // TODO:
-  console.error("TODO: send email notification");
+  // send email notification
+  // TODO: long term should come from the request
+  sendMentorshipRequestAcceptedEmail({ mentee: request.mentee, mentor: request.mentor, longTerm: false }); 
 
   res.status(200).json(relationship);
-
 }
