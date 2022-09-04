@@ -1,5 +1,6 @@
 import { getSession } from "next-auth/react";
 import { getXataHeaders, DB_PATH, getUser } from "../../services";
+import { RequestStatusEnum } from "../../types/dbTablesEnums";
 
 export default async function handler(req, res) {
   const session = await getSession({ req });
@@ -35,6 +36,7 @@ async function handleGET(session, req, res) {
       columns: ["*", "mentor.*"],
       filter: {
         mentee: user.id,
+        status: RequestStatusEnum.Pending,        
       },
     }),
   });
