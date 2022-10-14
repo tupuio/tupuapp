@@ -1,5 +1,5 @@
 import { Box, Heading, Text } from "@chakra-ui/layout";
-import MentorshipsList from "../components/MentorshipsList";
+import MentorshipsList from "../../components/MentorshipsList";
 
 export default function MentorshipsPage() {
   return (
