@@ -46,7 +46,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
    tupuapp$ npm install
    ```
 
-1. Create an `.env.local` file, open your favourite code editor, and fill the file with the contents that we have shared with you privately (probably through `https://cryptobin.co/` or `https://yopass.se/`):
+1. Create an `.env.local` file, mind the filename starting with a dot, open your favourite code editor, and fill the file with the contents that we have shared with you privately (probably through `https://cryptobin.co/` or `https://yopass.se/`):
 
    ```bash
    tupuapp$ touch .env.local
@@ -63,7 +63,7 @@ https://docs.sendgrid.com/ui/sending-email/sender-verification
 
 1. In order to not spam real people with notifications while developing, set `DEV_EMAIL_RECIPIENT` in `.env.local` with your email to receive all the notification emails to your inbox while developing.
 
-1. After filling in the file `.env.local`,if you use VSCode, you could open a new terminal (`Terminal` -> `New Terminal` or simply `` Ctrl+Shift+` ``), or use again the previous terminal, and start the the development server with:
+1. After filling in the file `.env.local`, if you use VSCode, you could open a new terminal (`Terminal` -> `New Terminal` or simply `` Ctrl+Shift+` ``), or use again the previous terminal, and start the the development server with:
 
    ```bash
    tupuapp$ npm run dev

@@ -11,11 +11,15 @@ import {
 } from "@chakra-ui/menu";
 import { FiChevronDown, FiMenu } from "react-icons/fi";
 import { signOut } from "next-auth/react";
+import { useRouter } from 'next/router'
 
 const MobileNav = ({ session, onOpen, mode, setMode, ...rest }) => {
   const name = session?.user?.name;
+  const router = useRouter();
+
   const toggleMode = () => {
     setMode(mode === "mentor" ? "mentee" : "mentor");
+    router.push('/');
   };
 
   return (

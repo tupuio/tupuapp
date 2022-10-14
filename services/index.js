@@ -51,7 +51,7 @@ export async function getRequestById(id) {
       ...(await getXataHeaders()),
     },
     body: JSON.stringify({
-      columns: ["*", "mentee.email", "mentor.email"],
+      columns: ["*", "mentee.email", "mentee.name", "mentor.email", "mentor.name"],
       "filter": {
         "id": id
       }

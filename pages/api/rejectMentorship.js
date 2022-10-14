@@ -2,6 +2,7 @@ import { getSession } from "next-auth/react";
 import { getUser } from "../../services";
 import { updateRequest, getRequestByQuery } from "../../services/requests";
 import { IsRequestStatusValid } from "../../types/dbTablesEnums";
+import { sendMentorshipRequestRejectedEmail } from "../../utils/email";
 
 export default async function handler(req, res) {
   const session = await getSession({ req });
@@ -63,9 +64,9 @@ async function handlePOST(session, req, res) {
     return;
   } 
 
-  //   send email notification
-  // TODO:
-  console.error("TODO: send email notification");
+  // send email notification
+  // TODO: long term should come from the request
+  sendMentorshipRequestRejectedEmail({ mentee: request.mentee, mentor: request.mentor, longTerm: false, requestStatus });
 
   res.status(200).json(responseRequest);
 
