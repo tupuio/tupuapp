@@ -1,12 +1,4 @@
 import { getXataClient } from "./xata";
-export const DB_PATH = `${process.env.XATA_URL}/db/tupu-app:${process.env.XATA_BRANCH}`;
-
-export async function getXataHeaders() {
-  return {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${process.env.XATA_KEY}`,
-  };
-}
 
 export async function getUser(session) {
   const xata = getXataClient();
