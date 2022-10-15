@@ -21,32 +21,9 @@ export async function getUserById(id) {
 }
 
 export async function getRequestById(id) {
-  const resp = await fetch(`${DB_PATH}/tables/requests/query`, {
-    method: "POST",
-    headers: {
-      ...(await getXataHeaders()),
-    },
-    body: JSON.stringify({
-      columns: [
-        "*",
-        "mentee.email",
-        "mentee.name",
-        "mentor.email",
-        "mentor.name",
-      ],
-      filter: {
-        id: id,
-      },
-    }),
-  });
-
-  if (resp.status > 299) {
-    throw new Error(
-      `Error getting request: ${resp.status} ${await resp.text()}`
-    );
-  }
-  const { records } = await resp.json();
-  const request = records.length > 0 ? records[0] : null;
-  // console.log("getRequestById: found request with id", request.id);
-  return request;
+  const xata = getXataClient();
+  return await xata.db.requests
+    .select(["*", "mentee.email", "mentee.name", "mentor.email", "mentor.name"])
+    .filter("id", id)
+    .getFirst();
 }
