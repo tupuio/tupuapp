@@ -28,11 +28,12 @@ async function handlePOST(session, req, res) {
     res.status(500).json({ message: "Can't get user data" });
     return;
   }
-  const { mentorId, message } = req.body;
+  const { mentorId, message, longterm } = req.body;
   const reqObj = {
     mentor: mentorId,
     mentee: user.id,
     message,
+    longterm,
     status: RequestStatusEnum.Pending,
     lastUpdateDate: new Date().toJSON() /* UTC */,
   };
@@ -46,11 +47,12 @@ async function handlePOST(session, req, res) {
     res.status(500).json({ message: "Can't get mentor data" });
     return;
   }
+
   const mentorshipRequest = {
     mentee: { name: user.name, email: user.email },
     mentor: { name: mentor.name, email: mentor.email },
     messageRequest: message,
-    longTerm: true,
+    longTerm: longterm
   };
   sendMentorshipRequestedEmail(mentorshipRequest);
 
