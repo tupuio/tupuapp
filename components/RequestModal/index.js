@@ -82,8 +82,8 @@ const RequestModal = ({ mentor, isOpen, onClose }) => {
                 formatting. Leave an empty line between paragraphs.
               </FormHelperText>
             </FormControl>
-            <FormControl>
-              <FormLabel htmlFor="longterm">Long term mentorships</FormLabel>
+            <FormControl display="flex" alignItems="center" mt={2}>
+              <FormLabel htmlFor="longterm" mb={1}>Long term mentorships</FormLabel>
               <Switch
                 {...register("longterm")}
                 id="longterm"

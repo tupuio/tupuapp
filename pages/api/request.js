@@ -35,7 +35,8 @@ async function handlePOST(session, req, res) {
     message,
     longterm,
     status: RequestStatusEnum.Pending,
-    lastUpdateDate: new Date().toJSON() /* UTC */,
+    lastUpdateDate: (new Date()).toJSON(), /* UTC */
+    creationDate: (new Date()).toJSON(), /* UTC */
   };
   const xata = getXataClient();
   const request = await xata.db.requests.create(reqObj);
