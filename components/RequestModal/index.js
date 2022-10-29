@@ -16,6 +16,7 @@ import {
 } from "@chakra-ui/modal";
 import { Textarea } from "@chakra-ui/textarea";
 import { useToast } from "@chakra-ui/toast";
+import { Switch } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 
 const RequestModal = ({ mentor, isOpen, onClose }) => {
@@ -24,6 +25,7 @@ const RequestModal = ({ mentor, isOpen, onClose }) => {
     defaultValues: {
       message:
         "I'd love to have you as a mentor!\n\n\n I want to \u003cinsert what you'd like to achieve\u003e, and I think your mentorship would be really valuable.",
+      longterm: false,
     },
   });
 
@@ -36,6 +38,7 @@ const RequestModal = ({ mentor, isOpen, onClose }) => {
       body: JSON.stringify({
         mentorId: mentor.id,
         message: data.message,
+        longterm: data.longterm,
       }),
     });
     if (resp.status > 299) {
@@ -78,6 +81,13 @@ const RequestModal = ({ mentor, isOpen, onClose }) => {
                 hoping to learn or achieve. You can use Markdown for
                 formatting. Leave an empty line between paragraphs.
               </FormHelperText>
+            </FormControl>
+            <FormControl>
+              <FormLabel htmlFor="longterm">Long term mentorships</FormLabel>
+              <Switch
+                {...register("longterm")}
+                id="longterm"
+              />
             </FormControl>
           </ModalBody>
 
