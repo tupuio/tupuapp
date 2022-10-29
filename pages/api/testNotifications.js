@@ -1,6 +1,6 @@
 import { getSession } from "next-auth/react";
-import { getXataHeaders, DB_PATH } from "../../services";
-import { 
+import { getXataClient } from "../../services/xata";
+import {
   sendPreferencesUpdatedEmail,
   sendMentorshipRequestedEmail,
   sendMenteeMentorshipClosedEmail,
@@ -8,25 +8,13 @@ import {
   sendMentorMentorshipClosedEmail,
   sendMentorshipRequestAcceptedEmail,
   sendMentorshipRequestCancelledEmail,
-  sendMentorshipRequestRejectedEmail
+  sendMentorshipRequestRejectedEmail,
 } from "../../utils/email";
 import { RequestStatusEnum } from "../../types/dbTablesEnums";
 
 async function getByEmail(email) {
-  const resp = await fetch(`${DB_PATH}/tables/users/query`, {
-    method: "POST",
-    headers: {
-      ...(await getXataHeaders()),
-    },
-    body: JSON.stringify({
-      filter: {
-        email,
-      },
-    }),
-  });
-
-  const { records } = await resp.json();
-  return records.length > 0 ? records[0] : null;
+  const xata = getXataClient();
+  return xata.db.users.filter({ email }).getFirst();
 }
 
 async function handleGET(session, req, res) {
@@ -41,27 +29,26 @@ async function handleGET(session, req, res) {
   }
 
   if (process.env.DEV_EMAIL_RECIPIENT) {
-    
     // careful, the free quota is 100/day
-    sendPreferencesUpdatedEmail(profile.email, "Lorenzo")
+    sendPreferencesUpdatedEmail(profile.email, "Lorenzo");
 
     // const mentee = { name: "Mentee", email: process.env.DEV_EMAIL_RECIPIENT };
     // const mentor = { name: "Mentor", email: process.env.DEV_EMAIL_RECIPIENT };
 
-    // sendMenteeMentorshipClosedEmail({ 
-    //   mentee, 
-    //   mentor, 
-    //   menteeFeedback: "the mentee feedback!", 
-    //   tupuFeedback: "the feedback for tupu" 
+    // sendMenteeMentorshipClosedEmail({
+    //   mentee,
+    //   mentor,
+    //   menteeFeedback: "the mentee feedback!",
+    //   tupuFeedback: "the feedback for tupu"
     // });
 
     // sendMentorContactMenteeEmail({ mentee, mentor, mentorMessage: "this is a message for you mentee!" });
-    
-    // sendMentorMentorshipClosedEmail({ 
-    //   mentee, 
-    //   mentor, 
-    //   mentorFeedback: "the mentor feedback!", 
-    //   tupuFeedback: "the feedback for tupu" 
+
+    // sendMentorMentorshipClosedEmail({
+    //   mentee,
+    //   mentor,
+    //   mentorFeedback: "the mentor feedback!",
+    //   tupuFeedback: "the feedback for tupu"
     // });
 
     // sendMentorshipRequestAcceptedEmail({ mentee, mentor, longTerm: false });
@@ -70,12 +57,12 @@ async function handleGET(session, req, res) {
     // sendMentorshipRequestRejectedEmail({ mentee, mentor, longTerm: true, requestStatus: RequestStatusEnum.RejectedBusy });
     // sendMentorshipRequestRejectedEmail({ mentee, mentor, longTerm: false, requestStatus: RequestStatusEnum.RejectedNoGoodFit });
 
-    // const mentorshipRequest = { 
+    // const mentorshipRequest = {
     //   mentee,
     //   mentor,
-    //   messageRequest: "Hi! I would like to talk to you!", 
+    //   messageRequest: "Hi! I would like to talk to you!",
     //   longTerm: true
-    // };  
+    // };
     // sendMentorshipRequestedEmail(mentorshipRequest);
   }
 

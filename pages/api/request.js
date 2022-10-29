@@ -1,6 +1,6 @@
 import { getSession } from "next-auth/react";
 import { getUser, getUserById } from "../../services";
-import { getXataHeaders, DB_PATH } from "../../services";
+import { getXataClient } from "../../services/xata";
 import { RequestStatusEnum } from "../../types/dbTablesEnums";
 import { sendMentorshipRequestedEmail } from "../../utils/email";
 
@@ -34,21 +34,10 @@ async function handlePOST(session, req, res) {
     mentee: user.id,
     message,
     status: RequestStatusEnum.Pending,
-    lastUpdateDate: (new Date()).toJSON(), /* UTC */
+    lastUpdateDate: new Date().toJSON() /* UTC */,
   };
-
-  const resp = await fetch(`${DB_PATH}/tables/requests/data`, {
-    method: "POST",
-    headers: {
-      ...(await getXataHeaders()),
-    },
-    body: JSON.stringify(reqObj),
-  });
-
-  if (resp.status > 299) {
-    res.status(resp.status).json(await resp.json());
-    return;
-  }
+  const xata = getXataClient();
+  const request = await xata.db.requests.create(reqObj);
 
   // get mentor name/email to send notification
   // the mentee is the current user
@@ -57,13 +46,13 @@ async function handlePOST(session, req, res) {
     res.status(500).json({ message: "Can't get mentor data" });
     return;
   }
-  const mentorshipRequest = { 
-    mentee: { name: user.name, email: user.email }, 
-    mentor: { name: mentor.name, email: mentor.email }, 
+  const mentorshipRequest = {
+    mentee: { name: user.name, email: user.email },
+    mentor: { name: mentor.name, email: mentor.email },
     messageRequest: message,
-    longTerm: true
+    longTerm: true,
   };
-  sendMentorshipRequestedEmail(mentorshipRequest);        
+  sendMentorshipRequestedEmail(mentorshipRequest);
 
-  res.status(resp.status).json(await resp.json());
+  res.status(200).json({ request });
 }

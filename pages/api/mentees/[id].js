@@ -1,5 +1,5 @@
 import { getSession } from "next-auth/react";
-import { getXataHeaders, DB_PATH } from "../../../services";
+import { getXataClient } from "../../../services/xata";
 
 export default async function handler(req, res) {
   const session = await getSession({ req });
@@ -20,20 +20,16 @@ export default async function handler(req, res) {
 }
 
 async function handleGET(session, req, res) {
-  const resp = await fetch(`${DB_PATH}/tables/users/data/${req.query.id}`, {
-    method: "GET",
-    headers: {
-      ...(await getXataHeaders()),
-    },
-  });
-  if (resp.status > 299) {
-    res.status(resp.status).json(await resp.json());
-    return;
-  }
-  const user = await resp.json();
+  const xata = getXataClient();
+  const user = await xata.db.users.read(req.query.id);
 
   // Only mentees are public, and only the ones that are not hidden
-  if (!user.roles || !user.roles.includes("mentee") || user.mentee?.hide) {
+  if (
+    !user ||
+    !user.roles ||
+    !user.roles.includes("mentee") ||
+    user.mentee?.hide
+  ) {
     res.status(404).json({
       error: "User not found",
     });
