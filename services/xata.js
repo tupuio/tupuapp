@@ -43,6 +43,8 @@ const tables = [
       { name: "message", type: "text" },
       { name: "status", type: "string" },
       { name: "lastUpdateDate", type: "string" },
+      { name: "creationDate", type: "string" },
+      { name: "longterm", type: "boolean" },
     ],
   },
   {
@@ -64,6 +66,7 @@ const tables = [
       { name: "notes", type: "string" },
       { name: "message", type: "string" },
       { name: "endDate", type: "string" },
+      { name: "longterm", type: "boolean" },
     ],
   },
 ];
