@@ -13,7 +13,7 @@
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
     "@sendgrid/mail": "^7.7.0",
-    "@xata.io/client": "^0.18.6",
+    "@xata.io/client": "^0.21.2",
     "chakra-ui-markdown-renderer": "^4.0.0",
     "client": "file:../../xataio/client",
     "framer-motion": "^4.1.17",
