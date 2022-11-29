@@ -43,6 +43,8 @@ const tables = [
       { name: "message", type: "text" },
       { name: "status", type: "string" },
       { name: "lastUpdateDate", type: "string" },
+      { name: "longterm", type: "bool", notNull: true, defaultValue: "true" },
+      { name: "creationDate", type: "datetime" },
     ],
   },
   {
@@ -64,13 +66,14 @@ const tables = [
       { name: "notes", type: "string" },
       { name: "message", type: "string" },
       { name: "endDate", type: "string" },
+      { name: "longterm", type: "bool", notNull: true, defaultValue: "false" },
     ],
   },
 ];
 /** @type { import('@xata.io/client').ClientConstructor<{}> } */
 const DatabaseClient = buildClient();
 const defaultOptions = {
-  databaseURL: "https://tupu-4vhf0k.xata.sh/db/tupu-app",
+  databaseURL: "https://tupu-4vhf0k.eu-west-1.xata.sh/db/tupu-app",
 };
 /** @typedef { import('./types').DatabaseSchema } DatabaseSchema */
 /** @extends DatabaseClient<DatabaseSchema> */
