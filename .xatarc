@@ -1,5 +1,5 @@
 {
-  "databaseURL": "https://tupu-4vhf0k.xata.sh/db/tupu-app",
+  "databaseURL": "https://tupu-4vhf0k.eu-west-1.xata.sh/db/tupu-app",
   "codegen": {
     "output": "services/xata.js",
     "moduleType": "esm"
