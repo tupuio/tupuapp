@@ -42,7 +42,7 @@ const tables = [
       { name: "mentee", type: "link", link: { table: "users" } },
       { name: "message", type: "text" },
       { name: "status", type: "string" },
-      { name: "lastUpdateDate", type: "string" },
+      { name: "lastUpdateDate", type: "datetime" },
       { name: "longterm", type: "bool", notNull: true, defaultValue: "true" },
       { name: "creationDate", type: "datetime" },
     ],

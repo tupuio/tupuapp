@@ -52,7 +52,7 @@ async function handlePOST(session, req, res) {
   }
 
   // remove xata column, update mentee/mentor as links, update new status
-  const { xata, ...updatedRequest } = { 
+  const { xata, ...updatedRequest } = {
     ...request,
     mentee: request.mentee.id,
     mentor: request.mentor.id,
@@ -62,11 +62,10 @@ async function handlePOST(session, req, res) {
   if (!responseRequest) {
     res.status(500).json({ message: "Can't update request data" });
     return;
-  } 
+  }
 
   // send email notification
-  // TODO: long term should come from the request
-  sendMentorshipRequestRejectedEmail({ mentee: request.mentee, mentor: request.mentor, longTerm: false, requestStatus });
+  sendMentorshipRequestRejectedEmail({ mentee: request.mentee, mentor: request.mentor, longTerm: request.longterm, requestStatus });
 
   res.status(200).json(responseRequest);
 

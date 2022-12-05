@@ -64,7 +64,7 @@ async function handlePOST(session, req, res) {
 
   // send email notification
   // TODO: long term should come from the request
-  sendMentorshipRequestCancelledEmail({ mentee, mentor, longTerm: false });
+  sendMentorshipRequestCancelledEmail({ mentee, mentor, longTerm: request.longterm });
 
   res.status(200).json(responseRequest);
 }
