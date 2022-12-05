@@ -1,9 +1,8 @@
 import { getSession } from "next-auth/react";
-import { getUser } from "../../services";
-import { updateRequest, getRequestByQuery } from "../../services/requests";
-import { createRelationship } from "../../services/relationships";
-import { sendMentorshipRequestAcceptedEmail } from "../../utils/email";
+import { getRequestById, getUser } from "../../services";
+import { updateRequest } from "../../services/requests";
 import { RequestStatusEnum } from "../../types/dbTablesEnums";
+import { sendMentorshipRequestCancelledEmail } from "../../utils/email";
 
 export default async function handler(req, res) {
   const session = await getSession({ req });
@@ -30,45 +29,42 @@ async function handlePOST(session, req, res) {
     return;
   }
 
-  const requestQuery = {
-    requestId: req.body.requestId,
-    mentorId: user.id,
-  };
+  const requestId = req.body.requestId;
+  const menteeId = user.id;
 
-  // get the request data with this id and mentor
-  const request = await getRequestByQuery(requestQuery);
+  const request = await getRequestById(requestId);
   if (!request) {
     res.status(500).json({ message: "Can't get request data" });
     return;
   }
+  const { mentee, mentor } = request;
 
-  // in order to confirm it
-  //   create a new relationship
-  const relationship = await createRelationship(request, res);
-  if (!relationship) {
-    res.status(500).json({ message: "Can't create new relationship data" });
+  // the mentee in the request must be the same as this current user
+  if (mentee.id !== menteeId) {
+    res.status(500).json({ message: "Can't validate request data" });
     return;
   }
 
-  // if successful, set the request as accepted
+  // set the request as cancelled
   // FIXME: or delete it?
 
   // remove xata column, update mentee/mentor as links, update new status
-  const { xata, ...updatedRequest } = { 
+  const { xata, ...updatedRequest } = {
     ...request,
     mentee: request.mentee.id,
     mentor: request.mentor.id,
-    status: RequestStatusEnum.Accepted,
+    status: RequestStatusEnum.Cancelled,
+    lastUpdateDate: new Date().toJSON() /* UTC */,
   };
   const responseRequest = await updateRequest(updatedRequest);
   if (!responseRequest) {
     res.status(500).json({ message: "Can't update request data" });
     return;
-  } 
+  }
 
   // send email notification
   // TODO: long term should come from the request
-  sendMentorshipRequestAcceptedEmail({ mentee: request.mentee, mentor: request.mentor, longTerm: false }); 
+  sendMentorshipRequestCancelledEmail({ mentee, mentor, longTerm: false });
 
-  res.status(200).json(relationship);
+  res.status(200).json(responseRequest);
 }

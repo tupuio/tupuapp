@@ -1,5 +1,7 @@
 import { getSession } from "next-auth/react";
-import { getXataHeaders, DB_PATH, getUser } from "../../services";
+import { getUser } from "../../services";
+import { getXataClient } from "../../services/xata";
+import { RequestStatusEnum } from "../../types/dbTablesEnums";
 
 export default async function handler(req, res) {
   const session = await getSession({ req });
@@ -25,19 +27,14 @@ async function handleGET(session, req, res) {
     res.status(500).json({ message: "Can't get user data" });
     return;
   }
+  const xata = getXataClient();
+  const applications = await xata.db.requests
+    .select(["*", "mentor.*"])
+    .filter({
+      mentee: user.id,
+      status: RequestStatusEnum.Pending,
+    })
+    .getAll();
 
-  const resp = await fetch(`${DB_PATH}/tables/requests/query`, {
-    method: "POST",
-    headers: {
-      ...(await getXataHeaders()),
-    },
-    body: JSON.stringify({
-      columns: ["*", "mentor.*"],
-      filter: {
-        mentee: user.id,
-      },
-    }),
-  });
-
-  res.status(resp.status).json(await resp.json());
+  res.status(200).json({ records: applications });
 }
