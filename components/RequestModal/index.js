@@ -73,6 +73,7 @@ const RequestModal = ({ mentor, isOpen, onClose }) => {
               mentee. You can customize the message that we&apos;ll send, which
               greatly improves your chances.
             </Text>
+            <br />
             <FormControl mt={4}>
               <FormLabel htmlFor="message">Your Message</FormLabel>
               <Textarea {...register("message")} id="message" rows={6} />
@@ -82,13 +83,15 @@ const RequestModal = ({ mentor, isOpen, onClose }) => {
                 formatting. Leave an empty line between paragraphs.
               </FormHelperText>
             </FormControl>
+            <br />
             <FormControl display="flex" alignItems="center" mt={2}>
-              <FormLabel htmlFor="longterm" mb={1}>Long term mentorships</FormLabel>
+              <FormLabel htmlFor="longterm" mb={1}>Long term mentorship</FormLabel>
               <Switch
                 {...register("longterm")}
                 id="longterm"
               />
             </FormControl>
+            <br />
           </ModalBody>
 
           <ModalFooter>
