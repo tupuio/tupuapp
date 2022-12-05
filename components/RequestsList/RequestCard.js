@@ -45,7 +45,7 @@ const RequestCard = ({ request, handleContact, handleAccept, handleReject }) => 
             src={picture_src}
             name={name}
             alignSelf={"center"}
-          />          
+          />
           <Heading size="sm">{name}</Heading>
           <Stack
             direction={"row"}
