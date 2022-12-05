@@ -16,6 +16,8 @@ const markdownTheme = {
 
 const ApplicationCard = ({ application }) => {
   console.log('Application', application);
+  const { picture, name, twitter, linkedin } = application.mentor;
+  const picture_src = picture ? `${picture}?tr=w-100,h-100,fo-auto` : '';
   return (
     <Stack
       borderWidth="1px"
@@ -36,35 +38,27 @@ const ApplicationCard = ({ application }) => {
           textAlign={"center"}
           justifyContent={"center"}
         >
-          {application.mentor.picture ? (
-              <Avatar
-                  size="xl"
-                  src={application.mentee.picture + "?tr=w-100,h-100,fo-auto"}
-                  name={application.mentee.name}
-                  alignSelf={"center"}
-              />
-          ) : (
-              <Avatar
-                  size="xl"
-                  name={application.mentee.name}
-                  alignSelf={"center"}
-              />
-          )}
-          <Heading size="sm">{application.mentor.name}</Heading>
+          <Avatar
+            size="xl"
+            src={picture_src}
+            name={name}
+            alignSelf={"center"}
+          />
+          <Heading size="sm">{name}</Heading>
           <Stack
             direction={"row"}
             textAlign={"center"}
             justifyContent={"center"}
           >
-            {application.mentor.twitter && (
-              <NextLink href={application.mentor.twitter} passHref>
+            {twitter && (
+              <NextLink href={twitter} passHref>
                 <Link target="_blank">
                   <Icon color="#1DA1F2" as={FaTwitterSquare} />
                 </Link>
               </NextLink>
             )}
-            {application.mentor.linkedin && (
-              <NextLink href={application.mentor.linkedin} passHref>
+            {linkedin && (
+              <NextLink href={linkedin} passHref>
                 <Link target="_blank">
                   <Icon color="#2867B2" as={FaLinkedin} />
                 </Link>
