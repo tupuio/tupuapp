@@ -15,7 +15,6 @@ const markdownTheme = {
 };
 
 const ApplicationCard = ({ application, handleCancel }) => {
-  console.log('Application', application);
   const { picture, name, twitter, linkedin } = application.mentor;
   const picture_src = picture ? `${picture}?tr=w-100,h-100,fo-auto` : '';
   return (
