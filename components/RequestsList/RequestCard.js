@@ -18,7 +18,8 @@ const markdownTheme = {
 };
 
 const RequestCard = ({ request, handleContact, handleAccept, handleReject }) => {
-  // console.log(request);
+  const { picture, name, twitter, linkedin } = request.mentee;
+  const picture_src = picture ? `${picture}?tr=w-100,h-100,fo-auto` : '';
   return (
     <Stack
       borderWidth="1px"
@@ -41,25 +42,25 @@ const RequestCard = ({ request, handleContact, handleAccept, handleReject }) => 
         >
           <Avatar
             size="xl"
-            src={request.mentee.picture + "?tr=w-100,h-100,fo-auto"}
-            name={request.mentee.name}
+            src={picture_src}
+            name={name}
             alignSelf={"center"}
           />
-          <Heading size="sm">{request.mentee.name}</Heading>
+          <Heading size="sm">{name}</Heading>
           <Stack
             direction={"row"}
             textAlign={"center"}
             justifyContent={"center"}
           >
-            {request.mentee.twitter && (
-              <NextLink href={request.mentee.twitter} passHref>
+            {twitter && (
+              <NextLink href={twitter} passHref>
                 <Link target="_blank">
                   <Icon color="#1DA1F2" as={FaTwitterSquare} />
                 </Link>
               </NextLink>
             )}
-            {request.mentee.linkedin && (
-              <NextLink href={request.mentee.linkedin} passHref>
+            {linkedin && (
+              <NextLink href={linkedin} passHref>
                 <Link target="_blank">
                   <Icon color="#2867B2" as={FaLinkedin} />
                 </Link>
