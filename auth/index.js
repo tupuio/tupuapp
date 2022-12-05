@@ -1,27 +1,17 @@
-import { getXataHeaders, DB_PATH } from "../services";
+import { getXataClient } from "../services/xata";
 
 export default function XataAdapter(client, options = {}) {
   return {
     async createUser(user) {
-      const response = await fetch(`${DB_PATH}/tables/users/data`, {
-        method: "POST",
-        headers: {
-          ...(await getXataHeaders()),
-        },
-        body: JSON.stringify({
-          name: user.name,
-          email: user.email,
-          roles: ["mentor", "mentee"],
-        }),
+      const xata = getXataClient();
+      const createdUser = await xata.db.users.create({
+        name: user.name,
+        email: user.email,
+        roles: ["mentor", "mentee"],
       });
-      if (response.status > 299) {
-        throw new Error(`Creating user in Xata: ${await response.text()}`);
-      }
-      const { id: userId } = await response.json();
-      console.log(`createUser: created user with id ${userId}`);
       // returns AdapterUser
       return {
-        id: userId,
+        id: createdUser.id,
         name: user.name,
         image: user.image,
         emailVerified: user.emailVerified,
@@ -29,21 +19,8 @@ export default function XataAdapter(client, options = {}) {
     },
 
     async getUser(id) {
-      console.log("getUser", id);
-      const response = await fetch(`${DB_PATH}/tables/users/data/${id}`, {
-        method: "GET",
-        headers: {
-          ...(await getXataHeaders()),
-        },
-      });
-      if (response.status === 404) {
-        return null;
-      }
-      if (response.status > 299) {
-        throw new Error(`Getting user from Xata: ${await response.text()}`);
-      }
-
-      const user = await response.json();
+      const xata = getXataClient();
+      const user = await xata.db.users.read(id);
       console.log("getUser: found user with id", user.id);
 
       return {
@@ -55,28 +32,8 @@ export default function XataAdapter(client, options = {}) {
     },
 
     async getUserByEmail(email) {
-      console.log("getUserByEmail", email);
-
-      const response = await fetch(`${DB_PATH}/tables/users/query`, {
-        method: "POST",
-        headers: {
-          ...(await getXataHeaders()),
-        },
-        body: JSON.stringify({
-          filter: {
-            email,
-          },
-        }),
-      });
-      if (response.status > 299) {
-        throw new Error(`Getting account from Xata: ${await response.text()}`);
-      }
-
-      const { records } = await response.json();
-      if (records.length === 0) {
-        return null;
-      }
-      const user = records[0];
+      const xata = getXataClient();
+      const user = await xata.db.users.filter("email", email).getFirst();
 
       console.log("getUserByEmail: found user with id", user.id);
 
@@ -90,38 +47,17 @@ export default function XataAdapter(client, options = {}) {
 
     async getUserByAccount({ provider, providerAccountId }) {
       console.log("getUserByAccount", provider, providerAccountId);
-
-      const response = await fetch(
-        `${DB_PATH}/tables/nextauth_providers/query`,
-        {
-          method: "POST",
-          headers: {
-            ...(await getXataHeaders()),
-          },
-          body: JSON.stringify({
-            columns: ["*", "user.*"],
-            filter: {
-              provider,
-              providerAccountId,
-            },
-          }),
-        }
-      );
-      if (response.status > 299) {
-        throw new Error(`Getting account from Xata: ${await response.text()}`);
-      }
-
-      const { records } = await response.json();
-      if (records.length === 0) {
+      const xata = getXataClient();
+      const account = await xata.db.nextauth_providers
+        .select(["*", "user.*"])
+        .filter({
+          provider,
+          providerAccountId,
+        })
+        .getFirst();
+      if (!account) {
         return null;
       }
-      if (records.length > 1) {
-        console.log(
-          `WARNING: multiple accounts linked to ${provider}/${providerAccountId}`
-        );
-      }
-      const account = records[0];
-      console.log("getUserByAccount: returning user with id", account.user.id);
 
       return {
         id: account.user.id,
@@ -150,19 +86,9 @@ export default function XataAdapter(client, options = {}) {
         providerAccountId: account.providerAccountId,
       };
 
-      const response = await fetch(
-        `${DB_PATH}/tables/nextauth_providers/data`,
-        {
-          method: "POST",
-          headers: {
-            ...(await getXataHeaders()),
-          },
-          body: JSON.stringify(link),
-        }
-      );
-      if (response.status > 299) {
-        throw new Error(`Creating link in Xata: ${await response.text()}`);
-      }
+      const xata = getXataClient();
+      await xata.db.nextauth_providers.create(link);
+
       return account;
     },
 
