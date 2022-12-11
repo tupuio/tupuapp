@@ -18,7 +18,7 @@ const markdownTheme = {
 };
 
 const MentorshipCard = ({ mentorship }) => {
-
+  console.log('mentorship id', mentorship.id);
   const { mentor } = mentorship;
 
   return (

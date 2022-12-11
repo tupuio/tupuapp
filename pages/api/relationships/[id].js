@@ -1,5 +1,7 @@
 import { getSession } from "next-auth/react";
-import { getXataHeaders, DB_PATH, getUser } from "../../../services";
+import { getUser } from "../../../services";
+import { getXataClient } from "../../../services/xata";
+
 
 export default async function handler(req, res) {
   const session = await getSession({ req });
@@ -27,34 +29,18 @@ async function handleGET(session, req, res) {
     res.status(500).json({ message: "Can't get user data" });
     return;
   }
-
-  const resp = await fetch(`${DB_PATH}/tables/relationships/query`, {
-    method: "POST",
-    headers: {
-      ...(await getXataHeaders()),
-    },
-    body: JSON.stringify({
-      columns: ["*", "mentor.*", "mentee.*"],
-      filter: {
-        id: req.query.id,
-      },
-    }),
-  });
-  if (resp.status > 299) {
-    res.status(resp.status).json(await resp.json());
-    return;
-  }
-  const relationship = await resp.json();
-
-  // Only mentors are public, and only the ones that are not hidden
-  // if (!user.roles || !user.roles.includes("mentor") || user.mentor?.hide) {
-  //   res.status(404).json({
-  //     error: "User not found",
-  //   });
-  //   return;
-  // }
-
-  res.status(200).json(relationship);
+  const xata = getXataClient();
+  const relationship = await xata.db.relationships
+    .select(["*", "mentor.*", "mentee.*"])
+    .filter({
+      id: req.query.id,
+    })
+    .filter({$any: [
+      { mentor: user.id },
+      { mentee: user.id },
+    ]})
+    .getFirst();
+  res.status(200).json({ ...relationship, userId: user.id });
 }
 
 async function handlePUT(session, req, res) {

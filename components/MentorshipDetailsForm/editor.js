@@ -12,7 +12,7 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { useToast } from "@chakra-ui/toast";
 
-export const RelationshipEditor = ({ relationship, mutateRelationship }) => {
+export const MentorshipDetailsEditor = ({ data: relationship, mutate, setEditMode }) => {
   const { register, handleSubmit } = useForm({
     defaultValues: relationship,
   });
@@ -21,25 +21,22 @@ export const RelationshipEditor = ({ relationship, mutateRelationship }) => {
   console.log("relationship: ", relationship)
 
   const onSubmit = async (data) => {
-    await fetch(`/api/relationships/${data.id}`, {
+    await fetch(`/api/relationships/${relationship.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ relationship: data }),
     });
-    // mutateRelationship(data);
+    mutate(relationship);
   };
-
+  const handleCancelEditClick = (ev) => {
+    setEditMode(false);
+  };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Flex py={10}>
         <VStack w="full" h="full" p={10} spacing={10} alignItems="flex-start">
-          <FormControl>
-            <FormLabel htmlFor="mentee.name">Mentee Name</FormLabel>
-            <div>{relationship?.mentee.name}</div>
-          </FormControl>
-
           <FormControl>
             <FormLabel htmlFor="goals">Goals</FormLabel>
             <Textarea
@@ -52,10 +49,7 @@ export const RelationshipEditor = ({ relationship, mutateRelationship }) => {
               goals description.
             </FormHelperText>
           </FormControl>
-
-
           <FormControl>
-
             <FormLabel htmlFor="notes">Notes</FormLabel>
             <Textarea
               placeholder='Write some Notes'
@@ -67,26 +61,15 @@ export const RelationshipEditor = ({ relationship, mutateRelationship }) => {
             </FormHelperText>
           </FormControl>
           <FormControl>
-            <Button colorScheme="greenButton" size="md" type="submit">
-              Save
-            </Button>
-          </FormControl>
-          <FormControl>
-            <FormLabel>Mentorship Status</FormLabel>
-            <Select placeholder='End Mentorship?'>
-              <option>Finish</option>
-              <option>Long-term Mentorship</option>
-            </Select>
-          </FormControl>
-
-
-          {/* <FormControl>
             <HStack spacing="24px">
               <Button colorScheme="greenButton" size="md" type="submit">
                 Save
               </Button>
-            </HStack>
-          </FormControl> */}
+              <Button onClick={handleCancelEditClick} colorScheme={"grayButton"} size="md">
+                Cancel
+              </Button>
+            </HStack>           
+          </FormControl>
         </VStack>
       </Flex>
     </form>
