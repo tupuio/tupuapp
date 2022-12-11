@@ -5,8 +5,8 @@ import ReactMarkdown from "react-markdown";
 import ChakraUIRenderer from "chakra-ui-markdown-renderer";
 import Icon from "@chakra-ui/icon";
 import { default as NextLink } from "next/link";
+import { useRouter } from 'next/router'
 import { FaTwitterSquare, FaLinkedin } from "react-icons/fa";
-
 
 const markdownTheme = {
   p: (props) => {
@@ -16,7 +16,7 @@ const markdownTheme = {
 };
 
 const MenteeCard = ({ mentorship }) => {
-
+  const router = useRouter()
   const { mentee } = mentorship;
 
   return (
@@ -93,7 +93,10 @@ const MenteeCard = ({ mentorship }) => {
           textAlign={"right"}
           justifyContent={"center"}
         >
-          <Button colorScheme={"greenButton"}>Details</Button>
+          <Button 
+            colorScheme={"greenButton"}
+            onClick={() => router.push(`/mentorshipDetails/${mentorship.id}`)}
+          >Details</Button>
         </Stack>
       </Stack>
     </Stack>
