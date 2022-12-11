@@ -40,7 +40,7 @@ async function handleGET(session, req, res) {
       { mentee: user.id },
     ]})
     .getFirst();
-  res.status(200).json({ ...relationship, userId: user.id });
+  res.status(200).json(relationship);
 }
 
 async function handlePUT(session, req, res) {

@@ -1,5 +1,7 @@
 import { useState } from "react";
+import { useSession } from "next-auth/react";
 import useSWR from "swr";
+
 import { Alert, AlertIcon } from "@chakra-ui/alert";
 
 import { MentorshipDetailsEditor } from "./editor";
@@ -11,6 +13,7 @@ import MentorshipCard from "../MentorshipsList/MentorshipCard";
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 const MentorshipDetailsForm = ({ id }) => {
+  const { data: session } = useSession();
   const { data, error, mutate } = useSWR(`/api/relationships/${id}`, fetcher);
   const [editMode, setEditMode] = useState(false);
 
@@ -29,7 +32,7 @@ const MentorshipDetailsForm = ({ id }) => {
   
   return (
     <>
-      { data?.userId === data?.mentor?.id ?
+      { session?.user.id === data?.mentor?.id ?
         <MenteeCard mentorship={data} />
         :
         <MentorshipCard mentorship={data} />
