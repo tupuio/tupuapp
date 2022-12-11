@@ -16,6 +16,7 @@ import {
 } from "@chakra-ui/modal";
 import { Textarea } from "@chakra-ui/textarea";
 import { useToast } from "@chakra-ui/toast";
+import { Switch } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 
 const RequestModal = ({ mentor, isOpen, onClose }) => {
@@ -24,6 +25,7 @@ const RequestModal = ({ mentor, isOpen, onClose }) => {
     defaultValues: {
       message:
         "I'd love to have you as a mentor!\n\n\n I want to \u003cinsert what you'd like to achieve\u003e, and I think your mentorship would be really valuable.",
+      longterm: false,
     },
   });
 
@@ -36,6 +38,7 @@ const RequestModal = ({ mentor, isOpen, onClose }) => {
       body: JSON.stringify({
         mentorId: mentor.id,
         message: data.message,
+        longterm: data.longterm,
       }),
     });
     if (resp.status > 299) {
@@ -70,6 +73,7 @@ const RequestModal = ({ mentor, isOpen, onClose }) => {
               mentee. You can customize the message that we&apos;ll send, which
               greatly improves your chances.
             </Text>
+            <br />
             <FormControl mt={4}>
               <FormLabel htmlFor="message">Your Message</FormLabel>
               <Textarea {...register("message")} id="message" rows={6} />
@@ -79,6 +83,15 @@ const RequestModal = ({ mentor, isOpen, onClose }) => {
                 formatting. Leave an empty line between paragraphs.
               </FormHelperText>
             </FormControl>
+            <br />
+            <FormControl display="flex" alignItems="center" mt={2}>
+              <FormLabel htmlFor="longterm" mb={1}>Long term mentorship</FormLabel>
+              <Switch
+                {...register("longterm")}
+                id="longterm"
+              />
+            </FormControl>
+            <br />
           </ModalBody>
 
           <ModalFooter>
