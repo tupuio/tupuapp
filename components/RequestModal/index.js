@@ -21,7 +21,8 @@ import { useForm } from "react-hook-form";
 
 const RequestModal = ({ mentor, isOpen, onClose }) => {
   const toast = useToast();
-  const { register, handleSubmit } = useForm({
+
+  const { register, handleSubmit, formState: { isSubmitting } } = useForm({
     defaultValues: {
       message:
         "I'd love to have you as a mentor!\n\n\n I want to \u003cinsert what you'd like to achieve\u003e, and I think your mentorship would be really valuable.",
@@ -41,6 +42,7 @@ const RequestModal = ({ mentor, isOpen, onClose }) => {
         longterm: data.longterm,
       }),
     });
+
     if (resp.status > 299) {
       toast({
         title: "Error",
@@ -50,6 +52,14 @@ const RequestModal = ({ mentor, isOpen, onClose }) => {
         isClosable: true,
       });
     } else {
+      toast({
+        title: "Success!",
+        description: "The mentorship request was successfully sent",
+        status: "success",
+        position: "top",
+        isClosable: true,
+      });
+
       onClose();
     }
   };
@@ -98,7 +108,7 @@ const RequestModal = ({ mentor, isOpen, onClose }) => {
             <Button colorScheme={"grayButton"} mr={3} onClick={onClose}>
               Close
             </Button>
-            <Button type="submit" colorScheme={"blueButton"}>
+            <Button type="submit" colorScheme={"blueButton"} isLoading={isSubmitting}>
               Request
             </Button>
           </ModalFooter>
