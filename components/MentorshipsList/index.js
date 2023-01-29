@@ -7,6 +7,9 @@ const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 const MentorshipsList = () => {
   const { data, error } = useSWR("/api/mentorships", fetcher);
+
+  console.log('data', data)
+
   if (error) {
     return (
       <Alert mt={10} status="error">
@@ -38,7 +41,7 @@ const MentorshipsList = () => {
         {data.records.map((mentorship) => (
           <MentorshipCard key={mentorship.id} mentorship={mentorship} />
         ))}
-      </SimpleGrid> 
+      </SimpleGrid>
     </>
   );
 };
