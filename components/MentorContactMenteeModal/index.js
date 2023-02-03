@@ -22,7 +22,7 @@ import { useForm } from "react-hook-form";
 
 const MentorContactMenteeModal = ({ request, isOpen, onClose }) => {
   const toast = useToast();
-  const { register, handleSubmit } = useForm({
+  const { register, handleSubmit, formState: { isSubmitting } } = useForm({
     defaultValues: {
       message:
       `Hi there!\n\nI've seen your mentorship request and I'd like to ask you a couple of questions!\n\n\u003cinsert what you'd like to ask, clarify\u003e \n\nI hope to hear from you soon!`,
@@ -42,12 +42,19 @@ const MentorContactMenteeModal = ({ request, isOpen, onClose }) => {
     if (resp.status > 299) {
       toast({
         title: "Error",
-        description: "Error creating request",
+        description: "Error sending message",
         status: "error",
         position: "top",
         isClosable: true,
       });
     } else {
+      toast({
+        title: "Success!",
+        description: "Your message has been sent successfully!",
+        status: "success",
+        position: "top",
+        isClosable: true,
+      });
       onClose();
     }
   };
@@ -85,7 +92,7 @@ const MentorContactMenteeModal = ({ request, isOpen, onClose }) => {
           </ModalBody>
           <ModalFooter>
             <Stack spacing={5} direction='row'>
-              <Button type="submit" colorScheme={"blueButton"}>
+              <Button type="submit" colorScheme={"blueButton"} isLoading={isSubmitting}>
                 Send message
               </Button>
               <Button colorScheme={"grayButton"} mr={3} onClick={onClose}>
