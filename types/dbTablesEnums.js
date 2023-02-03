@@ -20,7 +20,7 @@ export const IsRelationshipStatusValid = (status) => Object.values(RelationshipS
 
 export const RelationshipStatusLabelsEnum = Object.freeze({
   [RelationshipStatusEnum.Started]: "Started",
-  [RelationshipStatusEnum.Completed]: "Completed",
+  [RelationshipStatusEnum.ClosedCompleted]: "Completed",
   [RelationshipStatusEnum.ClosedBusy]: "Closed, because busy at the moment",
   [RelationshipStatusEnum.ClosedNoGoodFit]: "Closed, because was not the right fit",
   [RelationshipStatusEnum.ClosedNotActive]: "Closed, because not used anymore",
