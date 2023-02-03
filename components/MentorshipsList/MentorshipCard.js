@@ -8,7 +8,7 @@ import ChakraUIRenderer from "chakra-ui-markdown-renderer";
 import Icon from "@chakra-ui/icon";
 import { default as NextLink } from "next/link";
 import { FaTwitterSquare, FaLinkedin } from "react-icons/fa";
-
+import { RelationshipStatusEnum } from "../../types/dbTablesEnums";
 
 const markdownTheme = {
   p: (props) => {
@@ -17,7 +17,7 @@ const markdownTheme = {
   },
 };
 
-const MentorshipCard = ({ mentorship }) => {
+const MentorshipCard = ({ mentorship, handleCloseMentorship }) => {
 
   const { mentor } = mentorship;
 
@@ -87,6 +87,28 @@ const MentorshipCard = ({ mentorship }) => {
           justifyContent={"center"}
         >
           <Button colorScheme={"greenButton"}>Details</Button>
+          <Menu>
+            <MenuButton
+              as={Button}
+              rightIcon={<ChevronDownIcon />}
+            >
+              Close
+            </MenuButton>
+            <MenuList>
+              <MenuItem 
+                onClick={() => handleCloseMentorship(mentorship, RelationshipStatusEnum.ClosedCompleted)}
+              >Completed</MenuItem>
+              <MenuItem 
+                onClick={() => handleCloseMentorship(mentorship, RelationshipStatusEnum.ClosedNoGoodFit)}
+              >Not a good fit</MenuItem>
+              <MenuItem 
+                onClick={() => handleCloseMentorship(mentorship, RelationshipStatusEnum.ClosedBusy)}
+              >I&apos;m busy</MenuItem>
+              <MenuItem 
+                onClick={() => handleCloseMentorship(mentorship, RelationshipStatusEnum.ClosedNotActive)}
+              >Not active</MenuItem>
+            </MenuList>
+          </Menu>
         </Stack>
       </Stack>
     </Stack>
