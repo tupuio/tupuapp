@@ -1,7 +1,7 @@
 import { CloseButton } from "@chakra-ui/close-button";
 import { Box, Flex, Text } from "@chakra-ui/layout";
 import { Tag } from "@chakra-ui/tag";
-import { Link } from "@chakra-ui/react";
+import { Link, Divider } from "@chakra-ui/react";
 import { ExternalLinkIcon } from '@chakra-ui/icons'
 import {
   FiHome,
@@ -89,6 +89,7 @@ const SidebarContent = ({ onClose, mode, ...rest }) => {
             )}
           </NavItem>
         ))}
+        <Divider />
         <NavItem key="tupu.io" icon={FiHome} href="https://tupu.io" cursor="default">
           <Link href="https://tupu.io" isExternal cursor="link">
             tupu.io <ExternalLinkIcon mx="2px" />
