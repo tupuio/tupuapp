@@ -7,10 +7,11 @@ import useSWR from "swr";
 import MentorshipCard from "./MentorshipCard";
 import TupuAlertDialog from "../TupuAlertDialog";
 
+
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 const MentorshipsList = () => {
-  const { data, error, mutate } = useSWR("/api/mentorships", fetcher);
+  const { data, error, mutate } = useSWR("/api/mentorships?mode=mentee", fetcher);
 
   const [actionDialogParams, setActionDialogParams] = useState(null);
   const [isActionDialogLoading, setActionDialogLoading] = useState(false);
@@ -112,7 +113,7 @@ const MentorshipsList = () => {
   return (
     <>
       <Text>
-        These are your active mentorships. Go to their details, and from there you can book a call with the mentor, and manage the mentorship.
+        These are your active mentorships. You can book a call with the mentor, and close the mentorship.
       </Text>
       <SimpleGrid mt={10} columns={1} spacing={10}>
         {data.records.map((mentorship) => (

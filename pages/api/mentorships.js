@@ -28,12 +28,21 @@ async function handleGET(session, req, res) {
     return;
   }
   const xata = getXataClient();
+  const filters = {
+    status: RelationshipStatusEnum.Started,
+  };
+  const selects = ["*"];
+  const mode = req.query?.mode ?? "mentee";
+  if (mode === "mentee") {
+    filters.mentee = user.id;
+    selects.push("mentor.*");
+  } else {
+    filters.mentor = user.id;
+    selects.push("mentee.*");
+  }
   const mentorships = await xata.db.relationships
-    .select(["*", "mentor.*"])
-    .filter({
-      mentee: user.id,
-      status: RelationshipStatusEnum.Started,
-    })
+    .select(selects)
+    .filter(filters)
     .getAll();
   res.status(200).json({ records: mentorships });
 }
