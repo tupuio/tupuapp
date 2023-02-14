@@ -8,8 +8,7 @@ import {
 import { Input } from "@chakra-ui/input";
 import { Flex, HStack, VStack } from "@chakra-ui/layout";
 import { useForm } from "react-hook-form";
-import { Switch, Link } from '@chakra-ui/react'
-import { ExternalLinkIcon } from '@chakra-ui/icons'
+import { Switch } from '@chakra-ui/react'
 
 export const MentorPreferencesEditor = ({ profile, setEditMode, mutateProfile }) => {
   const { register, handleSubmit, formState: { errors } } = useForm({
@@ -38,25 +37,24 @@ export const MentorPreferencesEditor = ({ profile, setEditMode, mutateProfile })
       <Flex py={10}>
         <VStack w="full" h="full" p={10} spacing={10} alignItems="flex-start">
           <FormControl isInvalid={errors.mentor?.calendly}>
-            <FormLabel htmlFor="mentor.calendly">Calendly Event Link</FormLabel>
+            <FormLabel htmlFor="mentor.calendly">Calendar Event Link</FormLabel>
             <Input
-              placeholder="https://calendly.com/your_username/your_event_name"
+              placeholder="Calendar link"
               {...register("mentor.calendly", 
-                { required: { value: true, message: "Your Calendly event link is required to be able to start with mentoring."},
+                {
                   pattern: {
                     value: /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/i,
                     message: "Invalid URL link."
                   } 
-                })}
+                }
+              )}
               id="mentor.calendly"
             />
             {errors.mentor?.calendly && 
-              <FormErrorMessage>{errors.mentor.calendly.message}</FormErrorMessage>
+              <FormErrorMessage>{errors.mentor?.calendly.message}</FormErrorMessage>
             }            
             <FormHelperText>
-              Your Calendly event link will be used by your mentees to book your mentorship sessions. Pick yours from your <Link href="https://calendly.com/event_types/user/me" isExternal>
-              Calendly events <ExternalLinkIcon mx='2px' />
-              </Link>.
+              Your calendar event link will be used by your mentees to book your mentorship sessions. Pick yours from Calendly, Cal.com, or any other calendar event service.
             </FormHelperText>
           </FormControl>
           <FormControl>
