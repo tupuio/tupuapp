@@ -1,5 +1,5 @@
 import { Button } from "@chakra-ui/button";
-import { Flex, Text, VStack } from "@chakra-ui/layout";
+import { Flex, VStack } from "@chakra-ui/layout";
 import { Table, Tbody, Td, Tr } from "@chakra-ui/table";
 import {
   Alert,
@@ -13,7 +13,7 @@ export const MentorPreferencesViewer = ({ profile, setEditMode }) => {
   return (
     <Flex py={10} px={10}>
       <VStack>
-      {!profile.mentor || !profile.mentor.calendly ? (
+      {!profile.mentor ? (
         <Alert status='warning'>
           <AlertIcon />
           You preferences are not filled yet! Please edit your preferences to start with your mentoring journey.
@@ -22,8 +22,17 @@ export const MentorPreferencesViewer = ({ profile, setEditMode }) => {
         <Table variant="simple" size="lg">
           <Tbody>
             <Tr>
-              <Td fontWeight={700}>Calendly Event Link</Td>
-              <Td minWidth={400}>{profile.mentor.calendly}</Td>
+              <Td fontWeight={700}>Calendar Event Link</Td>
+              {profile.mentor.calendly ? (
+                <Td minWidth={400}>{profile.mentor.calendly}</Td>
+              ) : (
+                <Td minWidth={400}>
+                  <Alert status='warning'>
+                    <AlertIcon />
+                    Without a calendar link, your mentees will have to write you an email to set up calls.
+                  </Alert>
+                </Td>
+              )}
             </Tr>
             <Tr>
               <Td fontWeight={700}>Short term mentorships</Td>
