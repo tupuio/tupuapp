@@ -6,7 +6,7 @@ import ReactMarkdown from "react-markdown";
 const markdownTheme = {
   p: (props) => {
     const { children } = props;
-    return <Text mb={2}>{children}</Text>;
+    return <Text>{children}</Text>;
   },
 };
 
