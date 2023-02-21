@@ -38,7 +38,7 @@ const MentorshipInfo = ({ mentorship }) => {
         <ReactMarkdown components={ChakraUIRenderer(markdownTheme)} skipHtml>
           {message}
         </ReactMarkdown>
-        <Text textAlign={"center"} mt={4} as='b'>
+        <Text as='b'>
           {longterm?"Long":"Short"} term mentorship
         </Text>
       </VStack>
