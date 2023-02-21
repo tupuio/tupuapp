@@ -9,8 +9,7 @@ export default function ApplicationsPage() {
         <Text>
           You have sent the application for mentorship to the following people. 
           Please, be patient, they will accept or deny your application. You can 
-          cancel an application at anytime, please provide a kind message to the 
-          mentor while doing so.
+          cancel an application at anytime.
         </Text>
         <ApplicationsList />
       </Box>

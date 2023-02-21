@@ -1,25 +1,14 @@
-import { Avatar } from "@chakra-ui/avatar";
 import { Button } from "@chakra-ui/button";
-import { Heading, Link, Stack, Text } from "@chakra-ui/layout";
+import { Stack } from "@chakra-ui/layout";
 import { MenuButton, Menu, MenuList, MenuItem } from '@chakra-ui/react'
 import { ChevronDownIcon } from '@chakra-ui/icons'
-import ReactMarkdown from "react-markdown";
-import ChakraUIRenderer from "chakra-ui-markdown-renderer";
-import Icon from "@chakra-ui/icon";
-import { default as NextLink } from "next/link";
-import { FaTwitterSquare, FaLinkedin } from "react-icons/fa";
 import { RequestStatusEnum } from "../../types/dbTablesEnums";
+import PersonInfo from "../MentorshipsList/PersonInfo";
+import MentorshipInfo from "../MentorshipsList/MentorshipInfo";
 
-const markdownTheme = {
-  p: (props) => {
-    const { children } = props;
-    return <Text mb={2}>{children}</Text>;
-  },
-};
 
 const RequestCard = ({ request, handleContact, handleAccept, handleReject }) => {
-  const { picture, name, twitter, linkedin } = request.mentee;
-  const picture_src = picture ? `${picture}?tr=w-100,h-100,fo-auto` : '';
+  const { mentee, message, creationDate: mentorshipDate, status, longterm } = request;
   return (
     <Stack
       borderWidth="1px"
@@ -33,53 +22,10 @@ const RequestCard = ({ request, handleContact, handleAccept, handleReject }) => 
       <Stack
         direction={{ base: "column", lg: "row" }}
         spacing={{ base: 4, lg: 20 }}
+        width='100%'
       >
-        <Stack
-          pl={4}
-          direction={"column"}
-          textAlign={"center"}
-          justifyContent={"center"}
-        >
-          <Avatar
-            size="xl"
-            src={picture_src}
-            name={name}
-            alignSelf={"center"}
-          />
-          <Heading size="sm">{name}</Heading>
-          <Stack
-            direction={"row"}
-            textAlign={"center"}
-            justifyContent={"center"}
-          >
-            {twitter && (
-              <NextLink href={twitter} passHref>
-                <Link target="_blank">
-                  <Icon color="#1DA1F2" as={FaTwitterSquare} />
-                </Link>
-              </NextLink>
-            )}
-            {linkedin && (
-              <NextLink href={linkedin} passHref>
-                <Link target="_blank">
-                  <Icon color="#2867B2" as={FaLinkedin} />
-                </Link>
-              </NextLink>
-            )}
-          </Stack>
-        </Stack>
-
-        <Stack
-          direction={"column"}
-          textAlign={"left"}
-          justifyContent={"center"}
-        >
-          <ReactMarkdown components={ChakraUIRenderer(markdownTheme)} skipHtml>
-            {request.message}
-          </ReactMarkdown>
-        </Stack>
-
-
+        <PersonInfo person={mentee} />
+        <MentorshipInfo mentorship={{ message, mentorshipDate, status, longterm }} />
         <Stack
           direction={"column"}
           textAlign={"right"}
@@ -102,7 +48,7 @@ const RequestCard = ({ request, handleContact, handleAccept, handleReject }) => 
               >Not a good fit</MenuItem>
               <MenuItem 
                 onClick={() => handleReject(request, RequestStatusEnum.RejectedBusy)}
-              >I&apos;m busy</MenuItem>
+              >Not available</MenuItem>
               <MenuItem 
                 onClick={() => handleReject(request, RequestStatusEnum.Rejected)}
               >Prefer not to say</MenuItem>

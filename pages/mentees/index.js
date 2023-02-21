@@ -5,7 +5,7 @@ export default function MenteesPage() {
   return (
     <>
       <Heading mb={10}>Mentees</Heading>
-      <Box maxWidth="container.xl">
+      <Box maxWidth="4xl">
         <MenteesList />
       </Box>
     </>

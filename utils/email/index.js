@@ -135,7 +135,7 @@ const buildReasonString = (requestStatus) => {
   }
 };
 
-export const sendMenteeMentorshipClosedEmail = ({ mentee, mentor, menteeFeedback, tupuFeedback, }) => {
+export const sendMenteeMentorshipClosedEmail = ({ mentee, mentor, menteeFeedback, }) => {
   // mentee and mentor = { name: "", email: "" }
   const params = {
     mentee, 
@@ -146,8 +146,7 @@ export const sendMenteeMentorshipClosedEmail = ({ mentee, mentor, menteeFeedback
       return txtTemplate
         .replace(/\[\[menteeName\]\]/g, mentee.name)
         .replace(/\[\[mentorName\]\]/g, mentor.name)
-        .replace(/\[\[menteeFeedback\]\]/g, menteeFeedback)
-        .replace(/\[\[tupuFeedback\]\]/g, tupuFeedback);
+        .replace(/\[\[menteeFeedback\]\]/g, menteeFeedback);
     }
   };
   sendNotificationEmailToUsers(params);
@@ -171,7 +170,7 @@ export const sendMentorContactMenteeEmail = ({ mentee, mentor, mentorMessage }) 
   sendNotificationEmailToUsers(params);
 }
 
-export const sendMentorMentorshipClosedEmail = ({ mentee, mentor, mentorFeedback, tupuFeedback, }) => {
+export const sendMentorMentorshipClosedEmail = ({ mentee, mentor, mentorFeedback, }) => {
   // mentee and mentor = { name: "", email: "" }
   const params = {
     mentee, 
@@ -182,8 +181,7 @@ export const sendMentorMentorshipClosedEmail = ({ mentee, mentor, mentorFeedback
       return txtTemplate
         .replace(/\[\[menteeName\]\]/g, mentee.name)
         .replace(/\[\[mentorName\]\]/g, mentor.name)
-        .replace(/\[\[mentorFeedback\]\]/g, mentorFeedback)
-        .replace(/\[\[tupuFeedback\]\]/g, tupuFeedback);
+        .replace(/\[\[mentorFeedback\]\]/g, mentorFeedback);
     }
   };
   sendNotificationEmailToUsers(params);

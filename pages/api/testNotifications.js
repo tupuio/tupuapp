@@ -39,7 +39,6 @@ async function handleGET(session, req, res) {
     //   mentee,
     //   mentor,
     //   menteeFeedback: "the mentee feedback!",
-    //   tupuFeedback: "the feedback for tupu"
     // });
 
     // sendMentorContactMenteeEmail({ mentee, mentor, mentorMessage: "this is a message for you mentee!" });
@@ -48,7 +47,6 @@ async function handleGET(session, req, res) {
     //   mentee,
     //   mentor,
     //   mentorFeedback: "the mentor feedback!",
-    //   tupuFeedback: "the feedback for tupu"
     // });
 
     // sendMentorshipRequestAcceptedEmail({ mentee, mentor, longTerm: false });
