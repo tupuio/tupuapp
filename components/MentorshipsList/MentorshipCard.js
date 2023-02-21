@@ -103,7 +103,7 @@ const MentorshipCard = ({ mentorship, handleCloseMentorship }) => {
               >Not a good fit</MenuItem>
               <MenuItem 
                 onClick={() => handleCloseMentorship(mentorship, RelationshipStatusEnum.ClosedBusy)}
-              >I&apos;m busy</MenuItem>
+              >Not available</MenuItem>
               <MenuItem 
                 onClick={() => handleCloseMentorship(mentorship, RelationshipStatusEnum.ClosedNotActive)}
               >Not active</MenuItem>
