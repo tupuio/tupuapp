@@ -33,7 +33,7 @@ const MentorshipInfo = ({ mentorship }) => {
           align='stretch'
       >
         { (dateLabel && mentorshipDate) && 
-          <Text textAlign={"right"} mt={4}>{dateLabel}: {mentorshipDate}</Text>
+          <Text>{dateLabel}: {mentorshipDate}</Text>
         }
         <ReactMarkdown components={ChakraUIRenderer(markdownTheme)} skipHtml>
           {message}
