@@ -2,7 +2,7 @@ import Icon from "@chakra-ui/icon";
 import { Flex, Link } from "@chakra-ui/layout";
 import { default as NextLink } from "next/link";
 
-const NavItem = ({ icon, children, href, ...rest }) => {
+const NavItem = ({ icon, children, href, bg, cursor="pointer", ...rest }) => {
   return (
     <NextLink href={href}>
       <Link style={{ textDecoration: "none" }}>
@@ -12,11 +12,11 @@ const NavItem = ({ icon, children, href, ...rest }) => {
           mx="4"
           borderRadius="lg"
           role="group"
-          cursor="pointer"
+          cursor={cursor}
           color="white"
           _hover={{
             //bgGradient: "linear(to-b, brand.green, brand.blue2)",
-            bg: "brand.green",
+            bg,
             color: "white",
           }}
           {...rest}

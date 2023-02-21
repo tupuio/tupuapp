@@ -47,7 +47,7 @@ function TupuApp({
     <SessionProvider session={session}>
       <ChakraProvider theme={theme}>
         <SidebarWithHeader mode={mode} setMode={setMode}>
-          <Component {...pageProps} />
+          <Component mode={mode} {...pageProps} />
         </SidebarWithHeader>
       </ChakraProvider>
     </SessionProvider>

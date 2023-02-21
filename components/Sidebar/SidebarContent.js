@@ -1,6 +1,8 @@
 import { CloseButton } from "@chakra-ui/close-button";
 import { Box, Flex, Text } from "@chakra-ui/layout";
 import { Tag } from "@chakra-ui/tag";
+import { Link, Divider } from "@chakra-ui/react";
+import { ExternalLinkIcon } from '@chakra-ui/icons'
 import {
   FiHome,
   FiInbox,
@@ -16,16 +18,15 @@ import NavItem from "./NavItem";
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 const SidebarContent = ({ onClose, mode, ...rest }) => {
-  const { mentorshipsData } = useSWR("/api/mentorshipsCount", fetcher);
-  const { requestsData } = useSWR("/api/requestsCount", fetcher);
-  const { applicationsData } = useSWR("/api/applicationsCount", fetcher);
-  const { menteesData } = useSWR("/api/menteesCount", fetcher);
+  const { data: requestsData } = useSWR("/api/requestsCount", fetcher);
+  const { data: menteesData } = useSWR("/api/menteesCount", fetcher);
+  const { data: mentorshipsData } = useSWR("/api/mentorshipsCount", fetcher);
+  const { data: applicationsData } = useSWR("/api/applicationsCount", fetcher);
   const mentorshipsCount = mentorshipsData?.count || 0;
   const requestsCount = requestsData?.count || 0;
   const applicationsCount = applicationsData?.count || 0;
   const menteesCount = menteesData?.count || 0;
   const MentorLinkItems = [
-    { name: "Home", icon: FiHome, href: "/" },
     { name: "Your profile", icon: FiUser, href: "/profile" },
     { name: "Preferences", icon: FiSliders, href: "/preferences" },
     {
@@ -35,16 +36,13 @@ const SidebarContent = ({ onClose, mode, ...rest }) => {
       tag: () => requestsCount,
     },
     { name: "Mentees", icon: FiUsers, href: "/mentees", tag: () => menteesCount },
-    { name: "Settings", icon: FiSettings, href: "/settings" },
   ];
 
   const MenteeLinkItems = [
-    { name: "Home", icon: FiHome, href: "/" },
     { name: "Your profile", icon: FiUser, href: "/profile" },
     { name: "Find a mentor", icon: FiSearch, href: "/mentors" },
     { name: "Applications", icon: FiInbox, href: "/applications", tag: () => applicationsCount, },
     { name: "Mentorships", icon: FiUsers, href: "/mentorships", tag: () => mentorshipsCount, },
-    { name: "Settings", icon: FiSettings, href: "/settings" },
   ];
 
   const links = mode === "mentor" ? MentorLinkItems : MenteeLinkItems;
@@ -52,7 +50,7 @@ const SidebarContent = ({ onClose, mode, ...rest }) => {
   return (
     <Box
       transition="3s ease"
-      bg="brand.blue"
+      bg={mode === "mentor"?"brand.green":"brand.blue"}
       borderRight="1px"
       borderRightColor="gray.400"
       w={{ base: "full", md: 60 }}
@@ -70,9 +68,19 @@ const SidebarContent = ({ onClose, mode, ...rest }) => {
           onClick={onClose}
         />
       </Flex>
+      <Flex h="14" alignItems="center" mx="8" justifyContent="space-between">
+        <Text textColor="white" fontSize="2xl" fontWeight="normal">
+          {mode}
+        </Text>
+      </Flex>
       <Box mt={50}>
         {links.map((link) => (
-          <NavItem key={link.name} icon={link.icon} href={link.href}>
+          <NavItem 
+                  key={link.name} 
+                  icon={link.icon} 
+                  href={link.href}
+                  bg={mode === "mentor"?"brand.blue":"brand.green"}
+                  >
             {link.name}
             {link.tag && link.tag() > 0 && (
               <Tag size="sm" colorScheme="teal" ml={2}>
@@ -81,6 +89,12 @@ const SidebarContent = ({ onClose, mode, ...rest }) => {
             )}
           </NavItem>
         ))}
+        <Divider />
+        <NavItem key="tupu.io" icon={FiHome} href="https://tupu.io" cursor="default">
+          <Link href="https://tupu.io" isExternal cursor="link">
+            tupu.io <ExternalLinkIcon mx="2px" />
+          </Link> 
+        </NavItem>
       </Box>
     </Box>
   );
