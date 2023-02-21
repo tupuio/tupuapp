@@ -6,7 +6,7 @@ import { RelationshipStatusEnum } from "../../types/dbTablesEnums";
 import PersonInfo from "../MentorshipsList/PersonInfo";
 import MentorshipInfo from "../MentorshipsList/MentorshipInfo";
 
-const MenteeCard = ({ mentorship }) => {
+const MenteeCard = ({ mentorship, handleCloseMentorship }) => {
   const { mentee, message, startDate: mentorshipDate, status, longterm } = mentorship;
   return (
     <Stack
@@ -46,7 +46,7 @@ const MenteeCard = ({ mentorship }) => {
               >Not a good fit</MenuItem>
               <MenuItem 
                 onClick={() => handleCloseMentorship(mentorship, RelationshipStatusEnum.ClosedBusy)}
-              >I&apos;m busy</MenuItem>
+              >Not available</MenuItem>
               <MenuItem 
                 onClick={() => handleCloseMentorship(mentorship, RelationshipStatusEnum.ClosedNotActive)}
               >Not active</MenuItem>

@@ -34,17 +34,20 @@ const MentorshipCard = ({ mentorship, handleCloseMentorship }) => {
           {
           !!mentor?.mentor?.calendly
           ?
-          <Button 
+          <Button
+            as="a"
             rightIcon={<ExternalLinkIcon />} colorScheme='greenButton' variant='solid'
-            onClick={() => window.open(mentor?.mentor?.calendly)}
+            href={mentor?.mentor?.calendly}
+            target="_blank"
           >
             Book a Call
           </Button>
           :
           (mentor?.email &&
           <Button
-          leftIcon={<EmailIcon />} colorScheme='greenButton' variant='solid'
-          onClick={() => window.open('mailto:'+mentor?.email)}
+            as="a"
+            leftIcon={<EmailIcon />} colorScheme='greenButton' variant='solid'
+            href={`mailto:${mentor.email}`}
           >
             Email
           </Button>)}
@@ -64,7 +67,7 @@ const MentorshipCard = ({ mentorship, handleCloseMentorship }) => {
               >Not a good fit</MenuItem>
               <MenuItem 
                 onClick={() => handleCloseMentorship(mentorship, RelationshipStatusEnum.ClosedBusy)}
-              >I&apos;m busy</MenuItem>
+              >Not available</MenuItem>
               <MenuItem 
                 onClick={() => handleCloseMentorship(mentorship, RelationshipStatusEnum.ClosedNotActive)}
               >Not active</MenuItem>

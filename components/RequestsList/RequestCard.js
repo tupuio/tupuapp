@@ -48,7 +48,7 @@ const RequestCard = ({ request, handleContact, handleAccept, handleReject }) => 
               >Not a good fit</MenuItem>
               <MenuItem 
                 onClick={() => handleReject(request, RequestStatusEnum.RejectedBusy)}
-              >I&apos;m busy</MenuItem>
+              >Not available</MenuItem>
               <MenuItem 
                 onClick={() => handleReject(request, RequestStatusEnum.Rejected)}
               >Prefer not to say</MenuItem>
