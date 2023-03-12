@@ -2,13 +2,11 @@ import { Alert, AlertIcon } from "@chakra-ui/alert";
 import { Image } from "@chakra-ui/image";
 import {
   Box,
-  Center,
+
   Container,
-  Divider,
   Flex,
   Heading,
   Link,
-  SimpleGrid,
   Stack,
   Text,
 } from "@chakra-ui/layout";
@@ -52,26 +50,23 @@ export default function MentorPage() {
   }
 
   if (!data) {
-    return <>Looading</>;
+    return <>Loading</>;
   }
 
   return (
     <>
-      <Container mt="10" maxW={"5xl"} py={12}>
-        <SimpleGrid
-          columns={{ base: 1, md: 2 }}
-          minChildWidth={400}
-          spacing={10}
-        >
-          <Stack spacing={4}>
-            <Box height="5px" width="150px" bg="brand.orange" mb={2}></Box>
-            <Heading size="2xl" color="gray.700">
-              {data.name}
-            </Heading>
+      <Container maxW={"5xl"} py={12}>
+        <Stack spacing={4} marginRight={"auto"}>
+          <Heading color="gray.700">
+            {data.name}
+          </Heading>
+          {data.title &&
             <Heading size="md" color="gray.500">
               {data.title}
             </Heading>
-            <Stack direction={"row"} justifyContent={"left"}>
+          }
+          {data.twitter || data.linkedin &&
+            <Stack direction={"row"} justifyContent={"left"} margin>
               {data.twitter && (
                 <NextLink href={data.twitter} passHref>
                   <Link target="_blank">
@@ -87,14 +82,19 @@ export default function MentorPage() {
                 </NextLink>
               )}
             </Stack>
+          }
+          {data.biography &&
             <ReactMarkdown
               components={ChakraUIRenderer(markdownTheme)}
               skipHtml
             >
               {data.biography}
             </ReactMarkdown>
-          </Stack>
-          <Flex>
+          }
+        </Stack>
+        {data.picture &&
+          <Flex maxWidth={400} mt={8}>
+
             <Image
               rounded={"md"}
               alt={data.name}
@@ -102,25 +102,19 @@ export default function MentorPage() {
               src={data.picture}
               objectFit={"cover"}
             />
+
           </Flex>
-        </SimpleGrid>
-        <Stack mt={10} direction="column">
-          <Stack mb={10}>
-            <Center>
-              <Box height="5px" width="150px" bg="brand.orange"></Box>
-            </Center>
-          </Stack>
-          <Center>
-            <Text maxWidth="2xl">
-              {data.name} are volunteering their time to mentor women, people of
-              color, and other underrepresented groups in the tech industry.
-            </Text>
-          </Center>
-          <Center>
+        }
+        <Stack spacing={4} mt={data.picture ? 8 : 4}>
+          <Text maxWidth="2xl">
+            {data.name} is volunteering their time to mentor women, people of
+            color, and other underrepresented groups in the tech industry.
+          </Text>
+          <Box>
             <Button onClick={() => handleRequest()} colorScheme="greenButton">
               Request as mentor
             </Button>
-          </Center>
+          </Box>
         </Stack>
       </Container>
       <RequestModal mentor={data} isOpen={isOpen} onClose={onClose} />
