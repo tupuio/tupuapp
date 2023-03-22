@@ -57,7 +57,7 @@ export const MentorPreferencesEditor = ({ profile, setEditMode, mutateProfile })
               Your calendar event link will be used by your mentees to book your mentorship sessions. Pick yours from Calendly, Cal.com, or any other calendar event service.
             </FormHelperText>
           </FormControl>
-          <FormControl>
+          {/* <FormControl>
             <FormLabel htmlFor="mentor.shortterm">Short term mentorships?</FormLabel>
             <Switch
               {...register("mentor.shortterm")}
@@ -96,7 +96,7 @@ export const MentorPreferencesEditor = ({ profile, setEditMode, mutateProfile })
             <FormHelperText>
             Your profile as mentor will be shown only to logged-in users.
             </FormHelperText>
-          </FormControl>
+          </FormControl> */}
           <FormControl>
             <HStack spacing="24px">
               <Button colorScheme="greenButton" size="md" type="submit">

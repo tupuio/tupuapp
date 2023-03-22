@@ -34,7 +34,7 @@ export const MentorPreferencesViewer = ({ profile, setEditMode }) => {
                 </Td>
               )}
             </Tr>
-            <Tr>
+            {/* <Tr>
               <Td fontWeight={700}>Short term mentorships</Td>
               <Td>{profile.mentor.shortterm ? "Yes" : "No"}</Td>
             </Tr>
@@ -49,7 +49,7 @@ export const MentorPreferencesViewer = ({ profile, setEditMode }) => {
             <Tr>
               <Td fontWeight={700}>Incognito Mode</Td>
               <Td>{profile.mentor.incognito ? "Active" : "Not Active"}</Td>
-            </Tr>
+            </Tr> */}
           </Tbody>
         </Table>
         )}
