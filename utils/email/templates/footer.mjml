@@ -9,7 +9,7 @@
     </mj-section>  
     <mj-section>
       <mj-column width="65%">
-        <mj-image align="left" width="80px" href="https://www.tupu.io" src="https://www.tupu.io/images/logo-2.svg"></mj-image>
+        <mj-image align="left" width="120px" href="https://www.tupu.io" src="https://raw.githubusercontent.com/tupuio/tupuapp/b76d27a1c178f37945df59c326f2c67ef8646c16/public/tupu.png"></mj-image>
       </mj-column>
       <mj-column width="35%">
         <mj-table>
