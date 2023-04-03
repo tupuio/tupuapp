@@ -2,7 +2,7 @@
   <mj-body>
     <mj-section>
       <mj-column width="100%">
-        <mj-image href="https://www.tupu.io" src="https://www.tupu.io/images/mentorship-map.svg"></mj-image>
+        <mj-image align="center" alt="Tupu app logo" width="120px" href="https://www.tupu.io" src="https://raw.githubusercontent.com/tupuio/tupuapp/b76d27a1c178f37945df59c326f2c67ef8646c16/public/tupu.png"></mj-image>
       </mj-column>
     </mj-section>
     <mj-section padding-top="30px">

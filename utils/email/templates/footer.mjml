@@ -9,25 +9,16 @@
     </mj-section>  
     <mj-section>
       <mj-column width="65%">
-        <mj-image align="left" width="80px" href="https://www.tupu.io" src="https://www.tupu.io/images/logo-2.svg"></mj-image>
+        <mj-image align="left" width="120px" href="https://www.tupu.io" src="https://raw.githubusercontent.com/tupuio/tupuapp/b76d27a1c178f37945df59c326f2c67ef8646c16/public/tupu.png"></mj-image>
       </mj-column>
       <mj-column width="35%">
-        <mj-table>
+        <mj-table align="right" width="60%">
           <tr style="list-style: none;line-height:1">
-            <td> <a href="#">
-                <img width="25" src="https://cdn.recast.ai/newsletter/twitter.png" />
+            <td> <a href="mailto:monica@tupu.io">
+                <img width="25" src="https://raw.githubusercontent.com/tupuio/tupuapp/eea51608023f756df44379ae46f4ac3f9f173ac2/public/envelope.png" />
               </a> </td>
-            <td> <a href="#">
-                <img width="25" src="https://cdn.recast.ai/newsletter/facebook.png" />
-              </a> </td>
-            <td> <a href="#">
-                <img width="25" src="https://cdn.recast.ai/newsletter/medium.png" />
-              </a> </td>
-            <td> <a href="#">
-                <img width="25" src="https://cdn.recast.ai/newsletter/youtube.png" />
-              </a> </td>
-            <td> <a href="#">
-                <img width="25" src="https://cdn.recast.ai/newsletter/google%2B.png" />
+            <td> <a href="https://www.linkedin.com/company/tupu-io">
+                <img width="25" src="https://raw.githubusercontent.com/tupuio/tupuapp/eea51608023f756df44379ae46f4ac3f9f173ac2/public/linkedin.png" />
               </a> </td>
           </tr>
         </mj-table>
