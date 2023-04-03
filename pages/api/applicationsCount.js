@@ -1,6 +1,7 @@
 import { getSession } from "next-auth/react";
 import { getUser } from "../../services";
 import { getXataClient } from "../../services/xata";
+import { RequestStatusEnum } from "../../types/dbTablesEnums";
 
 export default async function handler(req, res) {
   const session = await getSession({ req });
@@ -28,7 +29,10 @@ async function handleGET(session, req, res) {
   }
   const xata = getXataClient();
   const applications = await xata.db.requests
-    .filter("mentee", user.id)
+    .filter({
+      mentee: user.id,
+      status: RequestStatusEnum.Pending,
+    })
     .getAll();
   res.status(200).json({ count: applications.length });
 }
