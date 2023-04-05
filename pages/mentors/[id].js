@@ -65,7 +65,7 @@ export default function MentorPage() {
               {data.title}
             </Heading>
           }
-          {data.twitter || data.linkedin &&
+          {(data.twitter || data.linkedin) &&
             <Stack direction={"row"} justifyContent={"left"} margin>
               {data.twitter && (
                 <NextLink href={data.twitter} passHref>
