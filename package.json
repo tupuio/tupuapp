@@ -21,7 +21,7 @@
     "imagekitio-react": "^1.1.0",
     "mjml": "^4.13.0",
     "next": "^12.3.1",
-    "next-auth": "^4.14.0",
+    "next-auth": "^4.21.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-hook-form": "^7.22.4",
