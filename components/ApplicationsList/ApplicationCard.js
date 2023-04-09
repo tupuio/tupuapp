@@ -6,7 +6,6 @@ import MentorshipInfo from "../MentorshipsList/MentorshipInfo";
 
 const ApplicationCard = ({ application, handleCancel }) => {
   const { mentor, message, creationDate: mentorshipDate, status, longterm } = application;
-  
   return (
     <Stack
       borderWidth="1px"

@@ -40,7 +40,6 @@ async function handlePOST(session, req, res) {
   };
   const xata = getXataClient();
   const request = await xata.db.requests.create(reqObj);
-  console.log(reqObj)
 
   // get mentor name/email to send notification
   // the mentee is the current user

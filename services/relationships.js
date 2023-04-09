@@ -11,7 +11,6 @@ export async function createRelationship(request, res) {
   };
   const xata = getXataClient();
   const relationship = await xata.db.relationships.create(relationshipObj);
-  console.log(relationship)
   return relationship;
 }
 
