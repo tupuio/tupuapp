@@ -54,7 +54,11 @@ async function handlePOST(session, req, res) {
     mentee: request.mentee.id,
     mentor: request.mentor.id,
     status: RequestStatusEnum.Cancelled,
-    lastUpdateDate: new Date().toJSON() /* UTC */,
+    lastUpdateDate: new Date().toLocaleDateString('en-US', {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric',
+    }) /* UTC */,
   };
   const responseRequest = await updateRequest(updatedRequest);
   if (!responseRequest) {
