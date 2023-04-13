@@ -1,12 +1,18 @@
 import { getSession } from "next-auth/react";
 import { getUser } from "../../services";
-import { updateRelationship, getRelationshipByQuery } from "../../services/relationships";
-import { 
-        IsRelationshipStatusValid,
-        RelationshipStatusEnum,
-        RelationshipStatusToLabel,
-      } from "../../types/dbTablesEnums";
-import { sendMentorMentorshipClosedEmail, sendMenteeMentorshipClosedEmail } from "../../utils/email";
+import {
+  updateRelationship,
+  getRelationshipByQuery,
+} from "../../services/relationships";
+import {
+  IsRelationshipStatusValid,
+  RelationshipStatusEnum,
+  RelationshipStatusToLabel,
+} from "../../types/dbTablesEnums";
+import {
+  sendMentorMentorshipClosedEmail,
+  sendMenteeMentorshipClosedEmail,
+} from "../../utils/email";
 
 export default async function handler(req, res) {
   const session = await getSession({ req });
@@ -50,12 +56,17 @@ async function handlePOST(session, req, res) {
 
   // just make sure that the relationship status is valid
   const relationshipStatus = req.body.relationshipStatus;
-  if (!IsRelationshipStatusValid(relationshipStatus) || relationshipStatus === RelationshipStatusEnum.Started) {
+  if (
+    !IsRelationshipStatusValid(relationshipStatus) ||
+    relationshipStatus === RelationshipStatusEnum.Started
+  ) {
     res.status(400).json({ message: "Invalid relationship status" });
     return;
   }
-  const isClosedByMentor = relationshipQuery.userId === relationship.mentor.id
-  const relationshipClosedBy = `Closed by ${isClosedByMentor?"Mentor":"Mentee"}`
+  const isClosedByMentor = relationshipQuery.userId === relationship.mentor.id;
+  const relationshipClosedBy = `Closed by ${
+    isClosedByMentor ? "Mentor" : "Mentee"
+  }`;
   // remove xata column, update mentee/mentor as links, update new status
   const { xata, ...updatedRelationship } = {
     ...relationship,
@@ -63,7 +74,9 @@ async function handlePOST(session, req, res) {
     mentor: relationship.mentor.id,
     status: relationshipStatus,
     endDate: new Date().toJSON() /* UTC */,
-    notes: [relationship.notes, relationshipClosedBy].filter(Boolean).join(" - ")
+    notes: [relationship.notes, relationshipClosedBy]
+      .filter(Boolean)
+      .join(" - "),
   };
   const responseRelationship = await updateRelationship(updatedRelationship);
   if (!responseRelationship) {
@@ -78,10 +91,18 @@ async function handlePOST(session, req, res) {
 
   if (isClosedByMentor) {
     // if mentor closed relationship
-    sendMentorMentorshipClosedEmail({ mentee, mentor, mentorFeedback: feedback, })
-  } else {    
+    sendMentorMentorshipClosedEmail({
+      mentee,
+      mentor,
+      mentorFeedback: feedback,
+    });
+  } else {
     // if mentee
-    sendMenteeMentorshipClosedEmail({ mentee, mentor, menteeFeedback: feedback, })
+    sendMenteeMentorshipClosedEmail({
+      mentee,
+      mentor,
+      menteeFeedback: feedback,
+    });
   }
   res.status(200).json(responseRelationship);
 }
