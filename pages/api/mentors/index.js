@@ -11,9 +11,6 @@ export default async function handler(req, res) {
     return;
   }
 
-  // this does not work:
-  // $includesAll: [{ $contains: "mentor" }, { $contains: "test" }],
-
   const allFilters = [
     { $exists: "roles" },
     {
@@ -27,6 +24,8 @@ export default async function handler(req, res) {
     process.env.NEXT_PUBLIC_DEV_LOGIN === "true"
   ) {
     allFilters.push({ roles: { $includes: "test" } });
+  } else {
+    allFilters.push({ $not: { roles: { $includes: "test" } } });
   }
 
   const mentors = await xata.db.users
