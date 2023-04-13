@@ -18,11 +18,17 @@ import { Textarea } from "@chakra-ui/textarea";
 import { useToast } from "@chakra-ui/toast";
 import { Switch } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
+import { useSWRConfig } from "swr";
 
 const RequestModal = ({ mentor, isOpen, onClose }) => {
   const toast = useToast();
+  const { mutate } = useSWRConfig();
 
-  const { register, handleSubmit, formState: { isSubmitting } } = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm({
     defaultValues: {
       message:
         "I'd love to have you as a mentor!\n\n\n I want to \u003cinsert what you'd like to achieve\u003e, and I think your mentorship would be really valuable.",
@@ -59,7 +65,7 @@ const RequestModal = ({ mentor, isOpen, onClose }) => {
         position: "top",
         isClosable: true,
       });
-
+      mutate("/api/applicationsCount");
       onClose();
     }
   };
@@ -89,17 +95,16 @@ const RequestModal = ({ mentor, isOpen, onClose }) => {
               <Textarea {...register("message")} id="message" rows={6} />
               <FormHelperText>
                 Please tell {mentor.name} a bit about yourself and what are you
-                hoping to learn or achieve. You can use Markdown for
-                formatting. Leave an empty line between paragraphs.
+                hoping to learn or achieve. You can use Markdown for formatting.
+                Leave an empty line between paragraphs.
               </FormHelperText>
             </FormControl>
             <br />
             <FormControl display="flex" alignItems="center" mt={2}>
-              <FormLabel htmlFor="longterm" mb={1}>Long term mentorship</FormLabel>
-              <Switch
-                {...register("longterm")}
-                id="longterm"
-              />
+              <FormLabel htmlFor="longterm" mb={1}>
+                Long term mentorship
+              </FormLabel>
+              <Switch {...register("longterm")} id="longterm" />
             </FormControl>
             <br />
           </ModalBody>
@@ -108,7 +113,11 @@ const RequestModal = ({ mentor, isOpen, onClose }) => {
             <Button colorScheme={"grayButton"} mr={3} onClick={onClose}>
               Close
             </Button>
-            <Button type="submit" colorScheme={"blueButton"} isLoading={isSubmitting}>
+            <Button
+              type="submit"
+              colorScheme={"blueButton"}
+              isLoading={isSubmitting}
+            >
               Request
             </Button>
           </ModalFooter>
