@@ -12,6 +12,8 @@ const markdownTheme = {
 
 const MentorshipInfo = ({ mentorship }) => {
   const { message, mentorshipDate, status, longterm } = mentorship;
+  const formattedDate = new Date(mentorshipDate).toLocaleDateString('en-150', {year: 'numeric', month: 'short', day: 'numeric'});
+
   let dateLabel = "";
   if (status === RelationshipStatusEnum.Started) {
     dateLabel = "Started on";
@@ -33,7 +35,7 @@ const MentorshipInfo = ({ mentorship }) => {
           align='stretch'
       >
         { (dateLabel && mentorshipDate) && 
-          <Text>{dateLabel}: {mentorshipDate}</Text>
+          <Text>{dateLabel}: {formattedDate}</Text>
         }
         <ReactMarkdown components={ChakraUIRenderer(markdownTheme)} skipHtml>
           {message}
