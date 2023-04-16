@@ -20,7 +20,7 @@ import { Switch } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { useSWRConfig } from "swr";
 
-const RequestModal = ({ mentor, isOpen, onClose }) => {
+const RequestModal = ({ mentor, isOpen, onClose, onSuccess }) => {
   const toast = useToast();
   const { mutate } = useSWRConfig();
 
@@ -65,6 +65,10 @@ const RequestModal = ({ mentor, isOpen, onClose }) => {
         position: "top",
         isClosable: true,
       });
+
+      if (typeof onSuccess === 'function') {
+        onSuccess()
+      }
       mutate("/api/applicationsCount");
       onClose();
     }
