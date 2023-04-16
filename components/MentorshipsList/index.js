@@ -3,28 +3,37 @@ import { SimpleGrid, Text } from "@chakra-ui/layout";
 import { useDisclosure } from "@chakra-ui/hooks";
 import { useState, useRef } from "react";
 import { useToast } from "@chakra-ui/toast";
-import useSWR from "swr";
+import useSWR, { useSWRConfig } from "swr";
 import MentorshipCard from "./MentorshipCard";
 import TupuAlertDialog from "../TupuAlertDialog";
-
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 const MentorshipsList = () => {
-  const { data, error, mutate } = useSWR("/api/mentorships?mode=mentee", fetcher);
-
+  const { data, error, mutate } = useSWR(
+    "/api/mentorships?mode=mentee",
+    fetcher
+  );
+  const { mutate: mutateCounter } = useSWRConfig();
   const [actionDialogParams, setActionDialogParams] = useState(null);
   const [isActionDialogLoading, setActionDialogLoading] = useState(false);
-  const { isOpen: isAlertDialogOpen, onOpen: onAlertDialogOpen, onClose: onAlertDialogClose } = useDisclosure();
+  const {
+    isOpen: isAlertDialogOpen,
+    onOpen: onAlertDialogOpen,
+    onClose: onAlertDialogClose,
+  } = useDisclosure();
   const cancelRef = useRef();
   const toast = useToast();
 
   const mutateRelationshipsList = async (relationship, status) => {
     const updatedRelationship = { ...relationship, status };
-    const newDataRecords = data.records.map( req => relationship.id === req.id ? updatedRelationship : req );
+    const newDataRecords = data.records.map((req) =>
+      relationship.id === req.id ? updatedRelationship : req
+    );
     const newData = { ...data, records: newDataRecords };
     mutate(newData);
-  }
+    mutateCounter("/api/mentorshipsCount");
+  };
 
   const changeMentorshipRelationship = async (params) => {
     const { relationship, endpoint, errorMsg, successMsg, status } = params;
@@ -53,16 +62,16 @@ const MentorshipsList = () => {
       toast({
         title: "Success!",
         description: successMsg,
-        status: 'success',
+        status: "success",
         position: "top",
         isClosable: true,
       });
       mutateRelationshipsList(relationship, status);
     }
-  }
+  };
 
   const closeMentorshipRelationship = async (relationship, status) => {
-    const params = { 
+    const params = {
       relationship,
       endpoint: "closeMentorship",
       errorMsg: "Error closing mentorship relationship",
@@ -70,7 +79,7 @@ const MentorshipsList = () => {
       status,
     };
     changeMentorshipRelationship(params);
-  }
+  };
 
   const handleMentorshipAction = (params) => {
     setActionDialogParams(params);
@@ -79,11 +88,11 @@ const MentorshipsList = () => {
   };
 
   const handleCloseMentorship = (relationship, status) => {
-    const params = { 
+    const params = {
       title: "Close mentorship",
       message: "Are you sure you want to close this mentorship?",
       action: "Close",
-      onConfirm: () => closeMentorshipRelationship(relationship, status)
+      onConfirm: () => closeMentorshipRelationship(relationship, status),
     };
     handleMentorshipAction(params);
   };
@@ -98,13 +107,19 @@ const MentorshipsList = () => {
   }
 
   if (!data) {
-    return <div><br />Loading..</div>;
+    return (
+      <div>
+        <br />
+        Loading..
+      </div>
+    );
   }
 
   if (data.records.length == 0) {
     return (
       <Text mt={10} fontWeight={700}>
-        You don&apos;t have any active mentorship going on. If you did not request any mentor for mentorship, please do so. We will notify you when
+        You don&apos;t have any active mentorship going on. If you did not
+        request any mentor for mentorship, please do so. We will notify you when
         a mentor reply to your application.
       </Text>
     );
@@ -113,7 +128,8 @@ const MentorshipsList = () => {
   return (
     <>
       <Text>
-        These are your active mentorships. You can book a call with the mentor, and close the mentorship.
+        These are your active mentorships. You can book a call with the mentor,
+        and close the mentorship.
       </Text>
       <SimpleGrid mt={10} columns={1} spacing={10}>
         {data.records.map((mentorship) => (

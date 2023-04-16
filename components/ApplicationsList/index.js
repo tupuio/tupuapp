@@ -5,7 +5,7 @@ import { SimpleGrid, Text } from "@chakra-ui/layout";
 import { useDisclosure } from "@chakra-ui/hooks";
 import { useToast } from "@chakra-ui/toast";
 
-import useSWR from "swr";
+import useSWR, { useSWRConfig } from "swr";
 
 import TupuAlertDialog from "../TupuAlertDialog";
 import ApplicationCard from "./ApplicationCard";
@@ -14,17 +14,25 @@ const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 const ApplicationsList = () => {
   const { data, error, mutate } = useSWR("/api/applications", fetcher);
+  const { mutate: mutateCounter } = useSWRConfig();
   const [actionDialogParams, setActionDialogParams] = useState(null);
   const [isActionDialogLoading, setActionDialogLoading] = useState(false);
-  const { isOpen: isAlertDialogOpen, onOpen: onAlertDialogOpen, onClose: onAlertDialogClose } = useDisclosure();
+  const {
+    isOpen: isAlertDialogOpen,
+    onOpen: onAlertDialogOpen,
+    onClose: onAlertDialogClose,
+  } = useDisclosure();
   const cancelRef = useRef();
   const toast = useToast();
 
   const mutateApplicationsList = async (application) => {
-    const newDataRecords = data.records.filter( req => application.id !== req.id );
+    const newDataRecords = data.records.filter(
+      (req) => application.id !== req.id
+    );
     const newData = { ...data, records: newDataRecords };
     mutate(newData);
-  }
+    mutateCounter("/api/applicationsCount");
+  };
 
   const changeMentorshipRequest = async (params) => {
     const { application, endpoint, errorMsg, successMsg } = params;
@@ -52,23 +60,23 @@ const ApplicationsList = () => {
       toast({
         title: "Success!",
         description: successMsg,
-        status: 'success',
+        status: "success",
         position: "top",
         isClosable: true,
       });
       mutateApplicationsList(application);
-    }    
-  }
+    }
+  };
 
   const cancelApplication = async (application) => {
-    const params = { 
+    const params = {
       application,
       endpoint: "cancelRequest",
       errorMsg: "Error revoking mentorship request",
-      successMsg: "The mentorship request was successfully revoked."
+      successMsg: "The mentorship request was successfully revoked.",
     };
     changeMentorshipRequest(params);
-  }
+  };
 
   const handleApplicationAction = (params) => {
     setActionDialogParams(params);
@@ -77,11 +85,11 @@ const ApplicationsList = () => {
   };
 
   const handleCancelApplication = (application) => {
-    const params = { 
+    const params = {
       title: "Revoke mentorship application",
       message: "Are you sure you want to revoke this mentorship request?",
       action: "Revoke",
-      onConfirm: () => cancelApplication(application)
+      onConfirm: () => cancelApplication(application),
     };
     handleApplicationAction(params);
   };
@@ -120,14 +128,13 @@ const ApplicationsList = () => {
         ))}
       </SimpleGrid>
       <TupuAlertDialog
-          isOpen={isAlertDialogOpen}
-          isLoading={isActionDialogLoading}
-          onClose={onAlertDialogClose}
-          params={actionDialogParams}
-          cancelRef={cancelRef}
-        />
+        isOpen={isAlertDialogOpen}
+        isLoading={isActionDialogLoading}
+        onClose={onAlertDialogClose}
+        params={actionDialogParams}
+        cancelRef={cancelRef}
+      />
     </>
-    
   );
 };
 

@@ -3,7 +3,7 @@ import { SimpleGrid, Text } from "@chakra-ui/layout";
 import { useDisclosure } from "@chakra-ui/hooks";
 import { useState, useRef } from "react";
 import { useToast } from "@chakra-ui/toast";
-import useSWR, { useSWRConfig } from 'swr'
+import useSWR, { useSWRConfig } from "swr";
 import RequestCard from "./RequestCard";
 import MentorContactMenteeModal from "../MentorContactMenteeModal";
 import TupuAlertDialog from "../TupuAlertDialog";
@@ -13,12 +13,17 @@ const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 const RequestsList = () => {
   const { data, error, mutate } = useSWR("/api/requests", fetcher);
+  const { mutate: mutateCounter } = useSWRConfig();
   const [contactedMenteeRequest, setContactedMenteeRequest] = useState(null);
   const [actionDialogParams, setActionDialogParams] = useState(null);
   const [isActionDialogLoading, setActionDialogLoading] = useState(false);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { isOpen: isAlertDialogOpen, onOpen: onAlertDialogOpen, onClose: onAlertDialogClose } = useDisclosure();
+  const {
+    isOpen: isAlertDialogOpen,
+    onOpen: onAlertDialogOpen,
+    onClose: onAlertDialogClose,
+  } = useDisclosure();
   const cancelRef = useRef();
   const toast = useToast();
 
@@ -27,12 +32,16 @@ const RequestsList = () => {
     onOpen();
   };
   const mutateRequestsList = async (request, status) => {
-      const updatedRequest = { ...request, status };
-      const newDataRecords = data.records.map( req => request.id === req.id ? updatedRequest : req );
-      const newData = { ...data, records: newDataRecords };
-      mutate(newData);
-  }
-  
+    const updatedRequest = { ...request, status };
+    const newDataRecords = data.records.map((req) =>
+      request.id === req.id ? updatedRequest : req
+    );
+    const newData = { ...data, records: newDataRecords };
+    mutate(newData);
+    mutateCounter("/api/menteesCount");
+    mutateCounter("/api/requestsCount");
+  };
+
   const changeMentorshipRequest = async (params) => {
     const { request, endpoint, errorMsg, successMsg, status } = params;
     setActionDialogLoading(true);
@@ -60,16 +69,16 @@ const RequestsList = () => {
       toast({
         title: "Success!",
         description: successMsg,
-        status: 'success',
+        status: "success",
         position: "top",
         isClosable: true,
       });
       mutateRequestsList(request, status);
-    }    
-  }
+    }
+  };
 
   const acceptMentorshipRequest = async (request) => {
-    const params = { 
+    const params = {
       request,
       endpoint: "acceptMentorship",
       errorMsg: "Error accepting mentorship request",
@@ -77,10 +86,10 @@ const RequestsList = () => {
       status: RequestStatusEnum.Accepted,
     };
     changeMentorshipRequest(params);
-  }
+  };
 
   const rejectMentorshipRequest = async (request, status) => {
-    const params = { 
+    const params = {
       request,
       endpoint: "rejectMentorship",
       errorMsg: "Error rejecting mentorship request",
@@ -88,7 +97,7 @@ const RequestsList = () => {
       status,
     };
     changeMentorshipRequest(params);
-  }
+  };
 
   const handleMentorshipAction = (params) => {
     setActionDialogParams(params);
@@ -97,25 +106,25 @@ const RequestsList = () => {
   };
 
   const handleAcceptMentorship = (request) => {
-    const params = { 
+    const params = {
       title: "Accept mentorship",
       message: "Are you sure you want to confirm this mentorship?",
       action: "Accept",
-      onConfirm: () => acceptMentorshipRequest(request)
+      onConfirm: () => acceptMentorshipRequest(request),
     };
     handleMentorshipAction(params);
   };
-    
+
   const handleRejectMentorship = (request, status) => {
-    const params = { 
+    const params = {
       title: "Reject mentorship",
       message: "Are you sure you want to reject this mentorship?",
       action: "Reject",
-      onConfirm: () => rejectMentorshipRequest(request, status)
+      onConfirm: () => rejectMentorshipRequest(request, status),
     };
     handleMentorshipAction(params);
-  };    
-  
+  };
+
   if (error) {
     return (
       <Alert mt={10} status="error">
@@ -126,11 +135,16 @@ const RequestsList = () => {
   }
 
   if (!data) {
-    return <div><br />Loading..</div>;
+    return (
+      <div>
+        <br />
+        Loading..
+      </div>
+    );
   }
 
   let requestsList = data.records;
-  
+
   if (requestsList.length == 0) {
     return (
       <Text mt={10} fontWeight={700}>
@@ -165,7 +179,7 @@ const RequestsList = () => {
         params={actionDialogParams}
         cancelRef={cancelRef}
       />
-    </>    
+    </>
   );
 };
 
