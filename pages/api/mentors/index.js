@@ -1,5 +1,6 @@
 import { getSession } from "next-auth/react";
 import { getXataClient } from "../../../services/xata";
+import { getUser } from "../../../services";
 
 export default async function handler(req, res) {
   const xata = getXataClient();
@@ -11,6 +12,11 @@ export default async function handler(req, res) {
     return;
   }
 
+  const user = await getUser(session);
+
+  // this does not work:
+  // $includesAll: [{ $contains: "mentor" }, { $contains: "test" }],
+
   const allFilters = [
     { $exists: "roles" },
     {
@@ -18,6 +24,11 @@ export default async function handler(req, res) {
         $includes: "mentor",
       },
     },
+    {
+      $not: {
+        "id": user.id
+      }
+    }
   ];
   if (
     process.env.NODE_ENV === "development" ||
