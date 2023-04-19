@@ -3,6 +3,7 @@ import { getUser, getUserById } from "../../services";
 import { getXataClient } from "../../services/xata";
 import { RequestStatusEnum } from "../../types/dbTablesEnums";
 import { sendMentorshipRequestedEmail } from "../../utils/email";
+import { GENERAL_REQUEST_ERROR_MESSAGE } from "../../constants";
 
 export default async function handler(req, res) {
   const session = await getSession({ req });
@@ -23,12 +24,19 @@ export default async function handler(req, res) {
 }
 
 async function handlePOST(session, req, res) {
+  const { mentorId, message, longterm } = req.body;
+
   const user = await getUser(session);
   if (!user) {
     res.status(500).json({ message: "Can't get user data" });
     return;
   }
-  const { mentorId, message, longterm } = req.body;
+
+  if (mentorId === user.id) {
+    res.status(500).json({ message: GENERAL_REQUEST_ERROR_MESSAGE })
+    return
+  }
+
   const reqObj = {
     mentor: mentorId,
     mentee: user.id,
