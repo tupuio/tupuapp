@@ -15,9 +15,6 @@ export default async function handler(req, res) {
 
   const currentUser = await getUser(session);
 
-  // this does not work:
-  // $includesAll: [{ $contains: "mentor" }, { $contains: "test" }],
-
   const allFilters = [
     { $exists: "roles" },
     {

@@ -1,0 +1,1 @@
+export const GENERAL_REQUEST_ERROR_MESSAGE = 'There has been an error with your request'
