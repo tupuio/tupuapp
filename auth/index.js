@@ -35,14 +35,18 @@ export default function XataAdapter(client, options = {}) {
       const xata = getXataClient();
       const user = await xata.db.users.filter("email", email).getFirst();
 
-      console.log("getUserByEmail: found user with id", user.id);
+      if (user) {
+        console.log("getUserByEmail: found user with id", user.id);
 
-      return {
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        emailVerified: null,
-      };
+        return {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          emailVerified: null,
+        };
+      }
+
+      return null
     },
 
     async getUserByAccount({ provider, providerAccountId }) {
