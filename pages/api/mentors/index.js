@@ -24,8 +24,11 @@ export default async function handler(req, res) {
     },
     {
       $not: {
-        "id": currentUser.id
-      }
+        "id": currentUser.id,
+      },
+    },
+    {
+      published: true
     }
   ];
 
