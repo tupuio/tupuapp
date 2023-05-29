@@ -8,6 +8,7 @@ export default function XataAdapter(client, options = {}) {
         name: user.name,
         email: user.email,
         roles: ["mentor", "mentee"],
+        published: false
       });
       // returns AdapterUser
       return {
