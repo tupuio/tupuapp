@@ -46,6 +46,7 @@ async function handlePUT(session, req, res) {
       notifications: profile.mentor?.notifications,
       incognito: profile.mentor?.incognito,
     },
+    published: profile.published
   });
   if (process.env.DEV_EMAIL_RECIPIENT) {
     const firstName = profile.name.split(" ")[0];
