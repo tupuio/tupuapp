@@ -1,5 +1,3 @@
-Hi!
-
 Hi, a new user has been created with the user ID: [[userId]]. 
 
 Please could you review this user's details and mark them as published if their profile is acceptable.
