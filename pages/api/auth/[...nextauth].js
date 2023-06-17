@@ -3,6 +3,18 @@ import LinkedInProvider from "next-auth/providers/linkedin";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import XataAdapter from "../../../auth";
+import { getXataClient } from "../../../services/xata";
+
+
+async function getByEmail(email) {
+  if (!email) {
+    return
+  }
+
+  const xata = await getXataClient();
+  return xata.db.users.filter("email", email).getFirst();
+}
+
 
 // const providers = [
 //   LinkedInProvider({
@@ -17,19 +29,19 @@ import XataAdapter from "../../../auth";
 
 const providers = [];
 
-if (process.env.LINKEDIN_CLIENT_ID && 
+if (process.env.LINKEDIN_CLIENT_ID &&
   process.env.LINKEDIN_CLIENT_SECRET) {
-    providers.push(LinkedInProvider({
+  providers.push(LinkedInProvider({
     clientId: process.env.LINKEDIN_CLIENT_ID,
     clientSecret: process.env.LINKEDIN_CLIENT_SECRET,
-    }));
+  }));
 }
-if (process.env.GOOGLE_CLIENT_ID && 
+if (process.env.GOOGLE_CLIENT_ID &&
   process.env.GOOGLE_CLIENT_SECRET) {
-    providers.push(GoogleProvider({
+  providers.push(GoogleProvider({
     clientId: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    }));
+  }));
 }
 if (
   process.env.NODE_ENV === "development" ||
@@ -76,7 +88,7 @@ if (
             roles: ["mentor", "mentee", "admin", "test"],
           };
         }
-        
+
         return null;
       },
     })
@@ -97,4 +109,16 @@ export default NextAuth({
   // Configure one or more authentication providers
   providers,
   secret: process.env.JWT_SECRET,
+  callbacks: {
+    async session({ session }) {
+      // get the profile of the user and assign the published flag to the session user
+      const profile = await getByEmail(session?.user?.email)
+
+      session.user = session.user || {}
+
+      session.user.published = profile?.published ?? false
+
+      return session
+    }
+  }
 });
