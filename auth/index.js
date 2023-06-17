@@ -22,6 +22,7 @@ export default function XataAdapter(client, options = {}) {
         name: user.name,
         image: user.image,
         emailVerified: user.emailVerified,
+        published: false
       };
     },
 
@@ -35,6 +36,7 @@ export default function XataAdapter(client, options = {}) {
         name: user.name,
         email: user.email,
         emailVerified: null,
+        published: user.published,
       };
     },
 
@@ -50,6 +52,7 @@ export default function XataAdapter(client, options = {}) {
           name: user.name,
           email: user.email,
           emailVerified: null,
+          published: user.published,
         };
       }
 
@@ -75,6 +78,7 @@ export default function XataAdapter(client, options = {}) {
         name: account.user.name,
         email: account.user.email,
         emailVerified: null,
+        published: account.user.published,
       };
     },
 
