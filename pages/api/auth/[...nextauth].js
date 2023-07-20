@@ -110,6 +110,14 @@ export default NextAuth({
   providers,
   secret: process.env.JWT_SECRET,
   callbacks: {
+    async jwt({ token }) {
+
+      const profile = await getByEmail(token?.email)
+
+      token.isPublished = profile?.published ?? false
+
+      return token
+    },
     async session({ session }) {
       // get the profile of the user and assign the published flag to the session user
       const profile = await getByEmail(session?.user?.email)

@@ -8,11 +8,11 @@ export default async function handler(req, res) {
   const xata = getXataClient();
   const session = await getSession({ req });
 
-  const hasSessionAndPublished = await getUserHasSessionAndPublished(session, res)
+  // const hasSessionAndPublished = await getUserHasSessionAndPublished(session, res)
 
-  if (!hasSessionAndPublished) {
-    return
-  }
+  // if (!hasSessionAndPublished) {
+  //   return
+  // }
 
   const currentUser = await getUser(session);
 
