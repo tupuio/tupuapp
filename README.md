@@ -70,4 +70,5 @@ https://docs.sendgrid.com/ui/sending-email/sender-verification
    ```
 
 1. Open [http://localhost:3000](http://localhost:3000) with your browser, and you should see the login page
+
 1. Try to login with the user `test` and password `app` to test the connection to the server database (you need to be connected to the internet, and have correctly set the `.env.local` file in the root of the Tupu application).
