@@ -1,4 +1,6 @@
 import { getXataClient } from "../services/xata";
+import { sendNewUserCreatedEmail } from "../utils/email";
+
 
 export default function XataAdapter(client, options = {}) {
   return {
@@ -8,13 +10,19 @@ export default function XataAdapter(client, options = {}) {
         name: user.name,
         email: user.email,
         roles: ["mentor", "mentee"],
+        published: false
       });
+
+      // send email to request new user verification
+      sendNewUserCreatedEmail(createdUser.id, user.email)
+
       // returns AdapterUser
       return {
         id: createdUser.id,
         name: user.name,
         image: user.image,
         emailVerified: user.emailVerified,
+        published: false
       };
     },
 
@@ -28,6 +36,7 @@ export default function XataAdapter(client, options = {}) {
         name: user.name,
         email: user.email,
         emailVerified: null,
+        published: user.published,
       };
     },
 
@@ -43,6 +52,7 @@ export default function XataAdapter(client, options = {}) {
           name: user.name,
           email: user.email,
           emailVerified: null,
+          published: user.published,
         };
       }
 
@@ -68,6 +78,7 @@ export default function XataAdapter(client, options = {}) {
         name: account.user.name,
         email: account.user.email,
         emailVerified: null,
+        published: account.user.published,
       };
     },
 

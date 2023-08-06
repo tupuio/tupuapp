@@ -22,6 +22,7 @@ const SidebarContent = ({ onClose, mode, ...rest }) => {
   const { data: menteesData } = useSWR("/api/menteesCount", fetcher);
   const { data: mentorshipsData } = useSWR("/api/mentorshipsCount", fetcher);
   const { data: applicationsData } = useSWR("/api/applicationsCount", fetcher);
+  const { data: profileData } = useSWR('/api/profile', fetcher)
   const mentorshipsCount = mentorshipsData?.count || 0;
   const requestsCount = requestsData?.count || 0;
   const applicationsCount = applicationsData?.count || 0;
@@ -45,12 +46,20 @@ const SidebarContent = ({ onClose, mode, ...rest }) => {
     { name: "Mentorships", icon: FiUsers, href: "/mentorships", tag: () => mentorshipsCount, },
   ];
 
-  const links = mode === "mentor" ? MentorLinkItems : MenteeLinkItems;
+  const UnPublishedLinkItems = [
+    { name: "Your profile", icon: FiUser, href: "/profile" },
+  ]
+
+  let links = UnPublishedLinkItems
+
+  if (profileData?.published) {
+    links = mode === "mentor" ? MentorLinkItems : MenteeLinkItems;
+  }
 
   return (
     <Box
       transition="3s ease"
-      bg={mode === "mentor"?"brand.green":"brand.blue"}
+      bg={mode === "mentor" ? "brand.green" : "brand.blue"}
       borderRight="1px"
       borderRightColor="gray.400"
       w={{ base: "full", md: 60 }}
@@ -75,12 +84,12 @@ const SidebarContent = ({ onClose, mode, ...rest }) => {
       </Flex>
       <Box mt={50}>
         {links.map((link) => (
-          <NavItem 
-                  key={link.name} 
-                  icon={link.icon} 
-                  href={link.href}
-                  bg={mode === "mentor"?"brand.blue":"brand.green"}
-                  >
+          <NavItem
+            key={link.name}
+            icon={link.icon}
+            href={link.href}
+            bg={mode === "mentor" ? "brand.blue" : "brand.green"}
+          >
             {link.name}
             {link.tag && link.tag() > 0 && (
               <Tag size="sm" colorScheme="teal" ml={2}>
@@ -93,7 +102,7 @@ const SidebarContent = ({ onClose, mode, ...rest }) => {
         <NavItem key="tupu.io" icon={FiHome} href="https://tupu.io" cursor="default">
           <Link href="https://tupu.io" isExternal cursor="link">
             tupu.io <ExternalLinkIcon mx="2px" />
-          </Link> 
+          </Link>
         </NavItem>
       </Box>
     </Box>
