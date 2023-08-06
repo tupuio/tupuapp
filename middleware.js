@@ -1,7 +1,14 @@
 import { NextResponse } from 'next/server'
 import { getToken } from 'next-auth/jwt'
 
-// const applicationApiPaths = ['api/profile', 'api/']
+function getSessionCookieName() {
+  if (process.env.NODE_ENV === 'development') {
+    return "next-auth.session-token"
+  }
+
+  return "__Secure-next-auth.session-token"
+}
+
 
 export async function middleware(request) {
 
@@ -11,20 +18,15 @@ export async function middleware(request) {
     // first check if the user is authenticated
     const token = await getToken({
       req: request,
-      secret: process.env.JWT_SECRET
+      secret: process.env.JWT_SECRET,
+      cookieName: getSessionCookieName(),
     })
-
-    console.log('TEST', token)
 
     // if they are not authenticated redirect to sign in page
     if (!token) {
-      // const url = new URL(`/api/auth/signin`, request.url);
-      // url.searchParams.set("callbackUrl", encodeURI(request.url));
-      // return NextResponse.redirect(url);
-      return new NextResponse(
-        JSON.stringify({ success: false, message: 'access denied due to token' }),
-        { status: 404, headers: { 'content-type': 'application/json' } }
-      )
+      const url = new URL(`/api/auth/signin`, request.url);
+      url.searchParams.set("callbackUrl", encodeURI(request.url));
+      return NextResponse.redirect(url);
 
     }
 
