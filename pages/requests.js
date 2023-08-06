@@ -16,3 +16,8 @@ export default function RequestsPage() {
     </>
   );
 }
+
+RequestsPage.auth = {
+  roles: ["mentor"],
+  publishedOnly: false
+}

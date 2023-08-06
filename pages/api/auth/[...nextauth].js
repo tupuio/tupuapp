@@ -125,6 +125,7 @@ export default NextAuth({
       session.user = session.user || {}
 
       session.user.published = profile?.published ?? false
+      session.user.roles = profile?.roles ?? []
 
       return session
     }

@@ -1,4 +1,4 @@
-import { Box, Heading, Text } from "@chakra-ui/layout";
+import { Box, Heading } from "@chakra-ui/layout";
 import MentorshipsList from "../components/MentorshipsList";
 
 export default function MentorshipsPage() {
@@ -10,4 +10,9 @@ export default function MentorshipsPage() {
       </Box>
     </>
   );
+}
+
+MentorshipsPage.auth = {
+  roles: ['mentor'],
+  publishedOnly: true
 }
