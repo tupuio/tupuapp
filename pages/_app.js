@@ -4,6 +4,7 @@ import { useState } from "react";
 import SidebarWithHeader from "../components/Sidebar";
 import { SessionProvider } from "next-auth/react";
 import { useSession } from "next-auth/react";
+import { ADMIN_ROLE } from "../constants";
 
 const theme = extendTheme({
   colors: {
@@ -54,7 +55,7 @@ function Auth({ children, authObject }) {
   }
 
   // if the page requires the user to have a certain role and the user does not have the role deny access
-  if (authObject?.roles && !authObject.roles.some(item => session?.user?.roles?.includes(item))) {
+  if (authObject?.roles && !authObject.roles.some(item => session?.user?.roles?.includes(item)) && !authObject.roles.includes(ADMIN_ROLE)) {
     return <div>Access denied</div>
   }
 
