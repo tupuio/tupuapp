@@ -157,20 +157,37 @@ export default function XataAdapter(client, options = {}) {
       const xata = getXataClient();
 
       const createdToken = await xata.db.tokens.create({
-        name: identifier,
+        identifier: identifier,
         value: token,
         expiresAt: expires
       });
 
       return {
-        identifier: createdToken.name,
+        identifier: createdToken.identifier,
         token: createdToken.value,
         expires: createdToken.expiresAt
       }
     },
 
     async useVerificationToken({identifier, token}) {
-      throw new Error("Not implemented");
+      console.log("useVerificationToken: using verification token", identifier, token);
+
+      const xata = getXataClient();
+
+      const tokenRecord = await xata.db.tokens.filter("identifier", identifier).getFirst();
+
+      if (!tokenRecord) {
+        console.log("useVerificationToken: token not found");
+        return null;
+      }
+
+      await xata.db.tokens.delete(tokenRecord.id);
+
+      return {
+        identifier: tokenRecord.identifier,
+        token: tokenRecord.value,
+        expires: tokenRecord.expiresAt
+      }
     },
   };
 }

@@ -18,15 +18,13 @@ const tables = [
       { name: "published", type: "bool", notNull: true, defaultValue: "false" },
     ],
     revLinks: [
-      { column: "user", table: "tokens" },
-      { column: "user", table: "profiles" },
       { column: "user", table: "mentors" },
+      { column: "user", table: "profiles" },
     ],
   },
   {
     name: "tokens",
     columns: [
-      { name: "user", type: "link", link: { table: "users" } },
       { name: "value", type: "string", unique: true },
       {
         name: "expiresAt",
@@ -34,7 +32,7 @@ const tables = [
         notNull: true,
         defaultValue: "now",
       },
-      { name: "name", type: "string", unique: true },
+      { name: "identifier", type: "string" },
     ],
   },
   {
