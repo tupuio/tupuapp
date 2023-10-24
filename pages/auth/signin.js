@@ -1,7 +1,5 @@
 import { Alert, AlertIcon } from "@chakra-ui/alert";
 import { Button } from "@chakra-ui/button";
-import { FormControl, FormLabel } from "@chakra-ui/form-control";
-import { Input } from "@chakra-ui/input";
 import { Box, Flex, Heading, Stack } from "@chakra-ui/layout";
 import {
   getCsrfToken,
@@ -19,6 +17,7 @@ const authError = (err) => {
     CredentialsSignin:
       "Wrong credentials. Please double check your sign in information.",
   };
+
   return messages[err] || err;
 };
 
@@ -75,45 +74,6 @@ export default function SignIn({ csrfToken, ...props }) {
                 </Stack>
               ))}
             </Stack>
-          )}
-
-          {(process.env.NODE_ENV === "development" ||
-            process.env.NEXT_PUBLIC_DEV_LOGIN === "true") && (
-            <>
-              <Heading size="lg" mb={4}>
-                Development Login
-              </Heading>
-              <form method="post" action="/api/auth/callback/credentials">
-                <input
-                  name="csrfToken"
-                  type="hidden"
-                  defaultValue={csrfToken}
-                />
-                <FormControl id="username">
-                  <FormLabel>Username</FormLabel>
-                  <Input name="username" />
-                </FormControl>
-                <FormControl id="password">
-                  <FormLabel>Password</FormLabel>
-                  <Input name="password" type="password" />
-                </FormControl>
-
-                <Stack spacing={4} mt={8}>
-                  <Stack spacing={10}>
-                    <Button
-                      type="submit"
-                      bg={"blue.400"}
-                      color={"white"}
-                      _hover={{
-                        bg: "blue.500",
-                      }}
-                    >
-                      Sign in
-                    </Button>
-                  </Stack>
-                </Stack>
-              </form>
-            </>
           )}
         </Box>
       </Stack>
