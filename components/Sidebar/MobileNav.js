@@ -5,7 +5,6 @@ import { Box, Flex, HStack, Text, VStack } from "@chakra-ui/layout";
 import {
   Menu,
   MenuButton,
-  MenuDivider,
   MenuItem,
   MenuList,
 } from "@chakra-ui/menu";
@@ -13,14 +12,9 @@ import { FiChevronDown, FiMenu } from "react-icons/fi";
 import { signOut } from "next-auth/react";
 import { useRouter } from 'next/router'
 
-const MobileNav = ({ session, onOpen, mode, setMode, ...rest }) => {
+const MobileNav = ({ session, onOpen, ...rest }) => {
   const name = session?.user?.name;
   const router = useRouter();
-
-  const toggleMode = () => {
-    setMode(mode === "mentor" ? "mentee" : "mentor");
-    router.push('/');
-  };
 
   return (
     <Flex
@@ -69,9 +63,6 @@ const MobileNav = ({ session, onOpen, mode, setMode, ...rest }) => {
                   ml="2"
                 >
                   <Text fontSize="sm">{name}</Text>
-                  <Text fontSize="xs" color="gray.600">
-                    {mode === "mentor" ? "Mentor" : "Mentee"}
-                  </Text>
                 </VStack>
                 <Box display={{ base: "none", md: "flex" }}>
                   <FiChevronDown />
@@ -82,10 +73,6 @@ const MobileNav = ({ session, onOpen, mode, setMode, ...rest }) => {
               bg={useColorModeValue("white", "gray.900")}
               borderColor={useColorModeValue("gray.200", "gray.700")}
             >
-              <MenuItem onClick={toggleMode}>
-                Switch to {mode === "mentor" ? "Mentee" : "Mentor"} view
-              </MenuItem>
-              <MenuDivider />
               <MenuItem onClick={() => signOut()}>Sign out</MenuItem>
             </MenuList>
           </Menu>

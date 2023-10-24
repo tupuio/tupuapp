@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Box, Heading } from "@chakra-ui/layout";
 import MentorPreferencesForm from "../components/MentorPreferencesForm";
 
@@ -11,4 +10,9 @@ export default function PreferencesPage() {
       </Box>
     </>
   );
+}
+
+PreferencesPage.auth = {
+  roles: ['mentee'],
+  publishedOnly: true
 }

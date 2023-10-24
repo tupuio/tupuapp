@@ -14,6 +14,9 @@ import {
 } from "react-icons/fi";
 import useSWR from "swr";
 import NavItem from "./NavItem";
+import { useSession } from "next-auth/react";
+import { doesUserHaveRole } from "../../utils/session";
+import { MENTOR_ROLE, MENTEE_ROLE } from "../../constants";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
@@ -27,9 +30,13 @@ const SidebarContent = ({ onClose, mode, ...rest }) => {
   const requestsCount = requestsData?.count || 0;
   const applicationsCount = applicationsData?.count || 0;
   const menteesCount = menteesData?.count || 0;
-  const MentorLinkItems = [
+  const { data: session } = useSession()
+
+  const GeneralLinkItems = [
     { name: "Your profile", icon: FiUser, href: "/profile" },
-    { name: "Preferences", icon: FiSliders, href: "/preferences" },
+  ]
+
+  const MentorLinkItems = [
     {
       name: "Requests",
       icon: FiInbox,
@@ -40,8 +47,8 @@ const SidebarContent = ({ onClose, mode, ...rest }) => {
   ];
 
   const MenteeLinkItems = [
-    { name: "Your profile", icon: FiUser, href: "/profile" },
     { name: "Find a mentor", icon: FiSearch, href: "/mentors" },
+    { name: "Preferences", icon: FiSliders, href: "/preferences" },
     { name: "Applications", icon: FiInbox, href: "/applications", tag: () => applicationsCount, },
     { name: "Mentorships", icon: FiUsers, href: "/mentorships", tag: () => mentorshipsCount, },
   ];
@@ -55,6 +62,12 @@ const SidebarContent = ({ onClose, mode, ...rest }) => {
   if (profileData?.published) {
     links = mode === "mentor" ? MentorLinkItems : MenteeLinkItems;
   }
+
+
+  // TODO: handle admins
+  const shouldRenderMentorLinks = profileData?.published && doesUserHaveRole(session, MENTOR_ROLE)
+
+  const shouldRenderMenteeLinks = profileData?.published && doesUserHaveRole(session, MENTEE_ROLE)
 
   return (
     <Box
@@ -77,7 +90,75 @@ const SidebarContent = ({ onClose, mode, ...rest }) => {
           onClick={onClose}
         />
       </Flex>
-      <Flex h="14" alignItems="center" mx="8" justifyContent="space-between">
+      <Box mt={50}>
+        {GeneralLinkItems.map((link) => (
+          <NavItem
+            key={link.name}
+            icon={link.icon}
+            href={link.href}
+            bg={mode === "mentor" ? "brand.blue" : "brand.green"}
+          >
+            {link.name}
+            {link.tag && link.tag() > 0 && (
+              <Tag size="sm" colorScheme="teal" ml={2}>
+                {link.tag()}
+              </Tag>
+            )}
+          </NavItem>
+        ))}
+      </Box>
+      {shouldRenderMentorLinks &&
+        <>
+          <Flex h="14" alignItems="center" mx="8" justifyContent="space-between">
+            <Text textColor="white" fontSize="xl" fontWeight="normal">
+              Mentor
+            </Text>
+          </Flex>
+          <Box>
+            {MentorLinkItems.map((link) => (
+              <NavItem
+                key={link.name}
+                icon={link.icon}
+                href={link.href}
+                bg={mode === "mentor" ? "brand.blue" : "brand.green"}
+              >
+                {link.name}
+                {link.tag && link.tag() > 0 && (
+                  <Tag size="sm" colorScheme="teal" ml={2}>
+                    {link.tag()}
+                  </Tag>
+                )}
+              </NavItem>
+            ))}
+          </Box>
+        </>
+      }
+      {shouldRenderMenteeLinks &&
+        <>
+          <Flex h="14" alignItems="center" mx="8" justifyContent="space-between">
+            <Text textColor="white" fontSize="xl" fontWeight="normal">
+              Mentee
+            </Text>
+          </Flex>
+          <Box>
+            {MenteeLinkItems.map((link) => (
+              <NavItem
+                key={link.name}
+                icon={link.icon}
+                href={link.href}
+                bg={mode === "mentor" ? "brand.blue" : "brand.green"}
+              >
+                {link.name}
+                {link.tag && link.tag() > 0 && (
+                  <Tag size="sm" colorScheme="teal" ml={2}>
+                    {link.tag()}
+                  </Tag>
+                )}
+              </NavItem>
+            ))}
+          </Box>
+        </>}
+      {/* <Flex h="14" alignItems="center" mx="8" justifyContent="space-between">
         <Text textColor="white" fontSize="2xl" fontWeight="normal">
           {mode}
         </Text>
@@ -104,7 +185,7 @@ const SidebarContent = ({ onClose, mode, ...rest }) => {
             tupu.io <ExternalLinkIcon mx="2px" />
           </Link>
         </NavItem>
-      </Box>
+      </Box> */}
     </Box>
   );
 };

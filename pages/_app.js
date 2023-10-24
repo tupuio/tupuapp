@@ -1,8 +1,8 @@
 import { ChakraProvider } from "@chakra-ui/react";
 import { extendTheme } from "@chakra-ui/react";
-import { useState } from "react";
 import SidebarWithHeader from "../components/Sidebar";
 import { SessionProvider } from "next-auth/react";
+import AuthChecker from "../components/AuthChecker/AuthChecker";
 
 const theme = extendTheme({
   colors: {
@@ -42,12 +42,18 @@ function TupuApp({
   Component,
   pageProps: { session, providers, ...pageProps },
 }) {
-  const [mode, setMode] = useState("mentee");
+
   return (
     <SessionProvider session={session}>
       <ChakraProvider theme={theme}>
-        <SidebarWithHeader mode={mode} setMode={setMode}>
-          <Component mode={mode} {...pageProps} />
+        <SidebarWithHeader>
+          {Component.auth ? (
+            <AuthChecker authObject={Component.auth}>
+              <Component {...pageProps} />
+            </AuthChecker>
+          ) : (
+            <Component {...pageProps} />
+          )}
         </SidebarWithHeader>
       </ChakraProvider>
     </SessionProvider>
