@@ -11,3 +11,8 @@ export default function ProfilePage() {
     </>
   );
 }
+
+ProfilePage.auth = {
+  roles: ["mentor", "mentee"],
+  publishedOnly: false
+}

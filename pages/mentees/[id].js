@@ -119,3 +119,8 @@ export default function MenteePage() {
     </>
   );
 }
+
+MenteePage.auth = {
+  roles: ["mentor"],
+  publishedOnly: true
+}
