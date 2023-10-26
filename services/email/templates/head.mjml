@@ -1,5 +1,5 @@
 <mj-head>
-  <mj-include path="./style.mjml" />
+  <mj-include path="style.mjml" />
   <mj-title>[[emailTitle]]</mj-title>
   <mj-font name="Roboto" href="https://fonts.googleapis.com/css?family=Roboto:300,500"></mj-font>
   <mj-attributes>

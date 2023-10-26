@@ -2,7 +2,7 @@ import NextAuth from "next-auth";
 import LinkedInProvider from "next-auth/providers/linkedin";
 import GoogleProvider from "next-auth/providers/google";
 import EmailProvider from "next-auth/providers/email";
-import XataAdapter from "../../../services/authAdapter";
+import XataAdapter from "../../../services/auth/adapter";
 import {getUserByEmail} from "../../../services/users";
 
 const providers = [];

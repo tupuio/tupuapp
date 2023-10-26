@@ -2,7 +2,7 @@ import { getSession } from "next-auth/react";
 import { getUser } from "../../services";
 import { updateRequest, getRequestByQuery } from "../../services/requests";
 import { createRelationship } from "../../services/relationships";
-import { sendMentorshipRequestAcceptedEmail } from "../../utils/email";
+import { sendMentorshipRequestAcceptedEmail } from "../../services/email";
 import { RequestStatusEnum } from "../../types/dbTablesEnums";
 
 export default async function handler(req, res) {

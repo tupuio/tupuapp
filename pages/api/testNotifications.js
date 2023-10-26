@@ -9,7 +9,7 @@ import {
   sendMentorshipRequestAcceptedEmail,
   sendMentorshipRequestCancelledEmail,
   sendMentorshipRequestRejectedEmail,
-} from "../../utils/email";
+} from "../../services/email";
 import { RequestStatusEnum } from "../../types/dbTablesEnums";
 
 async function getByEmail(email) {

@@ -1,27 +1,33 @@
-import {getXataClient} from "./xata";
-import {sendNewUserCreatedEmail} from "../utils/email";
+import {getXataClient} from "../xata";
+import {sendNewUserCreatedEmail} from "../email";
+import {createUser} from "../users";
+import {createProfile, getProfileByEmail, getProfileByExternalId, getProfileByUserId} from "../profiles";
+import {createMentor} from "../mentors";
 
-export default function XataAdapter(client, options = {}) {
+function convertProfile(profile) {
+  return {
+    id: profile.user.id,
+    name: profile.name,
+    image: "",
+    email: profile.user.email,
+    emailVerified: null,
+    published: profile.user.published,
+  };
+}
+
+export default function XataAdapter() {
   return {
     async createUser(user) {
       console.log("createUser: creating user", user.email);
 
-      const xata = getXataClient();
+      const createdUser = await createUser({ email: user.email });
+      await createProfile({ id: createdUser.id, name: user.name });
+      // TODO: Only create a mentors entry if the user is a mentor
+      await createMentor({ id: createdUser.id });
 
-      const createdUser = await xata.db.users.create({
-        email: user.email,
-        roles: ["mentor", "mentee"],
-      });
+      // TODO: Send user verification email
+      // sendNewUserCreatedEmail(createdUser.id, user.email)
 
-      await xata.db.profiles.create({
-        user: createdUser.id,
-        name: user.name,
-      });
-
-      // send email to request new user verification
-      sendNewUserCreatedEmail(createdUser.id, user.email)
-
-      // returns AdapterUser
       return {
         id: createdUser.id,
         name: user.name,
@@ -33,73 +39,55 @@ export default function XataAdapter(client, options = {}) {
     },
 
     async getUser(id) {
-      console.log("getUser: searching for user", user.id);
+      console.log("getUser: searching for user", id);
 
-      const xata = getXataClient();
-
-      const profile = await xata.db.profiles
-          .select(["*", "user.*"])
-          .filter({'user.id': id})
-          .getFirst();
+      const profile = await getProfileByUserId(id);
 
       if (!profile) {
         console.log("getUser: user not found");
         return null;
       }
 
-      return {
-        id: profile.user.id,
-        name: profile.name,
-        image: "",
-        email: profile.user.email,
-        emailVerified: null,
-        published: profile.user.published,
-      };
+      return convertProfile(profile);
     },
 
     async getUserByEmail(email) {
       console.log("getUserByEmail: searching for user", email);
 
-      const xata = getXataClient();
-
-      const profile = await xata.db.profiles
-          .select(["*", "user.*"])
-          .filter({'user.email': email})
-          .getFirst();
+      const profile = await getProfileByEmail(email);
 
       if (!profile) {
         console.log("getUserByEmail: user not found");
         return null;
       }
 
-      return {
-        id: profile.user.id,
-        name: profile.name,
-        image: "",
-        email: profile.user.email,
-        emailVerified: null,
-        published: profile.user.published,
-      };
+      return convertProfile(profile);
     },
 
     async getUserByAccount({provider, providerAccountId}) {
       console.log("getUserByAccount: searching for user", provider, providerAccountId);
 
-      const xata = getXataClient();
-
-      const profile = await xata.db.profiles
-          .select(["*", "user.*"])
-          .filter({
-            'user.provider': provider,
-            'user.externalId': providerAccountId
-          })
-          .getFirst();
+      const profile = await getProfileByExternalId({ provider, externalId: providerAccountId });
 
       if (!profile) {
         console.log("getUserByAccount: user not found");
         return null;
       }
 
+      return convertProfile(profile);
+    },
+
+    async updateUser(user) {
+      console.log("updateUser: updating user", user.id);
+
+      const xata = getXataClient();
+
+      // TODO: Do we need to update the user?
+      const profile = await xata.db.profiles
+          .select(["*", "user.*"])
+          .filter({'user.id': user.id})
+          .getFirst();
+
       return {
         id: profile.user.id,
         name: profile.name,
@@ -108,10 +96,6 @@ export default function XataAdapter(client, options = {}) {
         emailVerified: null,
         published: profile.user.published,
       };
-    },
-
-    async updateUser(user) {
-      throw new Error("Not implemented");
     },
 
     async deleteUser(id) {
@@ -119,7 +103,7 @@ export default function XataAdapter(client, options = {}) {
     },
 
     async linkAccount(account) {
-      console.log("linkAccount: linking account", account);
+      console.log("linkAccount: linking account", account.provider, account.providerAccountId);
 
       const xata = getXataClient();
 

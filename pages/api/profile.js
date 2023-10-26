@@ -1,6 +1,6 @@
 import { getSession } from "next-auth/react";
 import { getXataClient } from "../../services/xata";
-import { sendPreferencesUpdatedEmail } from "../../utils/email";
+import { sendPreferencesUpdatedEmail } from "../../services/email";
 
 async function getByEmail(email) {
   const xata = await getXataClient();

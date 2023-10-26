@@ -12,7 +12,7 @@ import {
 import {
   sendMentorMentorshipClosedEmail,
   sendMenteeMentorshipClosedEmail,
-} from "../../utils/email";
+} from "../../services/email";
 
 export default async function handler(req, res) {
   const session = await getSession({ req });

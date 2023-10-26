@@ -2,7 +2,6 @@ import { getSession } from "next-auth/react";
 import { getXataClient } from "../../../services/xata";
 import { getUser } from "../../../services";
 import { RequestStatusEnum } from "../../../types/dbTablesEnums";
-import getUserHasSessionAndPublished from "../../../utils/api/get-user-has-session-and-published";
 
 export default async function handler(req, res) {
   const xata = getXataClient();

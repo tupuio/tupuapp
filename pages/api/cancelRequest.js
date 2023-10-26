@@ -2,7 +2,7 @@ import { getSession } from "next-auth/react";
 import { getRequestById, getUser } from "../../services";
 import { updateRequest } from "../../services/requests";
 import { RequestStatusEnum } from "../../types/dbTablesEnums";
-import { sendMentorshipRequestCancelledEmail } from "../../utils/email";
+import { sendMentorshipRequestCancelledEmail } from "../../services/email";
 
 export default async function handler(req, res) {
   const session = await getSession({ req });

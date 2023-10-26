@@ -2,7 +2,7 @@ import { getSession } from "next-auth/react";
 import { getUser, getUserById } from "../../services";
 import { getXataClient } from "../../services/xata";
 import { RequestStatusEnum } from "../../types/dbTablesEnums";
-import { sendMentorshipRequestedEmail } from "../../utils/email";
+import { sendMentorshipRequestedEmail } from "../../services/email";
 import { GENERAL_REQUEST_ERROR_MESSAGE } from "../../constants";
 
 export default async function handler(req, res) {

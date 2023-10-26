@@ -1,6 +1,6 @@
 import { getSession } from "next-auth/react";
 import { getRequestById, getUser } from "../../services";
-import { sendMentorContactMenteeEmail } from "../../utils/email";
+import { sendMentorContactMenteeEmail } from "../../services/email";
 
 export default async function handler(req, res) {
   const session = await getSession({ req });
