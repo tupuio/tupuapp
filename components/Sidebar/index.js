@@ -7,7 +7,7 @@ import SigninPass from "../auth/SigninPass";
 import MobileNav from "./MobileNav";
 import SidebarContent from "./SidebarContent";
 
-export default function SidebarWithHeader({ mode, setMode, children }) {
+export default function SidebarWithHeader({ children }) {
   const { data: session } = useSession();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const router = useRouter();
@@ -22,13 +22,11 @@ export default function SidebarWithHeader({ mode, setMode, children }) {
     return <SigninPass />;
   }
 
-  console.log(session);
 
   return (
     <Box minH="100vh" bg="gray.100">
       <SidebarContent
         onClose={() => onClose}
-        mode={mode}
         display={{ base: "none", md: "block" }}
       />
       <Drawer
@@ -41,14 +39,12 @@ export default function SidebarWithHeader({ mode, setMode, children }) {
         size="full"
       >
         <DrawerContent>
-          <SidebarContent mode={mode} onClose={onClose} />
+          <SidebarContent onClose={onClose} />
         </DrawerContent>
       </Drawer>
       <MobileNav
         session={session}
         onOpen={onOpen}
-        mode={mode}
-        setMode={setMode}
       />
       <Box ml={{ base: 0, md: 60 }} p="4">
         {children}
